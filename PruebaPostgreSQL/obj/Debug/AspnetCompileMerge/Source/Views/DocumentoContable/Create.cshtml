@@ -1,0 +1,522 @@
+﻿@model Entities.Contabilidad.ViewModels.DocumentoContableViewModel
+
+@{
+    ViewBag.Title = "Documento Contable";
+}
+
+
+<div class="modal fade bs-example-modal-lg" id="myModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Seleccionar Tercero</h4>
+            </div>
+            <div class="modal-body" id="myModalContent">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="SeleccionarCliente();">Seleccionar</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade bs-example-modal-lg" id="modalAuxiliar">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Seleccionar Auxiliar</h4>
+            </div>
+            <div class="modal-body" id="modalAuxiliarContent">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="SeleccionarAuxiliar();">Seleccionar</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+@using (Html.BeginForm("Create", "DocumentoContable", FormMethod.Post))
+{
+    @Html.ValidationSummary()
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+
+                <div class="x_title">
+                    <h2>Documento Contable <small>Contabilidad</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="x_content">
+                    <section class="content invoice">
+                        <div class="form-group">
+                            <div class="row">
+                                @Html.LabelFor(model => model.Idsucursal, new { @class = "control-label col-md-1 col-sm-1 col-xs-12" })
+                                <div class="col-md-2 col-sm-2 col-xs-12">
+                                    @Html.DropDownListFor(model => model.Idsucursal, Model.ListaSucursal, new { @class = "form-control col-xs-2" })
+                                    @Html.ValidationMessageFor(model => model.Idsucursal, "", new { @class = "text-danger" })
+                                </div>
+                                @Html.LabelFor(model => model.Idtipodocumento, new { @class = "control-label col-md-1 col-sm-1 col-xs-12" })
+                                <div class="col-md-2 col-sm-2 col-xs-12">
+                                    @Html.DropDownListFor(model => model.Idtipodocumento, Model.ListaTipoDocumento, new { @class = "form-control col-xs-12" })
+                                    @Html.ValidationMessageFor(model => model.Idtipodocumento, "", new { @class = "text-danger" })
+                                </div>
+                                @Html.LabelFor(model => model.Nrodocumento, new { @class = "control-label col-md-1 col-sm-1 col-xs-12" })
+                                <div class="col-md-2 col-sm-2 col-xs-12">
+                                    <label class="control-label" >@(Model.Nrodocumento != 0? Model.Nrodocumento.ToString() : "") </label>                                    
+                                </div>
+                            </div>
+                            <div class="row">
+                                @Html.LabelFor(model => model.IdentificacionTercero, new { @class = "control-label col-md-1 col-sm-1 col-xs-12" })
+                                <div class="col-md-2 col-sm-2 col-xs-12">
+                                    @Html.TextBoxFor(model => model.IdentificacionTercero, new { @onkeypress = "pulsar(event,this.id);", @class = "form-control col-md-1 col-sm-1 col-xs-12" })
+                                    @Html.ValidationMessageFor(model => model.IdentificacionTercero, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+
+                                </div>
+                                <div class="col-md-2 col-sm-2 col-xs-12 form-group">
+                                    @Html.LabelFor(model => model.Fechadocumento, new { @class = "control-label" })
+                                    <div class='input-group date' id='myDatepickerFechaDocumento'>
+                                        @Html.TextBox("fechaDocumento", Model.Fechadocumento.Date.ToString("dd/MM/yyyy"), new { @class = "form-control" })
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Fechadocumento, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="col-md-2 col-sm-2 col-xs-12 form-group">
+                                    @Html.LabelFor(model => model.Fechacontabilizacion, new { @class = "control-label" })
+                                    <div class='input-group date' id='myDatepickerFechaContabilizacion'>
+                                        @Html.TextBox("fechaContabilizacion", Model.Fechacontabilizacion.Date.ToString("dd/MM/yyyy"), new { @class = "form-control" })
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Fechadocumento, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="row">
+                                @Html.LabelFor(model => model.IdCentroCosto, new { @class = "control-label col-md-1 col-sm-1 col-xs-12" })
+                                <div class="col-md-2 col-sm-2 col-xs-12">
+                                    @Html.DropDownListFor(model => model.IdCentroCosto, Model.ListaCentroCosto, new { @class = "form-control col-xs-12" })
+                                    @*@Html.ValidationMessageFor(model => model.IdCentroCosto, "", new { @class = "text-danger" })*@
+                                </div>
+                                @Html.LabelFor(model => model.IdUnidadNegocio, new { @class = "control-label col-md-1 col-sm-1 col-xs-12" })
+                                <div class="col-md-2 col-sm-2 col-xs-12">
+                                    @Html.DropDownListFor(model => model.IdUnidadNegocio, Model.ListaUnidadNegocio, new { @class = "form-control col-xs-12" })
+                                    @*@Html.ValidationMessageFor(model => model.IdUnidadNegocio, "", new { @class = "text-danger" })*@
+                                </div>
+                            </div>
+                            <div class="row">
+                                @Html.LabelFor(model => model.Notas, new { @class = "control-label col-md-1 col-sm-1 col-xs-12" })
+                                <div class="col-md-10 col-sm-10 col-xs-12">
+                                    @Html.TextBoxFor(model => model.Notas, new { @class = "form-control  col-md-10 col-sm-10 col-xs-12" })
+                                    @Html.ValidationMessageFor(model => model.Notas, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="row">
+                                <input type="submit" class="btn btn-success" value="Guardar" />
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+
+                <div class="x_title">
+                    <h2>Movimientos Contable </h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <section class="content invoice">
+                        <div class="form-group">
+                            <div class="row">
+
+                                @(Html.DevExtreme().DataGrid<Entities.Contabilidad.ViewModels.AuxiliarContableViewModel>()
+.ID("gridContainer")
+.AllowColumnResizing(true)
+.Paging(paging => paging.Enabled(false))
+.ShowBorders(true)
+.Editing(editing =>
+{
+editing.AllowAdding(true);
+editing.Mode(GridEditMode.Batch);
+editing.AllowUpdating(true);
+})
+.Columns(columns =>
+{
+
+//columns.AddFor(m => m.Auxiliar)
+//                                                                               .Width(125)
+//                                                                               .Lookup(lookup => lookup
+//                                                                                   .DataSource(d => d.WebApi().Controller("DocumentoContableWebApi").LoadAction("ObtenerAuxiliares").Key("ID"))
+//                                                                                   .DisplayExpr("Auxiliar")
+//                                                                                   .ValueExpr("ID")
+//                                                                               );
+
+//columns.AddFor(m => m.IdentificacionTercero)
+//                   .Width(125)
+//                   .Lookup(lookup => lookup
+//                       .DataSource(d => d.WebApi().Controller("DocumentoContableWebApi").LoadAction("ObtenerTerceros").Key("ID"))
+//                       .DisplayExpr("Tercero")
+//                       .ValueExpr("ID")
+//                   );
+columns.Add()
+.DataField("StateID")
+.Caption("State")
+.AllowFiltering(false)
+.CellTemplate(new JS("customizeDisplayText"))
+.Lookup(lookup => lookup
+.DataSource(d => d.WebApi().Controller("TerceroMaestroWebApi").Key("ID")).DataSourceOptions(op => op.PageSize(10).Paginate(true))
+.DisplayExpr("Name")
+.ValueExpr("ID")
+).EditCellTemplate(@<text>
+                    @Html.Partial("DxDropDownBox")
+                </text>);
+
+columns.AddFor(m => m.Notas)
+        .Width(70);
+
+columns.AddFor(m => m.Valor);
+
+columns.AddFor(m => m.Esdebito);
+
+columns.AddFor(m => m.Idmultilibro)
+        .Width(125)
+        .Lookup(lookup => lookup
+        .DataSource(d => d.WebApi().Controller("MultilibroWebApi").Key("Value"))
+        .DisplayExpr("Text")
+        .ValueExpr("Value")
+        );
+
+columns.AddFor(m => m.Idsucursal)
+        .Width(125)
+        .Lookup(lookup => lookup
+            .DataSource(d => d.WebApi().Controller("SucursalWebApi").LoadAction("GetSucursales").Key("Value"))
+            .DisplayExpr("Text")
+            .ValueExpr("Value")
+        );
+
+columns.AddFor(m => m.Idccostos)
+        .Width(125)
+        .Lookup(lookup => lookup
+            .DataSource(d => d.WebApi().Controller("CentroCostoWebApi").Key("Value"))
+            .DisplayExpr("Text")
+            .ValueExpr("Value")
+        );
+
+columns.AddFor(m => m.Idunidadnegocio)
+        .Width(125)
+        .Lookup(lookup => lookup
+            .DataSource(d => d.WebApi().Controller("UnidadNegocioWebApi").Key("Value"))
+            .DisplayExpr("Text")
+            .ValueExpr("Value")
+        );
+
+})
+.DataSource(d => d.WebApi().Controller("DocumentoContableWebApi").LoadAction("ObtenerMovimientos").UpdateAction(true).Key("Id").LoadParams(new { id = Model.Id }))
+                                )
+
+
+                               
+                                @*<div class="table-responsive">
+            <table id="children" class="table table-striped jambo_table bulk_action">
+                <thead>
+                    <tr class="headings">
+                        <th><label>#</label></th>
+                        <th>@Html.DisplayNameFor(model => model.ListaAuxiliarContable[0].Auxiliar)</th>
+                        <th>@Html.DisplayNameFor(model => model.ListaAuxiliarContable[0].IdentificacionTercero)</th>
+                        <th>@Html.DisplayNameFor(model => model.ListaAuxiliarContable[0].Notas)</th>
+                        <th>@Html.DisplayNameFor(model => model.ListaAuxiliarContable[0].Valor)</th>
+                        <th>@Html.DisplayNameFor(model => model.ListaAuxiliarContable[0].Esdebito)</th>
+                        <th>@Html.DisplayNameFor(model => model.ListaAuxiliarContable[0].Idmultilibro)</th>
+                        <th>@Html.DisplayNameFor(model => model.ListaAuxiliarContable[0].Idsucursal)</th>
+                        <th>@Html.DisplayNameFor(model => model.ListaAuxiliarContable[0].Idccostos)</th>
+                        <th>@Html.DisplayNameFor(model => model.ListaAuxiliarContable[0].Idunidadnegocio)</th>
+                        <th>@Html.DisplayNameFor(model => model.ListaAuxiliarContable[0].Idpresupuesto)</th>
+                        <th>@Html.DisplayNameFor(model => model.ListaAuxiliarContable[0].Idproyecto)</th>
+                        <th>@Html.DisplayNameFor(model => model.ListaAuxiliarContable[0].Idfe)</th>
+                        <th>@Html.DisplayNameFor(model => model.ListaAuxiliarContable[0].Basegravable)</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.ListaAuxiliarContable.Count; i++)
+                    {
+                        @Html.HiddenFor(model => model.ListaAuxiliarContable[i].Id)
+                        <tr class="even pointer">
+                            <td><label id="linea@i">@(i+1)</label></td>
+                            <td>@Html.TextBoxFor(m => m.ListaAuxiliarContable[i].Auxiliar, new { @onkeypress = "pulsarAuxiliar(event,this.id);", @style = "width:90px" })</td>
+                            <td>@Html.TextBoxFor(m => m.ListaAuxiliarContable[i].IdentificacionTercero, new { @onkeypress = "pulsar(event,this.id);", @style = "width:90px" })</td>
+                            <td>@Html.TextBoxFor(m => m.ListaAuxiliarContable[i].Notas, new { @style = "width:90px" })</td>
+                            <td>@Html.TextBoxFor(m => m.ListaAuxiliarContable[i].Valor, new { @style = "width:90px" })</td>
+                            <td>@Html.CheckBoxFor(m => m.ListaAuxiliarContable[i].Esdebito)</td>
+                            <td>@Html.DropDownListFor(m => m.ListaAuxiliarContable[i].Idmultilibro, new SelectList(Model.ListaMultiLibro, "Value", "Text", Model.ListaAuxiliarContable[i].Idmultilibro), new { @style = "width:80px" })</td>
+                            <td>@Html.DropDownListFor(m => m.ListaAuxiliarContable[i].Idsucursal, new SelectList(Model.ListaSucursal, "Value", "Text", Model.ListaAuxiliarContable[i].Idsucursal), new { @style = "width:80px" })</td>
+                            <td>@Html.DropDownListFor(m => m.ListaAuxiliarContable[i].Idccostos, new SelectList(Model.ListaCentroCosto, "Value", "Text", Model.ListaAuxiliarContable[i].Idccostos), new { @style = "width:80px" })</td>
+                            <td>@Html.DropDownListFor(m => m.ListaAuxiliarContable[i].Idunidadnegocio, new SelectList(Model.ListaUnidadNegocio, "Value", "Text", Model.ListaAuxiliarContable[i].Idunidadnegocio), new { @style = "width:80px" })</td>
+                            <td>@Html.TextBoxFor(m => m.ListaAuxiliarContable[i].Idpresupuesto, new { @style = "width:90px" })</td>
+                            <td>@Html.TextBoxFor(m => m.ListaAuxiliarContable[i].Idproyecto, new { @style = "width:90px" })</td>
+                            <td>@Html.TextBoxFor(m => m.ListaAuxiliarContable[i].Idfe, new { @style = "width:90px" })</td>
+                            <td>@Html.TextBoxFor(m => m.ListaAuxiliarContable[i].Basegravable, new { @style = "width:90px" })</td>
+                            <td>
+                                <a data-toggle="tooltip" data-placement="top" title="Agregar" id="movimiento_@i.ToString()" style="cursor:pointer; font-size:24px;" onclick="AgregarMovimiento(this);" hidden="@(!(i==(Model.ListaAuxiliarContable.Count-1)))">
+                                    <i class="fa fa-plus-circle"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        </div>*@
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <link href="~/Scripts/sweetalert2.css" rel="stylesheet" />
+    @*<script src="~/Scripts/jquery-3.0.0.js"></script>*@
+    <script src="~/Scripts/sweetalert2.js"></script>
+    <script src="~/Scripts/funcionescomunesbusquedaterceros.js"></script>
+    <script src="~/Scripts/funcionescomunesbusquedaauxiliares.js"></script>
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+
+        function customizeDisplayText(cell, info) {
+            var rowData = info.row.data;
+            if (!rowData)
+                return;
+            var texts = [];
+            if (rowData.StateID && rowData.StateID.length) {
+                for (var i = 0; i < rowData.StateID.length; i++) {
+                    var value = rowData.StateID[i];
+                    var displayText = info.column.lookup.calculateCellValue(value);
+                    if (displayText)
+                        texts.push(displayText);
+                }
+            }
+            cell.append(texts.toString());
+        };
+
+        function onValueChanged(args) {
+            var grid = $("#gridContainer").dxDataGrid("instance");
+            if (!grid.hasEditData())
+                grid.option("editing.mode", args.value);
+            else
+                DevExpress.ui.notify("Finish editing first");
+        }
+        var contador = @Html.Raw(Json.Encode(Model.ListaAuxiliarContable.Count()));
+        //var indice = 0;
+        var press = '';
+
+        $('#myDatepickerFechaDocumento').datetimepicker({
+            format: 'DD/MM/YYYY'
+        });
+
+        $('#myDatepickerFechaContabilizacion').datetimepicker({
+            format: 'DD/MM/YYYY'
+        });
+
+
+        $(document).ready(function () {
+            var message = @Html.Raw(Json.Encode(String.Join("<br>", Model?.Error ?? new List<string>())));
+            if (message != "") {
+                Swal.fire({
+                    type: 'error',
+                    title: 'Validación documento',
+                    html: message,
+                    confirmButtonText: "Aceptar",
+                    width: '500px'//,
+                    //footer: '&lt;a href>Why do I have this issue?&lt;/a>'
+                })
+            }
+        });
+
+
+        function pulsar(e, id) {
+            if (e.keyCode === 13 && !e.shiftKey) {
+                e.preventDefault();
+                press = id;
+                BuscarTercero();
+            }
+        }
+
+        function BuscarTercero() {
+            $.ajax({
+                type: "GET",
+                url: "@System.Configuration.ConfigurationManager.AppSettings["Url"]/TerceroMaestro/BusquedaTercero",
+                contentType: "application/json; charset=utf-8",
+                datatype: "json",
+                success: function (data) {
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal('show');
+                    CargarDatosTerceros();
+                },
+                error: function () {
+                    alert("Error al cargar contenido.");
+                }
+            });
+        }
+
+        function SeleccionarCliente() {
+            document.getElementById(press).value = identificaciontercero;
+            identificaciontercero = '';
+            $('#myModal').modal('hide');
+        }
+
+        function pulsarAuxiliar(e, id) {
+            if (e.keyCode === 13 && !e.shiftKey) {
+                e.preventDefault();
+                press = id;
+                BuscarAuxiliar();
+            }
+        }
+
+        function BuscarAuxiliar() {
+            $.ajax({
+                type: "GET",
+                url: "@System.Configuration.ConfigurationManager.AppSettings["Url"]/Auxiliares/BuscarAuxiliar",
+                contentType: "application/json; charset=utf-8",
+                datatype: "json",
+                success: function (data) {
+                    $('#modalAuxiliarContent').html(data);
+                    $('#modalAuxiliar').modal('show');
+                    CargarDatosAuxiliares();
+                },
+                error: function () {
+                    alert("Error al cargar contenido.");
+                }
+            });
+        }
+
+        function SeleccionarAuxiliar() {
+            document.getElementById(press).value = codigoAuxiliar;
+            codigoAuxiliar = '';
+            $('#modalAuxiliar').modal('hide');
+        }
+
+        function AgregarMovimiento(obj) {
+            obj.hidden = true;
+
+            
+            var sucursales = @Html.Raw(Json.Encode(Model.ListaSucursal));
+            var centrosCosto = @Html.Raw(Json.Encode(Model.ListaCentroCosto));
+            var unidadesNegocio = @Html.Raw(Json.Encode(Model.ListaUnidadNegocio));
+            var multilibro = @Html.Raw(Json.Encode(Model.ListaMultiLibro));
+            var identificacion = document.getElementById("IdentificacionTercero").value;
+            var nota = document.getElementById("Notas").value;
+            var sucursal = document.getElementById("Idsucursal").value;
+            var unidadNegocio = document.getElementById("IdUnidadNegocio").value;
+            var centroCosto = document.getElementById("IdCentroCosto").value;
+
+            var html = '<tr class="even pointer">';
+            
+            html = html + '<input data-val="true" id="ListaAuxiliarContable_' + contador + '__Id" name="ListaAuxiliarContable[' + contador + '].Id" type="hidden" value="0">';
+            html = html + '<td><label>' + (contador+1) + '</label></td>';
+            html = html + '<td><input data-val="true" data-val-required="El campo Auxiliar es obligatorio." id="ListaAuxiliarContable_'
+                + contador + '__Auxiliar" name="ListaAuxiliarContable[' + contador
+                + '].Auxiliar" type="text" value="" style="width:90px" onkeypress = "pulsarAuxiliar(event,this.id);" /></td>';            
+            html = html + '<td><input data-val="true" data-val-required="El campo Tercero es obligatorio." id="ListaAuxiliarContable_'
+                + contador + '__Identificaciontercero" name="ListaAuxiliarContable[' + contador
+                + '].Identificaciontercero" type="text" value="' + identificacion + '" style="width:90px" onkeypress = "pulsar(event,this.id);" /></td>';
+            html = html + '<td><input id="ListaAuxiliarContable_' + contador + '__Notas" name="ListaAuxiliarContable[' + contador + '].Notas" type="text" value="' + nota + '" style="width:90px"/></td>';
+            html = html + '<td><input data-val="true" data-val-number="The field Valor must be a number." id="ListaAuxiliarContable_' + contador + '__Valor" name="ListaAuxiliarContable[' + contador + '].Valor" type="text" value="" style="width:90px"/></td>';
+            html = html + '<td><input data-val="true" data-val-required="El campo Debito es obligatorio." id="ListaAuxiliarContable_' + contador + '__Esdebito" name="ListaAuxiliarContable[' + contador + '].Esdebito" type="checkbox" value="true" /><input name="ListaAuxiliarContable[0].Esdebito" type="hidden" value="false" /></td>';
+
+            @* lista de multilibro *@
+            html = html + '<td><select data-val="true" data-val-number="The field Multilibro must be a number." data-val-required="El campo Multilibro es obligatorio."'
+                + 'id = "ListaAuxiliarContable_' + contador + '__Idmultilibro" name = "ListaAuxiliarContable[' + contador + '].Idmultilibro" style = "width:80px" > ';
+
+            for (var i = 0; i < multilibro.length; i++) {
+                html = html + '<option value="' + multilibro[i].Value + '"';                
+                html = html + '> ' + multilibro[i].Text + '</option > ';
+            }
+            html = html + '</select></td>';
+
+            @*lista de sucursales*@
+            html = html + '<td><select data-val="true" data-val-number="The field Sucursal must be a number." data-val-required="El campo Sucursal es obligatorio."'
+                + 'id = "ListaAuxiliarContable_' + contador + '__Idsucursal" name = "ListaAuxiliarContable[' + contador +'].Idsucursal" style = "width:80px" > ';
+
+            for (var i = 0; i < sucursales.length; i++)
+            {
+                html = html + '<option value="' + sucursales[i].Value + '"';
+                if (sucursales[i].Value == sucursal) {
+                    html = html + ' selected="true" ';
+                }
+                html = html + '> ' + sucursales[i].Text + '</option > ';
+            }
+            html = html + '</select></td>';
+
+            @* lista de centro de costos *@
+            html = html + '<td><select data-val="true" data-val-number="The field Centro Costos must be a number." data-val-required="El campo Centro Costo es obligatorio."'
+                + 'id = "ListaAuxiliarContable_' + contador + '__Idccostos" name = "ListaAuxiliarContable[' + contador + '].Idccostos" style="width:80px"> ';
+
+            for (var i = 0; i < centrosCosto.length; i++) {
+                html = html + '<option value="' + centrosCosto[i].Value + '"';
+                if (centrosCosto[i].Value == centroCosto) {
+                    html = html + ' selected="true" ';
+                }
+                html = html + '> ' + centrosCosto[i].Text + '</option > ';                
+            }
+            html = html + '</select></td>';
+
+            @* lista de unidad de negocio *@
+            html = html + '<td><select data-val="true" data-val-number="The field unidad negocio must be a number." data-val-required="El campo unidad negocio es obligatorio."'
+                + 'id = "ListaAuxiliarContable_' + contador + '__Idunidadnegocio" name = "ListaAuxiliarContable[' + contador + '].Idunidadnegocio" style="width:80px"> ';
+
+            for (var i = 0; i < unidadesNegocio.length; i++) {
+                html = html + '<option value="' + unidadesNegocio[i].Value + '"';
+                if (unidadesNegocio[i].Value == unidadNegocio) {
+                    html = html + ' selected="true" ';
+                }
+                html = html + '> ' + unidadesNegocio[i].Text + '</option > ';                
+            }
+            html = html + '</select></td>';
+
+            @* -------- *@
+            html = html + '<td><input data-val="true" data-val-number="The field Idpresupuesto must be a number." id="ListaAuxiliarContable_' + contador + '__Idpresupuesto" name="ListaAuxiliarContable[' + contador + '].Idpresupuesto" type="text" value="" style="width:90px"/></td>';
+            html = html + '<td><input data-val="true" data-val-number="The field Idproyecto must be a number." id="ListaAuxiliarContable_' + contador + '__Idproyecto" name="ListaAuxiliarContable[' + contador + '].Idproyecto" type="text" value="" style="width:90px"/></td >';
+            html = html + '<td><input data-val="true" data-val-number="The field Idfe must be a number." id="ListaAuxiliarContable_' + contador + '__Idfe" name="ListaAuxiliarContable[' + contador + '].Idfe" type="text" value="" style="width:90px"/></td>';
+            html = html + '<td><input data-val="true" data-val-number="The field Basegravable must be a number." id="ListaAuxiliarContable_' + contador + '__Basegravable" name="ListaAuxiliarContable[' + contador + '].Basegravable" type="text" value="" style="width:90px"/></td>';
+
+            html = html + '<td> <a data-toggle="tooltip" data-placement="top" title="Agregar" id="movimiento_' + contador + '" style="cursor:pointer; font-size:24px;" onclick="AgregarMovimiento(this);"><i class="fa fa-plus-circle"></i></a></td>';
+            html = html + '</tr>';
+
+            $('#children').append(html);
+
+            contador++;
+        }
+
+    </script>
+}

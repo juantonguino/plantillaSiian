@@ -1,0 +1,25 @@
+@{
+	ViewBag.Title = "Index";}
+<h2> TipoTercero</h2>
+@(Html.DevExtreme().DataGrid<Entities.Contabilidad.ViewModels.TipoTerceroViewModel>()
+	.Columns(columns =>
+	{
+		columns.AddFor(m => m.Nombre);
+		columns.AddFor(m => m.Esterceroinformativo);
+		columns.AddFor(m => m.Esdosterceros);
+		columns.AddFor(m => m.Estercero);
+	})
+	.ColumnHidingEnabled(true)
+	.Editing(e => e
+	.Mode(GridEditMode.Row)
+	.AllowAdding(true)
+	.AllowUpdating(true)
+	.AllowDeleting(true)
+	).DataSource(d => d.WebApi()
+	.Controller("TipoTerceroWebApi")
+	.InsertAction(true)
+	.UpdateAction(true)
+	.DeleteAction(true)
+	.Key("Id")
+	)
+)

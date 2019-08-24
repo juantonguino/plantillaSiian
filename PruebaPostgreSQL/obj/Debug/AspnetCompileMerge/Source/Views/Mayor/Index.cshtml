@@ -1,0 +1,62 @@
+﻿@model Entities.Contabilidad.ViewModels.MayorViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+@(Html.DevExtreme().DataGrid<Entities.Contabilidad.ViewModels.MayorViewModel>()
+        .Columns(columns =>
+        {
+
+            columns.AddFor(m => m.Codigo).Width(100);
+
+            columns.AddFor(m => m.Nombre).Width(300);
+
+            columns.AddFor(m => m.Idmayor)
+            .Width(125)
+            .Lookup(lookup => lookup
+                .DataSource(d => d.WebApi().Controller("MayorWebApi").Key("Id"))
+                .DisplayExpr("Codigo")
+                .ValueExpr("Id")
+            );
+
+            columns.AddFor(m => m.Idnivel)
+            .Width(125)
+            .Lookup(lookup => lookup.DataSource(d => d.WebApi().Controller("EstructuraWebApi").Key("Id"))
+            .DisplayExpr("Nombre")
+            .ValueExpr("Id")
+            );
+
+            columns.AddFor(m => m.Idtipocuenta).
+            Width(100)
+            .Lookup(lookup => lookup.DataSource(d => d.WebApi().Controller("TipoCuentaWebApi").Key("Id"))
+            .DisplayExpr("Nombre")
+            .ValueExpr("Id")
+
+            );
+
+            columns.AddFor(m => m.Esactivo).Width(100);
+
+
+        })
+        .RemoteOperations(true)
+        .Editing(e => e
+            .Mode(GridEditMode.Row)
+            .AllowAdding(true)
+            .AllowUpdating(true)
+            .AllowDeleting(true)
+        ).DataSource(d => d.WebApi()
+            .Controller("MayorWebApi")
+            .InsertAction(true)
+            .UpdateAction(true)
+            .DeleteAction(true)
+            .Key("Id")
+        )
+        .Paging(paging => paging.PageSize(10))
+        .Pager(pager =>
+        {
+            pager.ShowPageSizeSelector(true);
+            pager.AllowedPageSizes(new List<int> { 5, 10, 20 });
+            pager.ShowInfo(true);
+        })
+)
+

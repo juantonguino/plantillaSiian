@@ -1,0 +1,23 @@
+@{
+	ViewBag.Title = "Index";}
+<h2> Multilibro</h2>
+@(Html.DevExtreme().DataGrid<Entities.Contabilidad.ViewModels.MultilibroViewModel>()
+	.Columns(columns =>
+	{
+		columns.AddFor(m => m.Nombre);
+		columns.AddFor(m => m.Esactivo);
+	})
+	.ColumnHidingEnabled(true)
+	.Editing(e => e
+	.Mode(GridEditMode.Row)
+	.AllowAdding(true)
+	.AllowUpdating(true)
+	.AllowDeleting(true)
+	).DataSource(d => d.WebApi()
+	.Controller("MultilibroWebApi")
+	.InsertAction(true)
+	.UpdateAction(true)
+	.DeleteAction(true)
+	.Key("Id")
+	)
+)

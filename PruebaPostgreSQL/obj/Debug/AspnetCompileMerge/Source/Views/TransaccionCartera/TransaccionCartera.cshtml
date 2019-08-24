@@ -1,0 +1,331 @@
+﻿@model Negocio.Contabilidad.TransaccionCarteraViewModel
+@{
+    ViewBag.Title = "Consulta Transaccion";
+}
+<!-- Large modal -->
+<form id="frmTransaccionCartera" name="frmTransaccionCartera" method="post">
+
+    <div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Seleccionar Transacción</h4>
+                </div>
+                <div class="modal-body" id="myModalContent">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary" data-dismiss="modal" id="BtnTransaccion" name="BtnTransaccion" onclick="SeleccionarTransaccion();">Aceptar</button>
+                    <button type="submit" class="btn btn-primary" data-pdsa-action="buscartercero" data-dismiss="modal" id="BtnCliente" name="BtnCliente" onclick="SeleccionarCliente();">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@using (Html.BeginForm("TransaccionCartera", "TransaccionCartera", FormMethod.Post))
+{
+    <!--BEGIN HIDDEN FIELDS-->
+    @Html.HiddenFor(m => m.Comando)
+    @Html.HiddenFor(m => m.Tercero.Id)
+    @Html.HiddenFor(m => m.IdPrestamoSeleccion)
+    @Html.HiddenFor(m => m.IdConcepto)
+
+    if (!Model.EsPagado)
+    {
+        <!--END HIDDEN FIELDS-->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="panel panel-primary">
+                        <div class="x_title panel-heading">
+                            <h1 class="panel-title">Buscar transaccion </h1>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label class="control-label">
+                                    Codigo transacción
+                                </label>
+                                @*@Html.EditorFor(m => m.Transaccion.Codigo, new { htmlAttributes = new { @class = "form-control" } })*@
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="btn-group">
+                                        <input class="btn-sm" type="text" id="Transaccion.Codigo" name="Transaccion.Codigo" value="@Model.Transaccion.Codigo">
+                                        <button class="btn btn-sm btn-default" onclick="ObtenerTransacciones();" type="button" data-placement="top" data-toggle="tooltip" data-original-title="Buscar"><i class="fa fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @if (@Model.Transaccion.Nombre != null)
+                                {
+                                    <label class="control-label">
+                                        Nombre transacción
+                                    </label>
+                                    <h2>@Model.Transaccion.Nombre</h2>
+                                }
+
+                            </div>
+                        </div>
+                        @*<div class="panel-footer">
+                                <button class="btn btn-primary" data-pdsa-action="buscartransacion" id="btnBuscarTransaccion">buscar transaccion</button>
+                            </div>*@
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="panel panel-primary">
+                        <div class="x_title panel-heading">
+                            <h1 class="panel-title">Buscar Persona</h1>
+                        </div>
+                        <div class="panel-body">
+
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Tercero.Cedula)
+                                @*@Html.EditorFor(m => m.Tercero.Cedula, new { htmlAttributes = new { @class = "form-control" } })*@
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="btn-group">
+                                        <input class="btn-sm" type="text" id="Tercero.Cedula" name="Tercero.Cedula" value="@Model.Tercero.Cedula">
+                                        <button class="btn btn-sm btn-default" onclick="ObtenerTerceros();" type="button" data-placement="top" data-toggle="tooltip" data-original-title="Buscar"><i class="fa fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            @if (Model.Tercero.Id != 0)
+                            {
+                                <div class="form-group">
+                                    <label class="control-label">
+                                        Nombre cliente
+                                    </label>
+                                    <label>@Model.Tercero.Nombre</label>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.ValorPago)
+                                    @Html.EditorFor(m => m.ValorPago, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+                            }
+
+                        </div>
+                        @*<div class="panel-footer">
+                                <button class="btn btn-primary" data-pdsa-action="buscartercero" id="btnbuscartransaccion">buscar persona</button>
+                            </div>*@
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!--BEGIN TABLA DE PRESTAMOS-->
+
+        <div class="panel panel-primary">
+            <div class="x_title panel-heading">
+                <h1 class="panel-title">Consulta de prestamos</h1>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table id="tablaPrestamos" class="table table-striped jambo_table">
+                        <thead>
+                            <tr class="headings">
+                                <th>Numero</th>
+                                <th>Estado</th>
+                                <th>Calificacion</th>
+                                <th>Calificacion Peor</th>
+                                <th>Saldo</th>
+                                <th>Pago Total</th>
+                                <th>Valor Cuota Actual</th>
+                                <th>Valor Para Estar Al Dia</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in Model.ListaPrestamos)
+                            {
+                                <tr class="clickable-row" data-value="@item.Id">
+                                    <td>@item.Numero</td>
+                                    <td>@item.Estado</td>
+                                    <td>@item.Calificacion</td>
+                                    <td>@item.Calificacionpeor</td>
+                                    <td>@item.Saldo</td>
+                                    <td>@item.ValorPagoTotal</td>
+                                    <td>@item.ValorCuotaActual</td>
+                                    <td>@item.ValorParaEstarAlDia</td>
+                                </tr>
+                            }
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+            <div class="panel-footer">
+
+            </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="x_title panel-heading">
+                <h1 class="panel-title">lista de conceptos</h1>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table id="tablaConceptos" class="table table-striped jambo_table">
+                        <thead>
+                            <tr class="headings">
+                                <th>Conceptos</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Conceptos)
+                            {
+                                <tr class="clickable-row" data-value-con="@item.Id">
+                                    <td>@item.Nombre</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+            <div class="panel-footer">
+                <button class="btn btn-primary" data-pdsa-action="pagar" id="btnpagar">pagar</button>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="panel panel-primary">
+            <div class="x_title panel-heading">
+                <h1 class="panel-title">Prestamo Pagado</h1>
+
+                @Html.Action("ReciboPagoViewerPartial",new { id=Model.IdMovimiento})
+
+            </div>
+        </div>
+    }
+    <!--END TABLA DE PRESTAMOS-->
+}
+@section scripts{
+    <script src="~/Scripts/funcionescomunesbusquedatransacciones.js"></script>
+    <script src="~/Scripts/funcionescomunesbusquedaterceros.js"></script>
+    <script>
+
+        function SeleccionarTransaccion() {
+            var x = $('input[name=seleccionTransaccion]:checked').val();
+            document.getElementById("frmTransaccionCartera").action = "@System.Configuration.ConfigurationManager.AppSettings["Url"]/TransaccionCartera/SeleccionTransaccion";
+            document.getElementById("frmTransaccionCartera").submit();
+        }
+
+        function SeleccionarCliente() {
+            var x = $('input[name=seleccionCliente]:checked').val();
+            $("#Comando").val($(this).data("pdsa-action"));
+            document.getElementById("Tercero_Id").value = x;
+            document.getElementById("frmTransaccionCartera").action = "@System.Configuration.ConfigurationManager.AppSettings["Url"]/TransaccionCartera/TransaccionCartera";
+            document.getElementById("frmTransaccionCartera").submit();
+        }
+
+        function ObtenerTerceros() {
+            $.ajax({
+                type: "GET",
+                url: "@System.Configuration.ConfigurationManager.AppSettings["Url"]/TerceroMaestro/BusquedaTercero",
+                contentType: "application/json; charset=utf-8",
+                datatype: "json",
+                success: function (data) {
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal('show');
+                    $("#BtnCliente").css("display", "inline");
+                    $("#BtnTransaccion").css("display", "none");
+                    document.getElementById("myModalLabel").innerHTML = "Seleccionar Cliente";
+                    CargarDatosTerceros();
+                },
+                error: function () {
+                    alert("Error al cargar contenido.");
+                }
+            });
+        }
+
+        function ObtenerTransacciones() {
+            $.ajax({
+                type: "GET",
+                url: "@System.Configuration.ConfigurationManager.AppSettings["Url"]/Transaccion/BusquedaTransaccion",
+                contentType: "application/json; charset=utf-8",
+                datatype: "json",
+                success: function (data) {
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal('show');
+                    $("#BtnCliente").css("display", "none");
+                    $("#BtnTransaccion").css("display", "inline");
+                    document.getElementById("myModalLabel").innerHTML = "Seleccionar Transacción";
+                    codigoBusqueda = document.getElementById("Transaccion.Codigo").value;
+                    CargarDatosTransacciones();
+                },
+                error: function () {
+                    alert("Error al cargar contenido.");
+                }
+            });
+        }
+
+
+        $(document).ready(function () {
+
+            var tablaconceptos = $("#tablaConceptos").DataTable({
+                "processing": false, // for show progress bar
+                "serverSide": false, // for process server side
+                "filter": false, // this is for disable filter (search box)
+                "orderMulti": false, // for disable multiple column at once
+                "paging": false,
+                "ordering": false,
+                "info": false
+            });
+            var table = $('#tablaPrestamos').DataTable({
+                "processing": false, // for show progress bar
+                "serverSide": false, // for process server side
+                "filter": false, // this is for disable filter (search box)
+                "orderMulti": false, // for disable multiple column at once
+                "paging": false,
+                "ordering": false,
+                "info": false
+            });
+            $("[data-pdsa-action]").on("click", function (e) {
+                e.preventDefault();
+                $("#Comando").val($(this).data("pdsa-action"));
+                $("form").submit();
+            });
+            $("[data-value]").on("click", function (e) {
+                e.preventDefault();
+                $("#IdPrestamoSeleccion").val($(this).data("value"));
+
+
+            });
+            $("[data-value-con]").on("click", function (e) {
+                e.preventDefault();
+                $("#IdConcepto").val($(this).data("value-con"));
+                
+
+
+            });
+            $('#tablaPrestamos tbody').on('click', 'tr', function () {
+                if ($(this).hasClass('selected')) {
+                    $(this).removeClass('selected');
+                }
+                else {
+                    table.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                }
+            });
+            $('#tablaConceptos tbody').on('click', 'tr', function () {
+                if ($(this).hasClass('selected')) {
+                    $(this).removeClass('selected');
+                }
+                else {
+                    tablaconceptos.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                }
+            });
+
+
+        });
+    </script>
+}

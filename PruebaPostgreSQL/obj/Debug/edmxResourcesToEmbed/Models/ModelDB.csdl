@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="pruebaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="generales_tipotelefono">
+    <Key>
+      <PropertyRef Name="codigo" />
+    </Key>
+    <Property Name="codigo" Type="String" MaxLength="2" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="estaactivo" Type="String" MaxLength="1" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="numeroverificador" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="personas_tipoidentificacion">
+    <Key>
+      <PropertyRef Name="secuencial" />
+    </Key>
+    <Property Name="codigo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="estaactiva" Type="String" MaxLength="1" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="numeroverificador" Type="Int32" Nullable="false" />
+    <Property Name="requieredigitoverificacion" Type="String" MaxLength="1" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="secuencial" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityContainer Name="AppDbContext" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="generales_tipotelefono" EntityType="Self.generales_tipotelefono" />
+    <EntitySet Name="personas_tipoidentificacion" EntityType="Self.personas_tipoidentificacion" />
+  </EntityContainer>
+</Schema>

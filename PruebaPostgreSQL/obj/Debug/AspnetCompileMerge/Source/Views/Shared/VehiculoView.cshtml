@@ -1,0 +1,70 @@
+﻿@model Entities.Credito.ViewModels.Credito_TerceroVehiculoEditViewModel
+
+
+@using (Html.BeginCollectionItem("ListaTerceroVehiculoEditViewModel"))
+{
+<div class="x_title" id="vehiculo_@Model.identificadorvehiculo" name="vehiculo_@Model.identificadorvehiculo">
+    @Html.HiddenFor(model => model.id)
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-3 col-sm-3 col-xs-12">
+                <label class="control-label has-feedback-left">
+                    Clase <span class="required right">*</span>
+                </label>
+                @Html.EditorFor(model => model.clase, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.clase, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                <label class="control-label has-feedback-left">
+                    Marca <span class="required right">*</span>
+                </label>
+                @Html.EditorFor(model => model.marca, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.marca, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                <label class="control-label has-feedback-left">
+                    Modelo <span class="required right">*</span>
+                </label>
+                <div class="has-feedback-left">
+                    @Html.EditorFor(model => model.modelo, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.modelo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                <label class="control-label has-feedback-left">
+                    Placa <span class="required right">*</span>
+                </label>
+                <div class="has-feedback-left">
+                    @Html.EditorFor(model => model.placa, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.placa, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 col-sm-3 col-xs-12">
+                <label class="control-label has-feedback-left">
+                    Valor Comercial <span class="required right">*</span>
+                </label>
+                @Html.EditorFor(model => model.valorcomercial, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.valorcomercial, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                <label class="control-label has-feedback-left">
+                    Pignorado
+                </label>
+                @Html.EditorFor(model => model.pignoradoa, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.pignoradoa, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <ul class="nav navbar-right center panel_toolbox">
+            <li>
+                <h3><a class="close-link" onclick="EliminarVehiculo('@Model.identificadorvehiculo');" style="cursor:pointer;"><i class="fa fa-trash"></i></a></h3>
+            </li>
+        </ul>
+        <div class="clearfix"></div>
+    </div>
+
+</div>
+}

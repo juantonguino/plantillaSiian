@@ -1,0 +1,330 @@
+﻿@model Entities.Transacciones.ViewModels.Transacciones_TransaccionEditViewModel
+
+
+<!-- modals -->
+<!-- Large modal -->
+<form action="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Transaccion/SeleccionTransaccion" name="formularioSeleccionTransaccion" method="post">
+
+    <div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Seleccionar Transacción</h4>
+                </div>
+                <div class="modal-body" id="myModalContent">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary" data-dismiss="modal" onclick="SeleccionarTransaccion();">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+
+            <div class="x_title">
+                <h2>Transacciones <small>Transacciones de cartera</small></h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="#">Settings 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Settings 2</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="x_content">
+                <section class="content invoice">
+
+                    <div class="row">
+                        <div class="form-group">
+
+                            <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                <label class="control-label">
+                                    Codigo transacción
+                                </label>
+                                @if (Model == null)
+                                {
+                                    <div>
+                                        <div class="btn-group">
+                                            <input class="form-control btn-sm" type="text" id="codigoTransaccion">
+                                            <button class="btn btn-sm btn-default" onclick="ObtenerTransacciones();" type="button" data-placement="top" data-toggle="tooltip" data-original-title="Buscar"><i class="fa fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div>
+                                        <div class="btn-group">
+                                            <input class="form-control btn-sm" readonly type="text" id="codigoTransaccion" value="@Model.codigo" style="background-color:lightyellow">
+                                            <button disabled class="btn btn-sm btn-default" onclick="ObtenerTransacciones();" type="button" data-placement="top" data-toggle="tooltip" data-original-title="Buscar"><i class="fa fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    @if (Model != null)
+                    {
+                        <div class="row">
+                            <div class="col-xs-12 invoice-header">
+                                <h2>
+                                    @Model.nombre
+                                </h2>
+                            </div>
+                        </div>
+
+
+                        <form action="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Transaccion/SeleccionPrestamo" name="formularioBusquedaPrestamo" id="formularioBusquedaPrestamo" method="post">
+
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">Busqueda por</label>
+                                        <div class="has-feedback-left">
+
+                                            @if (Model.buscarpornumeroprestamo == true)
+                                            {
+                                                <p>
+                                                    Número Prestamo
+
+                                                    <input type="radio" class="flat" name="buscarpornumeroprestamo" id="numeroprestamo" value="true" checked onclick="OnRadioStateChange(this)" required /> Identificación Cliente
+                                                    <input type="radio" class="flat" name="buscarpornumeroprestamo" id="identificacioncliente" value="false" onclick="OnRadioStateChange(this)" />
+                                                </p>
+                                            }
+                                            else
+                                            {
+                                                <p>
+                                                    Número Prestamo
+
+                                                    <input type="radio" class="flat" name="buscarpornumeroprestamo" id="numeroprestamo" value="true" onclick="OnRadioStateChange(this)" required /> Identificación Cliente
+                                                    <input type="radio" class="flat" name="buscarpornumeroprestamo" id="identificacioncliente" value="false" checked onclick="OnRadioStateChange(this)" />
+                                                </p>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                @Html.HiddenFor(model => model.id)
+                                @Html.HiddenFor(model => model.codigo)
+                                @Html.HiddenFor(model => model.nombre)
+                                <div class="form-group">
+                                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                        @if (Model.buscarpornumeroprestamo == true)
+                                        {
+                                            <label class="control-label" id="FiltroBusquedaLabel">
+                                                Número Prestamo
+                                            </label>
+                                        }
+                                        else
+                                        {
+                                            <label class="control-label" id="FiltroBusquedaLabel">
+                                                Identificación Cliente
+                                            </label>
+                                        }
+
+                                        <div>
+                                            <div class="btn-group">
+                                                <input class="btn-sm" type="text" id="parametroBusqueda" name="parametroBusqueda" value="@Model.parametroBusqueda">
+                                                <button class="btn btn-sm btn-default" type="submit" data-placement="top" data-toggle="tooltip" data-original-title="Buscar"><i class="fa fa-search"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="x_panel" id="PrestamoPagar" style="display: none;">
+                                    <div class="x_title">
+                                        <h2>Pago prestamo</h2>
+                                        <ul class="nav navbar-right panel_toolbox">
+                                            <li>
+                                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                            </li>
+                                            <li>
+                                                <a class="close-link"><i class="fa fa-close"></i></a>
+                                            </li>
+                                        </ul>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="x_content">
+                                        <section class="content invoice">
+                                            <div class="row">
+                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                    <div id="PrestamoInformacionAdicional"></div>
+                                                </div>
+                                            </div>
+                                        </section>
+                                    </div>
+                                </div>
+                                <div class="x_panel" id="ListaPrestamos">
+                                    <div class="x_title">
+                                        <h2>Lista de prestamos</h2>
+                                        <ul class="nav navbar-right panel_toolbox">
+                                            <li>
+                                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                            </li>
+                                            <li>
+                                                <a class="close-link"><i class="fa fa-close"></i></a>
+                                            </li>
+                                        </ul>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="x_content">
+                                        <section class="content invoice">
+
+                                            <!-- /.row -->
+                                            <!-- Table row -->
+                                            <div class="row">
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <table class="table table-striped">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Número Prestamo</th>
+                                                                <th>Monto</th>
+                                                                <th>Saldo</th>
+                                                                <th>Estado</th>
+                                                                <th>Fecha Desembolso</th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @for (int p = 0; p < Model.listaPrestamoMaestroEditViewModel.Count(); p++)
+                                                            {
+                                                                <tr>
+                                                                    <td>
+                                                                        @Model.listaPrestamoMaestroEditViewModel[p].numeroprestamo
+                                                                    </td>
+                                                                    <td>
+                                                                        @Html.Label("Monto", @String.Format("{0:N2}", Model.listaPrestamoMaestroEditViewModel[p].monto),new { @style= "font-weight:normal" })
+                                                                    </td>
+                                                                    <td>
+                                                                        @Html.Label("Saldo", @String.Format("{0:N2}", Model.listaPrestamoMaestroEditViewModel[p].saldo), new { @style = "font-weight:normal" })
+                                                                    </td>
+                                                                    <td>
+                                                                        @Model.listaPrestamoMaestroEditViewModel[p].codigoestadoprestamo
+                                                                    </td>
+                                                                    <td>
+                                                                        @Html.Label(Model.listaPrestamoMaestroEditViewModel[p].fechadesembolso.ToShortDateString(), new { @style = "font-weight:normal" })
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="#" onclick="ObtenerInformacionAdicional(@Model.listaPrestamoMaestroEditViewModel[p].id);">Pagar</a>
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <!-- /.col -->
+                                            </div>
+                                            <!-- /.row -->
+                                        </section>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    }
+
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/Scripts/funcionescomunesbusquedatransacciones.js"></script>
+
+    <script type="text/javascript">
+
+        function EventoClickIns() {
+            var radio = document.getElementById("numeroprestamo");
+            document.getElementById("FiltroBusquedaLabel").innerHTML = !radio.checked? "Número Prestamo" : "Identificación Cliente";
+        }
+
+        function SeleccionarTransaccion() {
+            var x = $('input[name=seleccionTransaccion]:checked').val();
+            document.formularioSeleccionTransaccion.submit();
+        }
+
+
+        function ObtenerInformacionAdicional(obj) {
+            
+            $.ajax({
+                type: "POST",
+                url: "@System.Configuration.ConfigurationManager.AppSettings["Url"]/Transaccion/InformacionAdicional",
+                data: {
+                    idPrestamo: obj
+                },
+                success: function (response) {
+                    $('#ListaPrestamos').hide();
+                    $("#PrestamoPagar").show();
+                    $("#PrestamoInformacionAdicional").append(response);
+                },
+                error: function (xhr, textStatus, errorThrown) { alert(errorThrown) },
+                async: false
+            });
+
+        }
+
+
+        //function submitForm() {
+        //    $.ajax({
+        //        type: "POST",
+        //        url: "/Transaccion/SeleccionPrestamo",
+        //        data: {
+        //            seleccionTransaccion: 1
+        //        },
+        //        success: function () {  },
+        //        error: function (xhr, textStatus, errorThrown) { alert(errorThrown) },
+        //        async: false
+        //    });
+        //}
+
+        function ObtenerTransacciones() {
+            $.ajax({
+                type: "GET",
+                url: "@System.Configuration.ConfigurationManager.AppSettings["Url"]/Transaccion/BusquedaTransaccion",
+                contentType: "application/json; charset=utf-8",
+                datatype: "json",
+                success: function (data) {
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal('show');
+                    codigoBusqueda = document.getElementById("codigoTransaccion").value;
+                    CargarDatosTransacciones();
+                },
+                error: function () {
+                    alert("Error al cargar contenido.");
+                }
+            });
+        }
+
+
+    </script>
+}

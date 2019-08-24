@@ -1,0 +1,51 @@
+@{
+	ViewBag.Title = "Index";}
+<h2> ParametrosDesembolsoCredito</h2>
+@(Html.DevExtreme().DataGrid<Entities.Credito.ViewModels.ParametrosDesembolsoCreditoViewModel>()
+	.Columns(columns =>
+	{
+		columns.AddFor(m => m.Idcompania)
+		.Lookup(lookup => lookup
+			.DataSource(d => d.WebApi().Controller("CompaniasWebApi").Key("Id"))
+			.DisplayExpr("Nombre")
+			.ValueExpr("Id")
+			);
+		columns.AddFor(m => m.Idtrasaccionrecogimiento)
+		.Lookup(lookup => lookup
+			.DataSource(d => d.WebApi().Controller("TransaccionWebApi").Key("Id"))
+			.DisplayExpr("Nombre")
+			.ValueExpr("Id")
+			);
+		columns.AddFor(m => m.Idtransaccionorden)
+		.Lookup(lookup => lookup
+			.DataSource(d => d.WebApi().Controller("TransaccionWebApi").Key("Id"))
+			.DisplayExpr("Nombre")
+			.ValueExpr("Id")
+			);
+		columns.AddFor(m => m.Idtransacciondesembolso)
+		.Lookup(lookup => lookup
+			.DataSource(d => d.WebApi().Controller("TransaccionWebApi").Key("Id"))
+			.DisplayExpr("Nombre")
+			.ValueExpr("Id")
+			);
+		columns.AddFor(m => m.Idconceptocxp)
+		.Lookup(lookup => lookup
+			.DataSource(d => d.WebApi().Controller("ConceptosWebApi").Key("Id"))
+			.DisplayExpr("Nombre")
+			.ValueExpr("Id")
+			);
+	})
+	.ColumnHidingEnabled(true)
+	.Editing(e => e
+	.Mode(GridEditMode.Row)
+	.AllowAdding(true)
+	.AllowUpdating(true)
+	.AllowDeleting(true)
+	).DataSource(d => d.WebApi()
+	.Controller("ParametrosDesembolsoCreditoWebApi")
+	.InsertAction(true)
+	.UpdateAction(true)
+	.DeleteAction(true)
+	.Key("Id")
+	)
+)

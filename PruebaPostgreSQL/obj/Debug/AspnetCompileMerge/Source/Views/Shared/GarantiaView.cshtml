@@ -1,0 +1,178 @@
+﻿@model Entities.Credito.ViewModels.Credito_GarantiaViewModel
+
+
+@using (Html.BeginCollectionItem("ListaGarantiasViewModel"))
+{
+    @Html.HiddenFor(model => model.Garantia.Id, @Model.Garantia.Id)
+    @Html.HiddenFor(model => model.Garantia.Idcreditomaestro)
+    @Html.HiddenFor(model => model.GarantiaHipoteca.Id)
+    @Html.HiddenFor(model => model.GarantiaPignoracion.Id)
+    @Html.HiddenFor(model => model.GarantiaHipoteca.Idgarantia)
+    @Html.HiddenFor(model => model.GarantiaPignoracion.Idgarantia)
+    @Html.HiddenFor(model => model.GarantiaHipoteca.Idtercerobieninmueble, new { @id = "idtercerobieninmueble_" + Model.Index.ToString() })
+    @Html.HiddenFor(model => model.GarantiaPignoracion.Idtercerovehiculo, new { @id = "idtercerovehiculo_" + Model.Index.ToString() })
+    @Html.HiddenFor(model => model.Garantia.Idtipogarantia, new { @id = "idtipogarantia_" + Model.Index.ToString() })
+    @Html.HiddenFor(model => model.Garantia.Activo, new { @id = "garantiaactiva_" + Model.Index.ToString() })
+
+
+    <div class="x_title" id="garantia_@Model.Garantia.Id" name="garantia_@Model.Garantia.Id">
+        <div class="form-group">
+
+            <div class="row">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IdBienPersonal, new { @class = "control-label col-md-1 col-sm-1 col-xs-12" })
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+                        @if (Model.Garantia.Id == 0)
+                        {
+                            @Html.DropDownListFor(model => model.IdBienPersonal, Model.BienPersonal, new { @class = "form-control", @onchange = "tipoGarantia(this.value," + Model.Index + ");" })
+                            @Html.ValidationMessageFor(model => model.IdBienPersonal, "", new { @class = "text-danger" })
+                        }
+                        else
+                        {
+                            @Html.TextBoxFor(model => model.BienPersonalDetalle, new { @class = "form-control", @readonly = "true" })
+                        }
+                    </div>
+
+                    @Html.LabelFor(model => model.Garantia.Idtipogarantia, new { @class = "control-label col-md-1 col-sm-1 col-xs-12" })
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+                        @*@if (Model.Garantia.Id == 0)
+                        {
+                            @Html.DropDownListFor(model => model.Garantia.Idtipogarantia, Model.TipoGarantia, new { @class = "form-control", @readonly="true" })
+                            @Html.ValidationMessageFor(model => model.Garantia.Idtipogarantia, "", new { @class = "text-danger" })
+                        }
+                        else
+                        {*@
+                            @Html.TextBoxFor(model => model.TipoGarantiaDetalle, new { id = "tipogarantiadetalle_" + Model.Index, @class = "form-control", @readonly = "true" })
+                        @*}*@
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12" align="right">
+                        <h3>
+                            <a class="close-link" onclick="EliminarGarantia(@Model.Garantia.Id, @Model.Index);" style="cursor:pointer;">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Garantia.Fechaavaluo, new { @class = "control-label col-md-1 col-sm-1 col-xs-12" })
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group">
+                        <div class="input-group date" id="myDatepickerFechaAvaluo_@Model.Index.ToString()">
+                            @Html.TextBox("fechaAvaluo_" + Model.Index.ToString(), Model.Garantia.Fechaavaluo.Date.ToString("dd/MM/yyyy"), new { @class = "form-control" })
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Garantia.Fechaavaluo, "", new { @class = "text-danger" })
+
+                    </div>
+                    @Html.LabelFor(model => model.Garantia.Valoravaluo, new { @class = "control-label col-md-1 col-sm-1 col-xs-12" })
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        @Html.TextBoxFor(model => model.Garantia.Valoravaluo, new { id = "valoravaluo_" + Model.Index, @class = "form-control", @readonly = "true" })
+                        @Html.ValidationMessageFor(model => model.Garantia.Valoravaluo, "", new { @class = "text-danger" })
+                    </div>
+                    @if (Model.InformacionPignoracion || Model.Garantia.Id == 0)
+                    {
+                        <div class="col-md-1 col-sm-1 col-xs-12" id="infoavaluadorlabel_@Model.Index.ToString()">
+                            @Html.LabelFor(model => model.GarantiaPignoracion.Avaluador, new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-12" id="infoavaluador_@Model.Index.ToString()">
+                            @Html.TextBoxFor(model => model.GarantiaPignoracion.Avaluador, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.GarantiaPignoracion.Avaluador, "", new { @class = "text-danger" })
+                        </div>
+                    }
+                </div>
+            </div>
+
+            @if (Model.InformacionHipotecaria || Model.Garantia.Id == 0)
+            {
+                <div id="infohipoteca_@Model.Index.ToString()">
+                    <div class="row">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.GarantiaHipoteca.Nombre, new { @class = "control-label col-md-1 col-sm-1 col-xs-12" })
+                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                @Html.TextBoxFor(model => model.GarantiaHipoteca.Nombre, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.GarantiaHipoteca.Nombre, "", new { @class = "text-danger" })
+                            </div>
+                            @Html.LabelFor(model => model.GarantiaHipoteca.Notaria, new { @class = "control-label col-md-1 col-sm-1 col-xs-12" })
+                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                @Html.TextBoxFor(model => model.GarantiaHipoteca.Notaria, new { @class = "form-control", @onkeypress = "soloNumeros(event)" })
+                                @Html.ValidationMessageFor(model => model.GarantiaHipoteca.Notaria, "", new { @class = "text-danger" })
+                            </div>
+                            @Html.LabelFor(model => model.GarantiaHipoteca.Ciudad, new { @class = "control-label col-md-1 col-sm-1 col-xs-12" })
+                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                @Html.TextBoxFor(model => model.GarantiaHipoteca.Ciudad, new { id = "ciudad_" + Model.Index, @class = "form-control", @readonly = "true" })
+                                @Html.ValidationMessageFor(model => model.GarantiaHipoteca.Ciudad, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.GarantiaHipoteca.Numeroescritura, new { @class = "control-label col-md-1 col-sm-1 col-xs-12" })
+                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                @Html.TextBoxFor(model => model.GarantiaHipoteca.Numeroescritura, new { id = "numeroescritura_" + Model.Index, @class = "form-control", @readonly = "true" })
+                                @Html.ValidationMessageFor(model => model.GarantiaHipoteca.Numeroescritura, "", new { @class = "text-danger" })
+                            </div>
+                            @Html.LabelFor(model => model.GarantiaHipoteca.Matriculainmobiliaria, new { @class = "control-label col-md-1 col-sm-1 col-xs-12" })
+                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                @Html.TextBoxFor(model => model.GarantiaHipoteca.Matriculainmobiliaria, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.GarantiaHipoteca.Matriculainmobiliaria, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (Model.InformacionPignoracion || Model.Garantia.Id == 0)
+            {
+                <div id="infopignoracion_@Model.Index.ToString()">
+                    <div class="row">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.GarantiaPignoracion.Marca, new { @class = "control-label col-md-1 col-sm-1 col-xs-12" })
+                            <div class="col-md-2 col-sm-2 col-xs-12">
+                                @Html.TextBoxFor(model => model.GarantiaPignoracion.Marca, new { id = "marca_" + Model.Index, @class = "form-control", @readonly = "true" })
+                                @Html.ValidationMessageFor(model => model.GarantiaPignoracion.Marca, "", new { @class = "text-danger" })
+                            </div>
+                            @Html.LabelFor(model => model.GarantiaPignoracion.Tipo, new { @class = "control-label col-md-1 col-sm-1 col-xs-12" })
+                            <div class="col-md-2 col-sm-2 col-xs-12">
+                                @Html.TextBoxFor(model => model.GarantiaPignoracion.Tipo, new { id = "tipo_" + Model.Index, @class = "form-control", @readonly = "true" })
+                                @Html.ValidationMessageFor(model => model.GarantiaPignoracion.Tipo, "", new { @class = "text-danger" })
+                            </div>
+                            @Html.LabelFor(model => model.GarantiaPignoracion.Modelo, new { @class = "control-label col-md-1 col-sm-1 col-xs-12" })
+                            <div class="col-md-2 col-sm-2 col-xs-12">
+                                @Html.TextBoxFor(model => model.GarantiaPignoracion.Modelo, new { id = "modelo_" + Model.Index, @class = "form-control", @readonly = "true" })
+                                @Html.ValidationMessageFor(model => model.GarantiaPignoracion.Modelo, "", new { @class = "text-danger" })
+                            </div>
+                            @Html.LabelFor(model => model.GarantiaPignoracion.Placa, new { @class = "control-label col-md-1 col-sm-1 col-xs-12" })
+                            <div class="col-md-2 col-sm-2 col-xs-12">
+                                @Html.TextBoxFor(model => model.GarantiaPignoracion.Placa, new { id = "placa_" + Model.Index, @class = "form-control", @readonly = "true" })
+                                @Html.ValidationMessageFor(model => model.GarantiaPignoracion.Placa, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.GarantiaPignoracion.Privado, new { @class = "control-label col-md-2 col-sm-2 col-xs-12" })
+                            <div class="col-md-1 col-sm-1 col-xs-12">
+                                @Html.CheckBoxFor(model => model.GarantiaPignoracion.Privado, new { @class = "flat check-box" })
+                                @Html.ValidationMessageFor(model => model.GarantiaPignoracion.Privado, "", new { @class = "text-danger" })
+                            </div>
+                            @Html.LabelFor(model => model.GarantiaPignoracion.Seguroriesgo, new { @class = "control-label col-md-2 col-sm-2 col-xs-12" })
+                            <div class="col-md-1 col-sm-1 col-xs-12">
+                                @Html.CheckBoxFor(model => model.GarantiaPignoracion.Seguroriesgo, new { @class = "flat check-box" })
+                                @Html.ValidationMessageFor(model => model.GarantiaPignoracion.Seguroriesgo, "", new { @class = "text-danger" })
+                            </div>
+                            @Html.LabelFor(model => model.GarantiaPignoracion.Exentoseguro, new { @class = "control-label col-md-2 col-sm-2 col-xs-12" })
+                            <div class="col-md-1 col-sm-1 col-xs-12">
+                                @Html.CheckBoxFor(model => model.GarantiaPignoracion.Exentoseguro, new { @class = "flat check-box" })
+                                @Html.ValidationMessageFor(model => model.GarantiaPignoracion.Exentoseguro, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}

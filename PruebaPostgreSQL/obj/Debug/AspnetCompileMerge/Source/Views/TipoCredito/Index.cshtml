@@ -1,0 +1,27 @@
+@{
+	ViewBag.Title = "Index";}
+<h2> TipoCredito</h2>
+@(Html.DevExtreme().DataGrid<Entities.Cartera.ViewModels.TipoCreditoViewModel>()
+	.Columns(columns =>
+	{
+		columns.AddFor(m => m.Nombre);
+		columns.AddFor(m => m.Montoinicial);
+		columns.AddFor(m => m.Montofinal);
+		columns.AddFor(m => m.Plazominimo);
+		columns.AddFor(m => m.Plazomaximo);
+		columns.AddFor(m => m.Esactivo);
+	})
+	.ColumnHidingEnabled(true)
+	.Editing(e => e
+	.Mode(GridEditMode.Row)
+	.AllowAdding(true)
+	.AllowUpdating(true)
+	.AllowDeleting(true)
+	).DataSource(d => d.WebApi()
+	.Controller("TipoCreditoWebApi")
+	.InsertAction(true)
+	.UpdateAction(true)
+	.DeleteAction(true)
+	.Key("Id")
+	)
+)

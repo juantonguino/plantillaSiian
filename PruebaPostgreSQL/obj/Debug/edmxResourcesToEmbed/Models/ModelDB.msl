@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="pruebaModelStoreContainer" CdmEntityContainer="AppDbContext">
+    <EntitySetMapping Name="generales_tipotelefono">
+      <EntityTypeMapping TypeName="pruebaModel.generales_tipotelefono">
+        <MappingFragment StoreEntitySet="generales_tipotelefono">
+          <ScalarProperty Name="codigo" ColumnName="codigo" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="estaactivo" ColumnName="estaactivo" />
+          <ScalarProperty Name="numeroverificador" ColumnName="numeroverificador" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="personas_tipoidentificacion">
+      <EntityTypeMapping TypeName="pruebaModel.personas_tipoidentificacion">
+        <MappingFragment StoreEntitySet="personas_tipoidentificacion">
+          <ScalarProperty Name="codigo" ColumnName="codigo" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="estaactiva" ColumnName="estaactiva" />
+          <ScalarProperty Name="numeroverificador" ColumnName="numeroverificador" />
+          <ScalarProperty Name="requieredigitoverificacion" ColumnName="requieredigitoverificacion" />
+          <ScalarProperty Name="secuencial" ColumnName="secuencial" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

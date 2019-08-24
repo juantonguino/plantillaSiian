@@ -1,0 +1,796 @@
+﻿@model Entities.Terceros.ViewModels.Terceros_TerceroMaestroEditViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<div class="page-title">
+    <div class="title_left">
+        <h3>Form Terceros</h3>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Form Wizards <small>Ingreso de terceros</small></h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="#">Settings 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Settings 2</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <form action="@System.Configuration.ConfigurationManager.AppSettings["Url"]/TerceroMaestro/Create" method="post" class="form-horizontal form-label-left">
+                    @Html.AntiForgeryToken()
+                    <!-- Smart Wizard -->
+                    <p>Ingreso de datos información de terceros.</p>
+                    @Html.HiddenFor(model => model.id)
+                    <div id="wizard" class="form_wizard wizard_horizontal">
+                        <ul class="wizard_steps">
+                            <li>
+                                <a href="#step-1">
+                                    <span class="step_no">1</span>
+                                    <span class="step_descr">
+                                        Step 1<br />
+                                        <small>Datos basicos</small>
+                                    </span>
+                                </a>
+                            </li>
+                            @if (Model.escliente)
+                            {
+                                <li id="WizardInformacionPersonal">
+                                    <a href="#step-2" id="refstep2">
+                                        <span class="step_no">2</span>
+                                        <span class="step_descr">
+                                            Step 2<br />
+                                            <small>Información personal</small>
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#step-3">
+                                        <span class="step_no" id="step3">3</span>
+                                        <span class="step_descr" id="step3name">
+                                            Step 3<br />
+                                            <small>Información contacto</small>
+                                        </span>
+                                    </a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li id="WizardInformacionPersonal" style="display:none;">
+                                    <a href="#step-2" id="refstep2" hidden>
+                                        <span class="step_no">2</span>
+                                        <span class="step_descr">
+                                            Step 2<br />
+                                            <small>Información personal</small>
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#step-3">
+                                        <span class="step_no" id="step3">2</span>
+                                        <span class="step_descr" id="step3name">
+                                            Step 2<br />
+                                            <small>Información contacto</small>
+                                        </span>
+                                    </a>
+                                </li>
+                            }
+
+                        </ul>
+                        <div id="step-1">
+
+                            <div class="form-group">
+                                
+                                <p style="padding: 5px;">
+
+                                    <div class="col-md-1 col-sm-1 col-xs-12 form-group has-feedback">
+                                        @Html.EditorFor(model => model.escliente, new { htmlAttributes = new { @class="flat" } }) Cliente
+                                        @Html.ValidationMessageFor(model => model.escliente, "", new { @class = "text-danger" })
+                                    </div>
+
+                                    <div class="col-md-1 col-sm-1 col-xs-12 form-group has-feedback">
+                                        @Html.EditorFor(model => model.esprovedor, new { htmlAttributes = new { @class = "flat" } }) Proveedor
+                                        @Html.ValidationMessageFor(model => model.esprovedor, "", new { @class = "text-danger" })
+                                    </div>
+                                    
+
+                                    <div class="col-md-1 col-sm-1 col-xs-12 form-group has-feedback">
+                                        @Html.EditorFor(model => model.esempleado, new { htmlAttributes = new { @class = "flat" } }) Empleado
+                                        @Html.ValidationMessageFor(model => model.esempleado, "", new { @class = "text-danger" })
+                                    </div>
+
+                                    <div class="col-md-1 col-sm-1 col-xs-12 form-group has-feedback">
+                                        @Html.EditorFor(model => model.esasociado, new { htmlAttributes = new { @class = "flat" } }) Asociado
+                                        @Html.ValidationMessageFor(model => model.esasociado, "", new { @class = "text-danger" })
+                                    </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                    <label class="control-label has-feedback-left" for="codigotipoidentificacion">
+                                        Tipo identificación <span class="required right">*</span>
+                                    </label>
+                                    @Html.DropDownList("codigotipoidentificacion", null, htmlAttributes: new { @class = "form-control", onchange = "OnChangeEventTipoIdentificacion(this)" })
+                                    @Html.ValidationMessageFor(model => model.codigotipoidentificacion, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div id="DivisionIdentificacionCC">
+                                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left" for="identificacion">
+                                            Nro Identificación <span class="required right">*</span>
+                                        </label>
+                                        @Html.EditorFor(model => model.identificacion, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                                        @Html.ValidationMessageFor(model => model.identificacion, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div id="DivisionIdentificacionNIT" style="display:none">
+                                    <div class="col-md-2 col-sm-2 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left" for="identificacion">
+                                            NIT <span class="required right">*</span>
+                                        </label>
+                                        @Html.EditorFor(model => model.identificacionnit, new { htmlAttributes = new { @class = "form-control", @required = "required", @onkeyup = "OnKeyUpNumeroIdentificacionNIT();" } })
+                                        @Html.ValidationMessageFor(model => model.identificacionnit, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-1 col-sm-1 col-xs-12 form-group">
+                                        <label class="control-label has-feedback-left" for="digitoverificador">
+                                            DV
+                                        </label>
+                                        <input class="form-control" type="text" id="digitoverificador" name="digitoverificador" value="@Model.digitoverificador" readonly style="background-color:lightyellow" />
+
+                                    </div>
+                                </div>                               
+                            </div>
+
+                            <div class="form-group" style="display:none" id="DivisionTipoNIT">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="razonsocial">
+                                    Razón social<span class="required right">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    @Html.EditorFor(model => model.razonsocial, new { htmlAttributes = new { @class = "form-control", style = "text-transform:uppercase" } })
+                                    @Html.ValidationMessageFor(model => model.razonsocial, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div id="DivisionTipoCC">
+                                <div class="form-group">
+                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                        <input type="text" name="apellido1" class="form-control has-feedback-left" id="apellido1" placeholder="1er apellido" value="@Model.apellido1" onkeypress="return soloLetras(event)" style="text-transform:uppercase">
+                                        <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                        @Html.ValidationMessageFor(model => model.apellido1, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                        <input type="text" name="apellido2" class="form-control has-feedback-left" id="apellido2" placeholder="2do apellido" value="@Model.apellido2" onkeypress = "return soloLetras(event)" style="text-transform:uppercase">
+                                        <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                        @Html.ValidationMessageFor(model => model.apellido2, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                        <input type="text" name="nombre1" class="form-control has-feedback-left" id="nombre1" placeholder="1er nombre" value="@Model.nombre1" onkeypress = "return soloLetras(event)" style="text-transform:uppercase">
+                                        <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                        @Html.ValidationMessageFor(model => model.nombre1, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                        <input type="text" name="nombre2" class="form-control has-feedback-left" id="nombre2" placeholder="2do nombre" value="@Model.nombre2" onkeypress = "return soloLetras(event)" style="text-transform:uppercase">
+                                        <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                        @Html.ValidationMessageFor(model => model.nombre2, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                    <label class="control-label has-feedback-left" for="idgenero">
+                                        Genero <span class="required right">*</span>
+                                    </label>
+                                    @Html.DropDownList("idgenero", null, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.idgenero, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                    <label class="control-label has-feedback-left">
+                                        Departamento <span class="required right">*</span>
+                                    </label>
+                                    @Html.DropDownList("iddepartamentoubicacion", null, htmlAttributes: new { @class = "form-control",
+                                           data_cascade_combo = "#municipiosubicacion",
+                                           data_cascade_combo_source = Url.Action("ObtenerMunicipios", "TerceroMaestro"),
+                                           data_cascade_combo_param_name = "id"
+                                       })
+                                    @Html.ValidationMessageFor(model => model.iddepartamentoubicacion, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                    <label class="control-label has-feedback-left">
+                                        Ciudad <span class="required right">*</span>
+                                    </label>
+                                    @Html.DropDownList("idmunicipioubicacion", null, htmlAttributes: new { @class = "form-control", id = "municipiosubicacion" })
+                                    @Html.ValidationMessageFor(model => model.idmunicipioubicacion, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                    <label class="control-label has-feedback-left">
+                                        Barrio/Vereda <span class="required right">*</span>
+                                    </label>
+                                    @Html.DropDownList("idbarriovereda", null, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.idbarriovereda, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-5 col-sm-5 col-xs-12 form-group has-feedback">
+                                    <label class="control-label  has-feedback-left" for="direccion">
+                                        Dirección domicilio <span class="required right">*</span>
+                                    </label>
+                                    @Html.EditorFor(model => model.direccion, new { htmlAttributes = new { @class = "form-control", style = "text-transform:uppercase" } })
+                                    @Html.ValidationMessageFor(model => model.direccion, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="col-md-5 col-sm-5 col-xs-12 form-group has-feedback">
+                                    <label class="control-label  has-feedback-left" for="referenciaubicacion">
+                                        Referencia de ubicación
+                                    </label>
+                                    @Html.EditorFor(model => model.referenciaubicacion, new { htmlAttributes = new { @class = "form-control", style = "text-transform:uppercase" } })
+                                    @Html.ValidationMessageFor(model => model.referenciaubicacion, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="col-md-2 col-sm-2 col-xs-12 form-group has-feedback">
+                                    <label class="control-label  has-feedback-left" for="idestadocivil">
+                                        Permanencia en meses <span class="required right">*</span>
+                                    </label>
+                                    @Html.EditorFor(model => model.tiempopermanenciameses, new { htmlAttributes = new { @class = "form-control", onkeypress = "soloNumeros(event)", min = 0 } })
+                                    @Html.ValidationMessageFor(model => model.tiempopermanenciameses, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                        </div>
+                        <div id="step-2">
+
+                            <div class="form-group">
+                                <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                                    <label class="control-label has-feedback-left">
+                                        Tipo de Cliente <span class="required right">*</span>
+                                    </label>
+                                    @Html.DropDownList("idtipocliente", null, htmlAttributes: new { @class = "form-control", id = "idtipocliente" })
+                                    @Html.ValidationMessageFor(model => model.idtipocliente, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                                    <label class="control-label has-feedback-left">
+                                        Fecha nacimiento <span class="required right">*</span>
+                                    </label>
+                                    <div class='input-group date' id='myDatepickerFechaNacimiento'>
+                                        <input type='text' class="form-control" name="fechanacimiento" value="@Model.fechanacimiento.Date.ToString("dd/MM/yyyy")" />
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.fechanacimiento, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                    <label class="control-label has-feedback-left">
+                                        Departamento nacimiento <span class="required right">*</span>
+                                    </label>
+                                    @Html.DropDownList("iddepartamentonacimiento", null, htmlAttributes: new { @class = "form-control",
+                                           data_cascade_combo = "#municipiosnacimiento",
+                                           data_cascade_combo_source = Url.Action("ObtenerMunicipios", "TerceroMaestro"),
+                                           data_cascade_combo_param_name = "id"
+                                       })
+
+                                    @Html.ValidationMessageFor(model => model.iddepartamentonacimiento, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                    <label class="control-label has-feedback-left">
+                                        Municipio nacimiento <span class="required right">*</span>
+                                    </label>
+                                    @Html.DropDownList("idmunicipionacimiento", null, htmlAttributes: new { @class = "form-control", id = "municipiosnacimiento" })
+                                    @Html.ValidationMessageFor(model => model.idmunicipionacimiento, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                                    <label class="control-label has-feedback-left">
+                                        Fecha expedición <span class="required right">*</span>
+                                    </label>
+                                    <div class='input-group date' id='myDatepickerFechaExpedicion'>
+                                        <input type='text' class="form-control" name="fechaexpedicion" value="@Model.fechaexpedicion.Date.ToString("dd/MM/yyyy")" />
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.fechaexpedicion, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                    <label class="control-label has-feedback-left">
+                                        Departamento expedición <span class="required right">*</span>
+                                    </label>
+                                    @Html.DropDownList("iddepartamentoexpedicion", null, htmlAttributes: new { @class = "form-control",
+                                           data_cascade_combo = "#municipiosexpedicion",
+                                           data_cascade_combo_source = Url.Action("ObtenerMunicipios", "TerceroMaestro"),
+                                           data_cascade_combo_param_name = "id"
+                                       })
+
+                                    @Html.ValidationMessageFor(model => model.iddepartamentonacimiento, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                    <label class="control-label has-feedback-left" for="ciudadexpedicion">
+                                        Ciudad expedición <span class="required right">*</span>
+                                    </label>
+                                    @Html.DropDownList("idciudadexpedicion", null, htmlAttributes: new { @class = "form-control", id = "municipiosexpedicion" })
+                                    @Html.ValidationMessageFor(model => model.idciudadexpedicion, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                    <label class="control-label  has-feedback-left" for="idestadocivil">
+                                        Estado civil <span class="required right">*</span>
+                                    </label>
+                                    @Html.DropDownList("codigoestadocivil", null, htmlAttributes: new { @class = "form-control", onchange = "OnChangeEventEstadoCivil(this)" })
+                                    @Html.ValidationMessageFor(model => model.codigoestadocivil, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                    <label class="control-label  has-feedback-left" for="idestrato">
+                                        Estrato <span class="required right">*</span>
+                                    </label>
+                                    @Html.DropDownList("idestrato", null, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.idestrato, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                    <label class="control-label has-feedback-lef" for="numeropersonasacargo">
+                                        Personas a cargo <span class="required right">*</span>
+                                    </label>
+                                    @Html.EditorFor(model => model.numeropersonasacargo, new { htmlAttributes = new { @class = "form-control", onkeypress = "soloNumeros(event)", min = 0 } })
+                                    @Html.ValidationMessageFor(model => model.numeropersonasacargo, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div id="DivisionConyuge" style="display:none">
+                                <div class="form-group">
+                                    @Html.HiddenFor(model => model.idconyuge)
+                                    @Html.HiddenFor(model => model.idterceromaestroconyuge)
+                                    <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                        <label class="control-label">
+                                            Identificación conyuge
+                                        </label>
+                                        <div class="">
+                                            <div class="btn-group">
+                                                <input class="btn-sm" type="text" id="identificacionconyuge" name="identificacionconyuge" value="@Model.identificacionconyuge">
+                                                <button class="btn btn-sm btn-default" onclick="ObtenerTerceros();" type="button" data-placement="top" data-toggle="tooltip" data-original-title="Buscar"><i class="fa fa-search"></i></button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                        <label class="control-label">
+                                            Nombres conyuge
+                                        </label>
+                                        <input type="text" name="nombreunidoconyuge" class="form-control" id="nombreunidoconyuge" style="background-color:lightyellow;" readonly value="@Model.nombreunidoconyuge">
+                                        @Html.ValidationMessageFor(model => model.nombreunidoconyuge, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                        <label class="control-label">
+                                            Apellidos conyuge
+                                        </label>
+                                        <input type="text" name="apellidounidoconyuge" class="form-control" id="apellidounidoconyuge" style="background-color:lightyellow;" readonly value="@Model.apellidounidoconyuge">
+                                        @Html.ValidationMessageFor(model => model.apellidounidoconyuge, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                    <label class="control-label has-feedback-left">
+                                        Nivel educativo <span class="required right">*</span>
+                                    </label>
+                                    @Html.DropDownList("idniveleducativo", null, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.idniveleducativo, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                    <label class="control-label has-feedback-left">
+                                        Tipo vivienda <span class="required right">*</span>
+                                    </label>
+                                    @Html.DropDownList("codigotipovivienda", null, htmlAttributes: new { @class = "form-control", onChange = "OnChangeEventTipoVivienda(this);" })
+                                    @Html.ValidationMessageFor(model => model.codigotipovivienda, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback" id="DivisionValorArrendo" style="display:none">
+                                    <label class="control-label has-feedback-left">
+                                        Valor arrendo <span class="required right">*</span>
+                                    </label>
+                                    @Html.EditorFor(model => model.valorarriendo, new { htmlAttributes = new { @class = "form-control", onkeyup = "format(this);", onchange = "format(this);" } })
+                                    @Html.ValidationMessageFor(model => model.valorarriendo, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback" id="DivisionValorAnticres" style="display:none">
+                                    <label class="control-label has-feedback-left">
+                                        Valor anticres <span class="required right">*</span>
+                                    </label>
+                                    @Html.EditorFor(model => model.valoranticres, new { htmlAttributes = new { @class = "form-control", onkeyup = "format(this);", onchange = "format(this);" } })
+                                    @Html.ValidationMessageFor(model => model.valoranticres, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                    <label class="control-label has-feedback-left">
+                                        Nombre del propietario
+                                    </label>
+                                    @Html.EditorFor(model => model.nombrepropietario, new { htmlAttributes = new { @class = "form-control", style = "text-transform:uppercase", onkeypress = "return soloLetras(event)" } })
+                                    @Html.ValidationMessageFor(model => model.nombrepropietario, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                    <label class="control-label has-feedback-left">
+                                        Teléfono propietario
+                                    </label>
+                                    @Html.EditorFor(model => model.telefonopropietario, new { htmlAttributes = new { @class = "form-control", onkeypress = "soloNumeros(event)" } })
+                                    @Html.ValidationMessageFor(model => model.telefonopropietario, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                        </div>
+                        <div id="step-3" style="height:100%">
+
+                            <div class="form-group">
+                                <div class="col-md-1 col-sm-1 col-xs-12">
+                                    <div value="+" onclick="AgregarTelefono();" style="cursor:pointer; font-size:18px;">+</div>
+                                </div>
+                                <div class="col-md-11 col-sm-11 col-xs-12">
+                                    <a href="#" id="lstAsesores">
+                                        <i class="icon icon-user-md" style="color:#f0ad4e"></i> Ingreso telefono
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-12 col-sm-12 col-xs-12" id="listaTelefonos" name="listaTelefonos">
+                                    @for(int i=0; i<Model.ListaTelefonoEditViewModel.Count(); i++ )
+                                    {
+                                        { Html.RenderPartial("TelefonoView", Model.ListaTelefonoEditViewModel[i]); }
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-1 col-sm-1 col-xs-12">
+                                    <div value="+" onclick="AgregarEmail();" style="cursor:pointer; font-size:18px;">+</div>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <a href="#" id="lstEmail">
+                                        <i class="icon icon-user-md" style="color:#f0ad4e"></i> Ingreso email
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-12 col-sm-12 col-xs-12" id="listaEmail" name="listaEmail">
+                                    @for (int i = 0; i < Model.ListaEmailEditViewModel.Count(); i++)
+                                    {
+                                        { Html.RenderPartial("EmailView", Model.ListaEmailEditViewModel[i]); }
+                                    }
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!-- End SmartWizard Content -->
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade bs-example-modal-lg" id="myModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Seleccionar Conyuge</h4>
+            </div>
+            <div class="modal-body" id="myModalContent">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="SeleccionarCliente();">Seleccionar</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true" id="modalmsg">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                @if (ViewBag.Guardado == 1)
+                {
+                    <h2><i style="color:darkblue" class="fa fa-info-circle"></i> Información</h2>
+                }
+                else
+                {
+                    <h2><i style="color:orange" class="fa fa-exclamation-circle"></i> Error</h2>
+                    @*<h2><i class="fa fa-warning"></i> Alerta</h2>*@
+                }
+
+            </div>
+            <div class="modal-body">
+                <p id="mensaje">
+                    @Html.ValidationSummary(false)
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+
+        <script src="~/Scripts/funcionescomunesbusquedaterceros.js"></script>
+
+        <script type="text/javascript">
+
+
+        $('#myDatepickerFechaExpedicion').datetimepicker({
+            format: 'DD/MM/YYYY'
+        });
+
+        $('#myDatepickerFechaNacimiento').datetimepicker({
+            format: 'DD/MM/YYYY'
+        });
+
+        function format(input) {
+            var num = input.value.replace(/\./g, '');
+            if (!isNaN(num)) {
+                num = num.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{3})/g, '$1.');
+                num = num.split('').reverse().join('').replace(/^[\.]/, '');
+                input.value = num;
+            }
+            else {
+                input.value = input.value.replace(/[^\d\.]*/g, '');
+            }
+        }
+
+
+        $(document).on('change', '[data-cascade-combo]', function (event) {
+
+            var id = $(this).attr('data-cascade-combo');
+            var url = $(this).attr('data-cascade-combo-source');
+            var paramName = $(this).attr('data-cascade-combo-param-name');
+
+            var data = {};
+            data[paramName] = id;
+
+            $.ajax({
+                url: url,
+                data: {
+                    id: $(this).val()
+                }
+            }).success(function (data) {
+                $(id).html('');
+                $.each(data,
+                    function (index, type) {
+                        var content = '<option value="' + type.Value + '">' + type.Text + '</option>';
+                        $(id).append(content);
+                    });
+            });
+        });
+
+        function SeleccionarCliente() {
+            
+            document.getElementById("idterceromaestroconyuge").value = idtercero;
+            document.getElementById("identificacionconyuge").value = identificaciontercero;
+            document.getElementById("nombreunidoconyuge").value = nombrestercero;
+            document.getElementById("apellidounidoconyuge").value = apellidostercero;
+            
+            $('#myModal').modal('hide');
+        }
+
+
+        function EventoClickIns() {
+            if (document.getElementById("escliente").checked) {
+                document.getElementById("step3").innerHTML = "2";
+                document.getElementById("step3name").innerHTML = "Step 2<br/><small> Información contacto</small>";
+                document.getElementById("WizardInformacionPersonal").style.display = "none";
+                $('#refstep2').attr('hidden',true);
+            } else {
+                document.getElementById("step3").innerHTML = "3";
+                document.getElementById("step3name").innerHTML = "Step 3<br/><small> Información contacto</small>";
+                document.getElementById("WizardInformacionPersonal").style.display = "";
+                $('#refstep2').removeAttr('hidden');
+            }
+        }
+
+        function ObtenerTerceros() {
+            $.ajax({
+                type: "GET",
+                url: "@System.Configuration.ConfigurationManager.AppSettings["Url"]/TerceroMaestro/BusquedaTercero",
+                contentType: "application/json; charset=utf-8",
+                datatype: "json",
+                success: function (data) {
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal('show');
+                    identificacionBusqueda = document.getElementById("identificacionconyuge").value;
+                    CargarDatosTerceros();
+                },
+                error: function () {
+                    alert("Error al cargar contenido.");
+                }
+            });
+        }
+
+        $("#identificacionconyuge").keyup(function () {
+            if (document.getElementById("identificacionconyuge").value == identificaciontercero && idtercero != 0) {
+                //no realiza accion la identificacion no tuvo modificacion
+            }
+            else {
+                idtercero = 0;
+                identificaciontercero = "";
+                document.getElementById("nombreunidoconyuge").value = '';
+                document.getElementById("apellidounidoconyuge").value = '';
+            }
+
+        });
+
+        function OnKeyUpNumeroIdentificacionNIT() {
+            var x = document.getElementById("identificacionnit").value;
+
+            $.ajax({
+                cache: false,
+                async: false,
+                url: "@System.Configuration.ConfigurationManager.AppSettings["Url"]/TerceroMaestro/ObtenerDigitoVerificador",
+                type: "POST",
+                data: { "Identificacion": x },
+                success: function (data) {
+                    document.getElementById("digitoverificador").value = data;
+                },
+                error: function (xhr, status, error) {
+
+                }
+            });
+        }
+
+        function OnChangeEventTipoIdentificacion(obj) {
+            var NIT = document.getElementById("DivisionTipoNIT");
+            var CC = document.getElementById("DivisionTipoCC");
+            var NITDIV = document.getElementById("DivisionIdentificacionNIT");
+            var CCDIV = document.getElementById("DivisionIdentificacionCC");
+
+            CC.style.display = obj.value == 'NIT' ? 'none' : 'block';
+            NIT.style.display = obj.value == 'NIT' ? 'block' : 'none';
+            NITDIV.style.display = obj.value == 'NIT' ? 'block' : 'none';
+            CCDIV.style.display = obj.value == 'NIT' ? 'none' : 'block';
+        }
+
+        function OnChangeEventEstadoCivil(obj) {
+            var CONYUGE = document.getElementById("DivisionConyuge");
+            CONYUGE.style.display = obj.value == 'C' || obj.value == 'UE' ? 'block' : 'none';
+        }
+
+        function OnChangeEventTipoVivienda(obj) {
+            var VALORANTICRES = document.getElementById("DivisionValorAnticres");
+            var VALORARRENDO = document.getElementById("DivisionValorArrendo");
+            VALORANTICRES.style.display = obj.value == 'ANTI' ? 'block' : 'none';
+            VALORARRENDO.style.display = obj.value == 'ARRE' ? 'block' : 'none';
+        }
+
+        function AgregarTelefono() {
+            $.ajax({
+                cache: false,
+                async: false,
+                url: "@System.Configuration.ConfigurationManager.AppSettings["Url"]/TerceroMaestro/TelefonoNuevo",
+                type: "POST",
+                data: { "id": 1 },
+                success: function (response) {
+                    $("#listaTelefonos").append(response);
+                },
+                error: function (xhr, status, error) {
+
+                }
+            });
+        }
+
+        function AgregarEmail() {
+            $.ajax({
+                cache: false,
+                async: false,
+                url: "@System.Configuration.ConfigurationManager.AppSettings["Url"]/TerceroMaestro/EmailNuevo",
+                type: "POST",
+                data: { "id": 1 },
+                success: function (response) {
+                    $("#listaEmail").append(response);
+                },
+                error: function (xhr, status, error) {
+
+                }
+            });
+        }
+
+        function soloLetras(e) {
+            key = e.keyCode || e.which;
+            tecla = String.fromCharCode(key).toLowerCase();
+            letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
+            especiales = "8-37-39-46";
+
+            tecla_especial = false
+            for (var i in especiales) {
+                if (key == especiales[i]) {
+                    tecla_especial = true;
+                    break;
+                }
+            }
+
+            if (letras.indexOf(tecla) == -1 && !tecla_especial) {
+                return false;
+            }
+        }
+
+        //Solo permite introducir números.
+        function soloNumeros(e) {
+            var key = window.event ? e.which : e.keyCode;
+            if (key < 48 || key > 57) {
+                e.preventDefault();
+            }
+        }
+
+        function EliminarTelefono(idTelefono) {
+            $("#telefono_" + idTelefono).remove();
+        }
+
+        function EliminarEmail(idEmail) {
+            $("#email_" + idEmail).remove();
+        }
+
+        $(document).ready(function () {
+            OnChangeEventTipoIdentificacion(document.getElementById("codigotipoidentificacion"));
+            OnChangeEventEstadoCivil(document.getElementById("codigoestadocivil"));
+            OnChangeEventTipoVivienda(document.getElementById("codigotipovivienda"));
+            idtercero = @Model.idconyuge;
+            identificaciontercero = '@Model.identificacionconyuge';
+            nombrestercero = '@Model.nombreunidoconyuge';
+            apellidostercero = '@Model.apellidounidoconyuge';
+
+
+
+            if ('@ViewBag.Guardado' == '1') {
+                document.getElementById("mensaje").innerHTML = "@ViewBag.Mensaje";
+                $('#modalmsg').modal('show');
+            }
+            else if ('@ViewBag.Guardado' == '0') {
+                $('#modalmsg').modal('show');
+            }
+           
+
+        });
+
+        </script>
+    }

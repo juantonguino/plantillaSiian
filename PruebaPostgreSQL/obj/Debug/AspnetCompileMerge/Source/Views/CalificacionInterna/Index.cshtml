@@ -1,0 +1,29 @@
+@{
+    ViewBag.Title = "Index";
+}
+<h2> CalificacionInterna</h2>
+@(Html.DevExtreme().DataGrid<Entities.Cartera.ViewModels.CalificacionInternaViewModel>()
+        .Selection(s => s.Mode(SelectionMode.Single))
+        .HoverStateEnabled(true)
+        .Columns(columns =>
+        {
+            columns.AddFor(m => m.Codigo);
+            columns.AddFor(m => m.Nombre);
+            columns.AddFor(m => m.Diasinicio);
+            columns.AddFor(m => m.Diasfinal);
+            columns.AddFor(m => m.Essuspencioncausacion);
+        })
+        .Editing(e => e
+        .Mode(GridEditMode.Form)
+        .AllowAdding(true)
+        .AllowUpdating(true)
+        .AllowDeleting(true)
+        ).DataSource(d => d.WebApi()
+        .Controller("CalificacionInternaWebApi")
+        .InsertAction(true)
+        .UpdateAction(true)
+        .DeleteAction(true)
+        .Key("Id")
+        )
+)
+

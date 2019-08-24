@@ -1,0 +1,27 @@
+@{
+	ViewBag.Title = "Index";}
+<h2> EstadoContable</h2>
+@(Html.DevExtreme().DataGrid<Entities.Contabilidad.ViewModels.EstadoContableViewModel>()
+	.Columns(columns =>
+	{
+		columns.AddFor(m => m.Nombre);
+		columns.AddFor(m => m.Esanulado);
+		columns.AddFor(m => m.Esaprobado);
+		columns.AddFor(m => m.Esproceso);
+		columns.AddFor(m => m.Esedicion);
+		columns.AddFor(m => m.Esactivo);
+	})
+	.ColumnHidingEnabled(true)
+	.Editing(e => e
+	.Mode(GridEditMode.Row)
+	.AllowAdding(true)
+	.AllowUpdating(true)
+	.AllowDeleting(true)
+	).DataSource(d => d.WebApi()
+	.Controller("EstadoContableWebApi")
+	.InsertAction(true)
+	.UpdateAction(true)
+	.DeleteAction(true)
+	.Key("Id")
+	)
+)

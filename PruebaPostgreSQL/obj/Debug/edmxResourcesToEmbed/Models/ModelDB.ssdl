@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="pruebaModel.Store" Provider="Devart.Data.PostgreSql" ProviderManifestToken="PostgreSQL, 9.1.3" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="generales_tipotelefono">
+    <Key>
+      <PropertyRef Name="codigo" />
+    </Key>
+    <Property Name="codigo" Type="char" MaxLength="2" Nullable="false" />
+    <Property Name="nombre" Type="text" Nullable="false" />
+    <Property Name="estaactivo" Type="bit" MaxLength="1" Nullable="false" />
+    <Property Name="numeroverificador" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="personas_tipoidentificacion">
+    <Key>
+      <PropertyRef Name="secuencial" />
+    </Key>
+    <Property Name="codigo" Type="text" Nullable="false" />
+    <Property Name="nombre" Type="text" Nullable="false" />
+    <Property Name="estaactiva" Type="bit" MaxLength="1" Nullable="false" />
+    <Property Name="numeroverificador" Type="int" Nullable="false" />
+    <Property Name="requieredigitoverificacion" Type="bit" MaxLength="1" Nullable="false" />
+    <Property Name="secuencial" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="pruebaModelStoreContainer">
+    <EntitySet Name="generales_tipotelefono" EntityType="Self.generales_tipotelefono" Schema="public" store:Type="Tables" />
+    <EntitySet Name="personas_tipoidentificacion" EntityType="Self.personas_tipoidentificacion" Schema="public" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

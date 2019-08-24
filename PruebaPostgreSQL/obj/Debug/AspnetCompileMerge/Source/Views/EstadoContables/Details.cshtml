@@ -1,0 +1,66 @@
+﻿@model Entities.Contabilidad.EstadoContable
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>EstadoContable</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.esanulado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.esanulado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.esaprobado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.esaprobado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.esproceso)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.esproceso)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.esedicion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.esedicion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.esactivo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.esactivo)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

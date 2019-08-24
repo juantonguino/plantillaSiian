@@ -1,0 +1,7 @@
+@Html.DevExpress().DocumentViewer(settings => {
+    settings.Name = "PagareViewer";
+    settings.CallbackRouteValues = new { Controller = "Pagare", Action = "PagareViewerPartial" };
+    settings.ExportRouteValues = new { Controller = "Pagare", Action = "PagareViewerPartialExport" };
+    settings.Report = (XtraReport)Model;
+    settings.ToolbarMode = DocumentViewerToolbarMode.StandardToolbar;
+}).GetHtml()

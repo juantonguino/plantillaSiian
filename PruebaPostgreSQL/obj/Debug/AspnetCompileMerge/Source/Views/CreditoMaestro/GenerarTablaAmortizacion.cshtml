@@ -1,0 +1,32 @@
+﻿@model List<Cartera.CuotaConceptosCredito>
+
+<div class="container">
+    <br />
+    <div class="table-responsive">
+        <table id="demoGrid" class="table table-striped jambo_table bulk_action"  width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Cuota</th>
+                    <th>Fecha Inicio</th>
+                    <th>Fecha Fin</th>
+                    <th>Capital</th>
+                    <th>Interes</th>
+                    <th>Otros</th>
+                    <th>Cuota</th>
+                </tr>
+            </thead>
+            @foreach(Cartera.CuotaConceptosCredito item in Model)
+            {
+            <tr>
+                <td>@item.NumeroCuota</td>
+                <td>@item.FechaInicio.ToShortDateString()</td>
+                <td>@item.FechaFin.ToShortDateString()</td>
+                <td>@item.Capital.ToString("N2")</td>
+                <td>@item.Interes.ToString("N2")</td>
+                <td>@item.Otros.ToString("N2")</td>
+                <td>@item.ValorCuota.ToString("N2")</td>
+            </tr>
+            }
+        </table>
+    </div>
+</div>

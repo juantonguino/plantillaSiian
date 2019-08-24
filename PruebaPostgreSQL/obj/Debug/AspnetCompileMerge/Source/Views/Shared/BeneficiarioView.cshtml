@@ -1,0 +1,82 @@
+﻿@model Entities.Credito.ViewModels.Credito_BeneficiarioEditViewModel
+
+
+@using (Html.BeginCollectionItem("ListaCreditoBeneficiarioEditViewModel"))
+{
+<div class="x_title" id="beneficiario_@Model.identificadorbeneficiario" name="beneficiario_@Model.identificadorbeneficiario">
+    @Html.HiddenFor(model => model.id)
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-4 col-sm-4 col-xs-12">
+                <label class="control-label has-feedback-left">
+                    Identificación <span class="required right">*</span>
+                </label>
+                @Html.EditorFor(model => model.identificacion, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.identificacion, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                <label class="control-label has-feedback-left">
+                    Apellido 1 <span class="required right">*</span>
+                </label>
+                <div class="has-feedback-left">
+                    @Html.EditorFor(model => model.apellido1, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.apellido1, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                <label class="control-label has-feedback-left">
+                    Apellido 2 <span class="required right">*</span>
+                </label>
+                <div class="has-feedback-left">
+                    @Html.EditorFor(model => model.apellido2, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.apellido2, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                <label class="control-label has-feedback-left">
+                    Nombre 1 <span class="required right">*</span>
+                </label>
+                @Html.EditorFor(model => model.nombre1, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.nombre1, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                <label class="control-label has-feedback-left">
+                    Nombre 2 <span class="required right">*</span>
+                </label>
+                @Html.EditorFor(model => model.nombre2, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.nombre2, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                <label class="control-label has-feedback-left">
+                    Parentesco <span class="required right">*</span>
+                </label>
+                <div class="has-feedback-left">
+                    @Html.EditorFor(model => model.parentesco, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.parentesco, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2 col-sm-2 col-xs-12 form-group has-feedback">
+                <label class="control-label has-feedback-left">
+                    Porcentaje <span class="required right">*</span>
+                </label>
+                <div class="has-feedback-left">
+                    @Html.EditorFor(model => model.porcentaje, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.porcentaje, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <ul class="nav navbar-right center panel_toolbox">
+        <li>
+            <h3><a onclick="EliminarBeneficiario('@Model.identificadorbeneficiario');" style="cursor:pointer;"><i class="fa fa-trash"></i></a></h3>
+        </li>
+    </ul>
+    <div class="clearfix"></div>
+</div>
+}

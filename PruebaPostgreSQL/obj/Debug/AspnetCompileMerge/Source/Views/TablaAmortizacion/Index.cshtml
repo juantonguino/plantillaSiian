@@ -1,0 +1,35 @@
+﻿@model Credito.TablasAmortizacion
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Tabla de amortizacion</h2>
+@(Html.DevExtreme().DataGrid<Credito.TablasAmortizacion>()
+    .Columns(columns => {
+
+        columns.AddFor(m => m.Id);
+
+        columns.AddFor(m => m.Nombre);
+
+        columns.AddFor(m => m.Escuotafija);
+
+        columns.AddFor(m => m.Escapitalfijo);
+
+        columns.AddFor(m => m.Esfijaentodocredito);
+
+        columns.AddFor(m => m.Escapitalalfinal);
+    })
+    .Editing(e => e
+        .Mode(GridEditMode.Row)
+        .AllowAdding(true)
+        .AllowUpdating(true)
+        .AllowDeleting(true)
+    ).DataSource(d => d.WebApi()
+        .Controller("TablaAmortizacionWebApi")
+        .InsertAction(true)
+        .UpdateAction(true)
+        .DeleteAction(true)
+        .Key("Id")
+    )
+)
+

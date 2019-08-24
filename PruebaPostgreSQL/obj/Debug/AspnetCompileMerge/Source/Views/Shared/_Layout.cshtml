@@ -1,0 +1,353 @@
+﻿@using Microsoft.AspNet.Identity
+
+@if (Request.IsAuthenticated)
+{
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>@ViewBag.Title - SIIAN</title>
+
+
+
+        <!-- Mobile Metas -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <!-- Web Fonts  -->
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">
+        @Styles.Render("~/assets/css")
+        @Scripts.Render("~/bundles/modernizr")
+        @Html.DevExpress().GetStyleSheets(
+           new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+           new StyleSheet { ExtensionSuite = ExtensionSuite.Editors },
+           new StyleSheet { ExtensionSuite = ExtensionSuite.Report }
+       )
+
+        @Styles.Render("~/Content/DevExtremeBundle")
+
+        @Scripts.Render("~/bundles/jquery")
+        @Html.DevExpress().GetScripts(
+            new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+            new Script { ExtensionSuite = ExtensionSuite.Editors },
+            new Script { ExtensionSuite = ExtensionSuite.Report }
+        )
+        @Scripts.Render("~/Scripts/DevExtremeBundle")
+
+    </head>
+    <body class="nav-md">
+        <div class="container body">
+            <div class="main_container">
+                <div class="col-md-3 left_col">
+                    <div class="left_col scroll-view">
+                        <div class="navbar nav_title" style="border: 0;">
+                            <a href="#" class="site_title"><i class="fa fa-pie-chart"></i> <span>SIIAN!</span></a>
+                        </div>
+                        <div class="clearfix"></div>
+                        <!-- menu profile quick info -->
+                        <div class="profile clearfix">
+                            <div class="profile_pic">
+                                <img alt="..." class="img-circle profile_img">
+                            </div>
+                            <div class="profile_info">
+                                <span>Bienvenido,</span>
+                                <h2>
+                                    @if (User.Identity.GetUserName().Contains("@"))
+                                    {
+                                        @User.Identity.GetUserName().Substring(0, User.Identity.GetUserName().IndexOf("@"));
+                                    }
+                                    else
+                                    {
+                                        @User.Identity.GetUserName()
+                                    }
+                                </h2>
+                            </div>
+                        </div>
+                        <!-- search form -->
+                        <form action="/Home/MenuAccionRapida" method="post">
+                            <div class="input-group">
+                                <input type="text" name="q" class="form-control" placeholder="Search...">
+                                <span class="input-group-btn">
+                                    <button type="submit" name="search" id="search-btn" class="btn btn-flat">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </form>
+                        <!-- /menu profile quick info -->
+                        <br />
+                        <!-- sidebar menu -->
+                        <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                            <div class="menu_section">
+                                <h3>Menu General</h3>
+                                <ul class="nav side-menu">
+                                    <li>
+                                        <a href="~/Home/Index"><i class="fa fa-home"></i> Principal</a>
+
+                                    </li>
+                                    <li>
+                                        <a><i class="fa fa-edit"></i> Terceros <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href="#"><text style="color:#f0ad4e">(TR01)</text> Parametros</a></li>
+                                            <li><a href="~/TerceroMaestro/Create"><text style="color:#f0ad4e">(TR02)</text> Ingreso Tercero</a></li>
+                                            <li><a href="~/TerceroMaestro/Index"><text style="color:#f0ad4e">(TR03)</text> Listar Terceros</a></li>
+                                            <li><a href="#"><text style="color:#f0ad4e">(TR04)</text> Informes</a></li>
+
+                                        </ul>
+                                    </li>
+
+                                    <li>
+                                        <a><i class="fa fa-edit"></i> Credito <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href="#">Parametros</a></li>
+                                            <li><a href="~/CreditoMaestro/Index">Solicitud Credito</a></li>
+                                        </ul>
+                                    </li>
+
+                                    <li>
+                                        <a><i class="fa fa-edit"></i> Tesoreria <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href="#">Parametros</a></li>
+                                            <li>
+                                                <a>Cajas<span class="fa fa-chevron-down"></span></a>
+                                                <ul class="nav child_menu">
+                                                    <li><a href="#">Documento</a></li>
+                                                    <li><a href="~/Transaccion/Index">Transacción</a></li>
+                                                </ul>
+                                            </li>
+
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a><i class="fa fa-edit"></i> Contabilidad <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href="~/DocumentoContable/Create">Documento Contable</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a><i class="fa fa-edit"></i> Cartera<span class="fa fa-chevron-down"></span> </a>
+                                        <ul class="nav child_menu">
+                                            <li><a href="~/ConsultaPrestamo/ConsultaPrestamo">Consulta de Prestamos</a></li>
+                                            <li><a href="#">Proceso de Prestamos</a></li>
+                                            <li><a href="~/TransaccionCartera/TransaccionCartera">Transaccion Cartera</a></li>
+                                            <li><a href="~/CierreDia/CierreDia">Cerrar Cartera</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a><i class="fa fa-edit"></i>Cobranzas <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href="#">Castigar prestamos</a></li>
+                                            <li><a href="#">Judicializar prestamo</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a><i class="fa fa-edit"></i>Parametros <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li>
+                                                <a>Credito<span class="fa fa-chevron-down"></span></a>
+                                                <ul class="nav child_menu">
+                                                    <li><a href="~/TablaAmortizacion">Tablas Amortizacion</a></li>
+                                                    <li><a href="~/Transaccion/Index">Transacción</a></li>
+                                                    <li><a href="~/ParametrosDesembolsoCredito">Parametros Desembolso</a></li>
+                                                    <li><a href="~/TipoCredito">Tipo de credito</a></li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a>Cartera<span class="fa fa-chevron-down"></span></a>
+                                                <ul class="nav child_menu">
+                                                    <li><a href="~/Calificacion">Calificacion</a></li>
+                                                    <li><a href="~/CalificacionInterna">Calificacion Interna</a></li>
+                                                    <li><a href="~/DestinoCredito">Destino Credito</a></li>
+                                                    <li><a href="~/EstadoConceptoCredito">Estados Concepto credito</a></li>
+                                                    <li><a href="~/TipoCreditoClienteDestinoTasa">Tipo cliente destino tasa</a></li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a>Contabilidad<span class="fa fa-chevron-down"></span></a>
+                                                <ul class="nav child_menu">
+                                                    <li><a href="~/Mayor">Mayores</a></li>
+                                                    <li><a href="~/Auxiliares">Auxiliares</a></li>
+                                                    <li><a href="~/AuxiliarDetalle">Auxiliar Detalle</a></li>
+                                                    <li><a href="~/EstadoContable">Estados Contables</a></li>
+                                                    <li><a href="~/Moneda">Moneda</a></li>
+                                                    <li><a href="~/Multilibro">Multilibro</a></li>
+                                                    <li><a href="~/TipoCuentaImpuesto">Tipo Cuenta Impuesto</a></li>
+                                                    <li><a href="~/TipoDocumento">Tipos de documentos</a></li>
+                                                    <li><a href="~/TipoTercero">Tipo Tercero saldo</a></li>
+                                                    <li><a href="~/TipoTributo">Tipo Tributo</a></li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a>Generales<span class="fa fa-chevron-down"></span></a>
+                                                <ul class="nav child_menu">
+                                                    <li><a href="#">Documento</a></li>
+                                                    
+                                                    <li><a href="~/Companias/Index">Compañias</a></li>
+                                                    <li><a href="~/Modulo">Modulos</a></li>
+                                                    <li><a href="~/Surcusal">Sucursales</a></li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a>Terceros<span class="fa fa-chevron-down"></span></a>
+                                                <ul class="nav child_menu">
+
+                                                    <li><a href="~/TipoCliente">Tipo Cliente</a></li>
+
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a>Transacciones<span class="fa fa-chevron-down"></span></a>
+                                                <ul class="nav child_menu">
+
+                                                    <li><a href="~/Conceptos">Conceptos</a></li>
+                                                    <li><a href="~/Transaccion/Indexm">Transacción</a></li>
+
+                                                </ul>
+                                            </li>
+
+
+                                        </ul>
+                                    </li>
+
+                                </ul>
+                            </div>
+
+                        </div>
+                        <!-- /sidebar menu -->
+                        <!-- /menu footer buttons -->
+                        <div class="sidebar-footer hidden-small">
+                            <a data-toggle="tooltip" data-placement="top" title="Settings">
+                                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                            </a>
+                            <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+                            </a>
+                            <a data-toggle="tooltip" data-placement="top" title="Lock">
+                                <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+                            </a>
+                            <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
+                                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                            </a>
+                        </div>
+                        <!-- /menu footer buttons -->
+                    </div>
+                </div>
+                <!-- top navigation -->
+                <div class="top_nav navbar-fixed-top">
+                    <div class="nav_menu">
+                        <nav>
+                            <div class="nav toggle">
+                                <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                            </div>
+                            <div class="navbar-left" style="padding-top: 12px">
+                                <button class="btn" title="Seleccionar Cliente" data-toggle="modal" data-target=".bs-example-modal-lg" name="BuscarCliente" id="BuscarCliente" style="display:none;">
+                                    <i class="fa fa-user"></i>
+                                </button>
+                                <button class="btn" title="Guardar" name="GuardarDatos" id="GuardarDatos" style="display: none;">
+                                    <i class="fa fa-save"></i>
+                                </button>
+                                <button class="btn" title="Procesar Etapa" name="ProcesarEtapa" id="ProcesarEtapa" style="display:none;">
+                                    <i class="fa fa-cog"></i>
+                                </button>
+                                <button class="btn" title="Tabla Amortización" name="TablaAmortizacion" id="TablaAmortizacion" style="display:none;">
+                                    <i class="fa fa-book"></i>
+                                </button>
+                                <button class="btn" title="Desembolsar" name="Desembolsar" id="Desembolsar" style="display:none;">
+                                    <i class="glyphicon glyphicon-briefcase"></i>
+                                </button>
+                                <button class="btn" title="Nueva Solicitud" name="NuevaSolicitud" id="NuevaSolicitud" style="display:none;">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </div>
+
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li class="">
+                                        <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                            <img alt="">@User.Identity.GetUserName()
+                                            <span class=" fa fa-angle-down"></span>
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-usermenu pull-right">
+                                            <li><a href="javascript:;"> Profile</a></li>
+                                            <li>
+                                                @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                                                {
+                                                    @Html.AntiForgeryToken();
+                                                    <a href="javascript:document.getElementById('logoutForm').submit()"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                                                }
+
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+
+                        </nav>
+                    </div>
+                </div>
+                <!-- /top navigation -->
+                <!-- page content -->
+                <div class="right_col" role="main">
+                    <!-- top tiles -->
+                    <!-- /top tiles -->
+                    <div class="row" style="margin-top:60px">
+                        @RenderBody()
+                    </div>
+
+                </div>
+                <!-- /page content -->
+                <!-- footer content -->
+                <footer>
+                    <div class="pull-right">
+                        Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+                    </div>
+                    <div class="clearfix"></div>
+                </footer>
+                <!-- /footer content -->
+            </div>
+        </div>
+
+
+        
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
+    </body>
+</html>
+}
+else
+{
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+
+
+
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- Web Fonts  -->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">
+    @Styles.Render("~/assets/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+	@*@Styles.Render("~/Content/DevExtremeBundle")*@
+	
+	@Scripts.Render("~/bundles/jquery")
+	@*@Scripts.Render("~/Scripts/DevExtremeBundle")*@
+
+</head>
+<body class="login">
+    <div>
+        <a class="hiddenanchor" id="signup"></a>
+        <a class="hiddenanchor" id="signin"></a>
+        <div class="login_wrapper">
+            @RenderBody()
+        </div>
+    </div>
+    
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+}

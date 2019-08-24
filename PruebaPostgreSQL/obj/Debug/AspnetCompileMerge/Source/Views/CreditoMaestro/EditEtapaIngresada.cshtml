@@ -1,0 +1,569 @@
+﻿@model Entities.Credito.ViewModels.Credito_CreditoMaestroEditViewModel
+<div class="row">
+    <div class="x_panel panel-primary">
+        <div class="x_title panel-heading">
+            <label>DATOS DEL CLIENTE</label>
+            <ul class="nav navbar-right panel_toolbox" style="min-width:0;">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="form-group">
+                <div class="row">
+                    <input type="hidden" name="idtercero" id="idtercero" value="@Model.idtercero" class="form-control" />
+                    <input type="hidden" name="id" id="id" value="@Model.id" class="form-control" />
+                    <input type="hidden" name="numerosolicitud" id="numerosolicitud" value="@Model.numerosolicitud" class="form-control" />
+                </div>
+                <div class="row">
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <label class="control-label has-feedback-left">Tipo Documento</label>
+
+                        @Html.DropDownListFor(model => model.Cliente.codigotipoidentificacion, Model.Cliente.TipoIdentificacion, htmlAttributes: new { @class = "form-control", @readonly = "true" })
+                        @Html.ValidationMessageFor(model => model.Cliente.codigotipoidentificacion, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <label class="control-label has-feedback-left">No.</label>
+                        <input type="text" name="Cliente.identificacion" id="Cliente.identificacion" value="@Model.Cliente.identificacion" class="form-control" readonly />
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-12 form-group has-feedback">
+                        <label class="control-label has-feedback-left">Fecha de Exp.</label>
+                        <input type="text" name="Cliente.fechaexpedicion" id="Cliente.fechaexpedicion" class="form-control" value="@Model.Cliente.fechaexpedicion.ToString("dd/MM/yyyy")" readonly />
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                        <label class="control-label has-feedback-left">Departamento de Exp.</label>
+                        @Html.DropDownListFor(model => model.Cliente.iddepartamentoexpedicion, Model.Cliente.DepartamentoExpedicion, htmlAttributes: new
+                   {
+                       @class = "form-control",
+                       data_cascade_combo = "#municipiosexpedicion",
+                       data_cascade_combo_source = Url.Action("ObtenerMunicipios", "TerceroMaestro"),
+                       data_cascade_combo_param_name = "id"
+                   })
+                        @Html.ValidationMessageFor(model => model.Cliente.iddepartamentoexpedicion, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                        <label class="control-label has-feedback-left">Ciudad de Exp.</label>
+                        @Html.DropDownListFor(model => model.Cliente.idciudadexpedicion, Model.Cliente.CiudadExpedicion, htmlAttributes: new { @class = "form-control", id = "municipiosexpedicion" })
+                        @Html.ValidationMessageFor(model => model.Cliente.idciudadexpedicion, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                        <label class="control-label has-feedback-left">
+                            1er Apellido:
+                        </label>
+                        <input type="text" name="Cliente.apellido1" id="Cliente.apellido1" value="@Model.Cliente.apellido1" class="form-control" readonly />
+                    </div>
+
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                        <label class="control-label has-feedback-left">
+                            2do Apellido:
+                        </label>
+                        <input type="text" name="Cliente.apellido2" id="Cliente.apellido2" value="@Model.Cliente.apellido2" class="form-control" readonly />
+
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                        <label class="control-label has-feedback-left">
+                            1er Nombre:
+                        </label>
+                        <input type="text" name="Cliente.nombre1" id="Cliente.nombre1" value="@Model.Cliente.nombre1" class="form-control" readonly />
+                    </div>
+
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                        <label class="control-label has-feedback-left">
+                            2do Nombre:
+                        </label>
+                        <input type="text" name="Cliente.nombre2" id="Cliente.nombre2" value="@Model.Cliente.nombre2" class="form-control" readonly />
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                        <label class="control-label has-feedback-left" for="idgenero">
+                            Genero <span class="required right">*</span>
+                        </label>
+                        @Html.DropDownListFor(model => model.Cliente.idgenero, Model.Cliente.Genero, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Cliente.idgenero, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                        <label class="control-label has-feedback-left">
+                            Fecha nacimiento <span class="required right">*</span>
+                        </label>
+                        <input type="text" name="Cliente.fechanacimiento" class="form-control has-feedback-left" data-inputmask="'mask': '99/99/9999'" value="@Model.Cliente.fechanacimiento.Date.ToString("dd/MM/yyyy")" readonly>
+                        <span class="glyphicon glyphicon-calendar form-control-feedback left" aria-hidden="true"></span>
+                        @Html.ValidationMessageFor(model => model.Cliente.fechanacimiento, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                        <label class="control-label has-feedback-left">
+                            Departamento nacimiento
+                        </label>
+                        @Html.DropDownListFor(model => model.Cliente.iddepartamentonacimiento, Model.Cliente.DepartamentoNacimiento, htmlAttributes: new
+                  {
+                      @class = "form-control",
+                      data_cascade_combo = "#municipiosnacimiento",
+                      data_cascade_combo_source = Url.Action("ObtenerMunicipios", "TerceroMaestro"),
+                      data_cascade_combo_param_name = "id"
+                  })
+                        @Html.ValidationMessageFor(model => model.Cliente.iddepartamentonacimiento, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                        <label class="control-label has-feedback-left">
+                            Municipio nacimiento
+                        </label>
+                        @Html.DropDownListFor(model => model.Cliente.idmunicipionacimiento, Model.Cliente.MunicipioNacimiento, htmlAttributes: new { @class = "form-control", id = "municipiosnacimiento" })
+                        @Html.ValidationMessageFor(model => model.Cliente.idmunicipionacimiento, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                        <label class="control-label  has-feedback-left" for="idestadocivil">
+                            Estado civil
+                        </label>
+                        @Html.DropDownListFor(model => model.Cliente.codigoestadocivil, Model.Cliente.EstadoCivil, htmlAttributes: new { @class = "form-control", onchange = "OnChangeEventEstadoCivil(this)" })
+                        @Html.ValidationMessageFor(model => model.Cliente.codigoestadocivil, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                        <label class="control-label  has-feedback-left" for="idestrato">
+                            Estrato
+                        </label>
+                        @Html.DropDownListFor(model => model.Cliente.idestrato, Model.Cliente.Estrato, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Cliente.idestrato, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                        <label class="control-label  has-feedback-left">
+                            No. de personas a cargo
+                        </label>
+                        @Html.EditorFor(model => model.Cliente.numeropersonasacargo, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Cliente.numeropersonasacargo, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                        <label class="control-label  has-feedback-left" for="idniveleducativo">
+                            Nivel Educativo
+                        </label>
+                        @Html.DropDownListFor(model => model.Cliente.idniveleducativo, Model.Cliente.NivelEducativo, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Cliente.idniveleducativo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5 col-sm-5 col-xs-12 form-group has-feedback">
+                        <label class="control-label  has-feedback-left">
+                            Dirección de Domicilio
+                        </label>
+                        @Html.EditorFor(model => model.Cliente.direccion, new { htmlAttributes = new { @class = "form-control", style = "text-transform:uppercase" } })
+                        @Html.ValidationMessageFor(model => model.Cliente.direccion, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-5 col-sm-5 col-xs-12 form-group has-feedback">
+                        <label class="control-label  has-feedback-left">
+                            Referencia ubicación
+                        </label>
+                        @Html.EditorFor(model => model.Cliente.referenciaubicacion, new { htmlAttributes = new { @class = "form-control", style = "text-transform:uppercase" } })
+                        @Html.ValidationMessageFor(model => model.Cliente.referenciaubicacion, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-12 form-group has-feedback">
+                        <label class="control-label  has-feedback-left">
+                            Permanencia en meses
+                        </label>
+                        @Html.EditorFor(model => model.Cliente.tiempopermanenciameses, new { htmlAttributes = new { @class = "form-control", onkeypress = "soloNumeros(event)", min = 0 } })
+                        @Html.ValidationMessageFor(model => model.Cliente.tiempopermanenciameses, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                        <label class="control-label  has-feedback-left">
+                            Correo cliente
+                        </label>
+                        @Html.EditorFor(model => model.Cliente.correocliente, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Cliente.correocliente, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                        <label class="control-label  has-feedback-left">
+                            Telefono cliente
+                        </label>
+                        @Html.EditorFor(model => model.Cliente.telefonocliente, new { htmlAttributes = new { @class = "form-control", onkeypress = "soloNumeros(event)" } })
+                        @Html.ValidationMessageFor(model => model.Cliente.telefonocliente, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                        <label class="control-label  has-feedback-left">
+                            Celular cliente
+                        </label>
+                        @Html.EditorFor(model => model.Cliente.celularcliente, new { htmlAttributes = new { @class = "form-control", onkeypress = "soloNumeros(event)" } })
+                        @Html.ValidationMessageFor(model => model.Cliente.celularcliente, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                        <label class="control-label  has-feedback-left">
+                            Tipo cliente
+                        </label>
+                        @Html.DropDownListFor(model => model.Cliente.idtipocliente, Model.Cliente.TipoCliente, htmlAttributes: new { @class = "form-control", @readonly = "true" })
+                        @Html.ValidationMessageFor(model => model.Cliente.idtipocliente, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                        <label class="control-label has-feedback-left">
+                            Departamento <span class="required right">*</span>
+                        </label>
+                        @Html.DropDownListFor(model => model.Cliente.iddepartamentoubicacion, Model.Cliente.DepartamentoUbicacion, htmlAttributes: new
+                   {
+                       @class = "form-control",
+                       data_cascade_combo = "#municipiosubicacion",
+                       data_cascade_combo_source = Url.Action("ObtenerMunicipios", "TerceroMaestro"),
+                       data_cascade_combo_param_name = "id"
+                   })
+                        @Html.ValidationMessageFor(model => model.Cliente.iddepartamentoubicacion, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                        <label class="control-label has-feedback-left">
+                            Ciudad <span class="required right">*</span>
+                        </label>
+                        @Html.DropDownListFor(model => model.Cliente.idmunicipioubicacion, Model.Cliente.MunicipioUbicacion, htmlAttributes: new { @class = "form-control", id = "municipiosubicacion" })
+                        @Html.ValidationMessageFor(model => model.Cliente.idmunicipioubicacion, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                        <label class="control-label has-feedback-left">
+                            Barrio/Vereda <span class="required right">*</span>
+                        </label>
+                        @Html.DropDownListFor(model => model.Cliente.idbarriovereda, Model.Cliente.BarrioVereda, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Cliente.idbarriovereda, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div id="DatosConyuge">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="x_panel panel-warning">
+                            <div class="x_title panel-heading">
+                                <label>Datos del conyuge o compañero permanente</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        @Html.HiddenFor(model => model.Cliente.idconyuge)
+                        @Html.HiddenFor(model => model.Cliente.idterceromaestroconyuge)
+                        @Html.HiddenFor(model => model.Cliente.nombreunidoconyuge)
+                        @Html.HiddenFor(model => model.Cliente.apellidounidoconyuge)
+                        @Html.HiddenFor(model => model.Conyuge.iddepartamentonacimiento)
+
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                            <label class="control-label">
+                                Identificación conyuge
+                            </label>
+                            <div class="">
+                                <div class="btn-group">
+                                    <input class="btn-sm" type="text" id="Cliente.identificacionconyuge" name="Cliente.identificacionconyuge" value="@Model.Cliente.identificacionconyuge">
+                                    <button class="btn btn-sm btn-default" onclick="ObtenerTerceros();" type="button" data-placement="top" data-toggle="tooltip" data-original-title="Buscar"><i class="fa fa-search"></i></button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                            <label class="control-label has-feedback-left">
+                                Tipo de Documento <span class="required right">*</span>
+                            </label>
+                            @Html.DropDownListFor(model => model.Conyuge.codigotipoidentificacion, Model.Conyuge.TipoIdentificacion, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
+                            @Html.ValidationMessageFor(model => model.Conyuge.idtipoidentificacion, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                            <label class="control-label has-feedback-left">
+                                No. <span class="required right">*</span>
+                            </label>
+                            <input type="text" name="Conyuge.identificacion" id="Conyuge.identificacion" value="@Model.Conyuge.identificacion" class="form-control" readonly />
+                            @Html.ValidationMessageFor(model => model.Conyuge.identificacion, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                            <label class="control-label has-feedback-left">
+                                Fecha nacimiento <span class="required right">*</span>
+                            </label>
+                            <input type="text" name="Conyuge.fechanacimiento" class="form-control has-feedback-left" data-inputmask="'mask': '99/99/9999'" value="@Model.Conyuge.fechanacimiento.Date.ToString("dd/MM/yyyy")" readonly />
+                            <span class="glyphicon glyphicon-calendar form-control-feedback left" aria-hidden="true"></span>
+                            @Html.ValidationMessageFor(model => model.Conyuge.fechanacimiento, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                            <label class="control-label has-feedback-left">
+                                Municipio nacimiento
+                            </label>
+                            @Html.DropDownListFor(model => model.Conyuge.idmunicipionacimiento, Model.Conyuge.MunicipioNacimiento, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
+                            @Html.ValidationMessageFor(model => model.Conyuge.idmunicipionacimiento, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                            <label class="control-label has-feedback-left">
+                                1er Apellido:
+                            </label>
+                            <input type="text" name="Conyuge.apellido1" id="Conyuge.apellido1" value="@Model.Conyuge.apellido1" class="form-control" readonly />
+                        </div>
+
+                        <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                            <label class="control-label has-feedback-left">
+                                2do Apellido:
+                            </label>
+                            <input type="text" name="Conyuge.apellido2" id="Conyuge.apellido2" value="@Model.Conyuge.apellido2" class="form-control" readonly />
+
+                        </div>
+                        <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                            <label class="control-label has-feedback-left">
+                                1er Nombre:
+                            </label>
+                            <input type="text" name="Conyuge.nombre1" id="Conyuge.nombre1" value="@Model.Conyuge.nombre1" class="form-control" readonly />
+                        </div>
+
+                        <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                            <label class="control-label has-feedback-left" for="identificacion">
+                                2do Nombre:
+                            </label>
+                            <input type="text" name="Conyuge.nombre2" id="Conyuge.nombre2" value="@Model.Conyuge.nombre2" class="form-control" readonly />
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="x_panel panel-primary">
+        <div class="x_title panel-heading">
+            <label>DATOS DE SOLICITUD</label>
+            <ul class="nav navbar-right panel_toolbox" style="min-width:0;">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="x_panel panel-warning">
+                        <div class="x_title panel-heading">
+                            <label>Solicitud de crédito</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <p>
+                            TITULAR:
+                            <input type="radio" class="flat" name="estitular" id="titular" value="true" checked="" required />
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <label class="control-label col-md-1 col-sm-1 col-xs-12">SUCURSAL</label>
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+                        @Html.DropDownListFor(model => model.idsucursal, Model.Sucursal, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.idsucursal, "", new { @class = "text-danger" })
+                    </div>
+                    <label class="control-label col-md-1 col-sm-1 col-xs-12">FECHA SOLICITUD</label>
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group">
+                        <div class='input-group date' id='myDatepickerFechaCreacion'>
+                            <input type='text' class="form-control" name="fechacreacion" value="@Model.fechacreacion.Date.ToString("dd/MM/yyyy")" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                            @Html.ValidationMessageFor(model => model.fechacreacion, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <label class="control-label col-md-1 col-sm-1 col-xs-12">TIPO DE SOLICITUD</label>
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+                        @Html.DropDownListFor(model => model.idtiposolicitud, Model.TipoSolicitud, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.idtiposolicitud, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="x_panel panel-warning">
+                        <div class="x_title panel-heading">
+                            <label>Producto solicitado</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Medio de Recepción de la solicitud:</label>
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+                        @Html.DropDownListFor(model => model.idmediopromocion, Model.MedioPromocion, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.idmediopromocion, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Nombre del Asesor:</label>
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+                        @Html.DropDownListFor(model => model.idasesor, Model.Asesor, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.idasesor, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="x_panel panel-warning">
+                        <div class="x_title panel-heading">
+                            <label>Condiciones del crédito</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <label class="control-label col-md-1 col-sm-1 col-xs-12">Monto:</label>
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <input type="text" name="montoinicial" id="montoinicial" class="form-control" value="@Model.montoinicial" onkeypress="soloNumeros(event);" onkeyup="ValidarDestinos();" />
+                        @Html.ValidationMessageFor(model => model.montoinicial, "", new { @class = "text-danger" })
+                    </div>
+                    <label class="control-label col-md-1 col-sm-1 col-xs-12">Producto a Financiar:</label>
+                    <div class="col-md-5 col-sm-5 col-xs-12">
+                        <select class="form-control" id="idtipocreditotasa" name="idtipocreditotasa"></select>
+                        @Html.ValidationMessageFor(model => model.idtipocreditotasa, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="control-label col-md-1 col-sm-1 col-xs-12">Plazo:</label>
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <input type="text" name="numerocuotas" id="numerocuotas" class="form-control" value="@Model.numerocuotas" onkeypress="soloNumeros(event);" />
+                        @Html.ValidationMessageFor(model => model.numerocuotas, "", new { @class = "text-danger" })
+                    </div>
+                    <label class="control-label col-md-1 col-sm-1 col-xs-12">Expectativa de Pago:</label>
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <input type="text" name="expectativapago" id="expectativapago" class="form-control" value="@Model.expectativapago" onkeypress="soloNumeros(event);" />
+                        @Html.ValidationMessageFor(model => model.expectativapago, "", new { @class = "text-danger" })
+                    </div>
+                    <label class="control-label col-md-1 col-sm-1 col-xs-12">Fecha primer Pago:</label>
+                    <div class="col-md-2 col-sm-2 col-xs-12 form-group">
+                        <div class='input-group date' id='myDatepickerFechaPrimerPago'>
+                            <input type='text' class="form-control" name="fechaprimerpago" value="@Model.fechaprimerpago.Date.ToString("dd/MM/yyyy")" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                            @Html.ValidationMessageFor(model => model.fechaprimerpago, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                        @Html.LabelFor(model => model.idfrecuenciapagointeres, "Frecuencia pago interes", htmlAttributes: new { @class = "control-label has-feedback-left" })
+                        @Html.DropDownListFor(model => model.idfrecuenciapagointeres, Model.FrecuenciaPagoInteres, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.idfrecuenciapagointeres, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                        @Html.LabelFor(model => model.idfrecuenciapagocapital, "Frecuencia pago capital", htmlAttributes: new { @class = "control-label has-feedback-left" })
+                        @Html.DropDownListFor(model => model.idfrecuenciapagocapital, Model.FrecuenciaPagoCapital, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.idfrecuenciapagocapital, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="x_panel panel-primary">
+        <div class="x_title panel-heading">
+            <label>REFERENCIAS</label>
+            <ul class="nav navbar-right panel_toolbox" style="min-width:0;">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="form-group">
+                <div class="row">
+                    @Html.Label("Tipo Referencia:", htmlAttributes: new { @class = "control-label col-md-1 col-sm-1 col-xs-12" })
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                        @Html.DropDownList("TipoReferencia", Model.TipoReferencia, htmlAttributes: new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-1 col-sm-1 col-xs-12">
+                        <a data-toggle="tooltip" data-placement="top" title="Agregar Referencia" style="cursor:pointer; font-size:24px;" onclick="AgregarReferencia();">
+                            <i class="fa fa-plus-circle"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12 col-sm-12 col-xs-12" id="listaReferencias" name="listaReferencias">
+                        @foreach (var r in Model.ListaTerceroReferenciaEditViewModel)
+                        {
+                            r.admiteedicion = true;
+                            r.identificadorreferencia = r.id.ToString();
+                            { Html.RenderPartial("~/Views/Shared/ReferenciaView.cshtml", r); }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="x_panel panel-primary">
+        <div class="x_title panel-heading">
+            <label>DATOS DEL NEGOCIO</label>
+            <ul class="nav navbar-right panel_toolbox" style="min-width:0;">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-3 col-sm-3 col-xs-12" style="margin-top:7px;">
+                        <p>
+                            Negocio:
+                            <input type="radio" class="flat" name="esnegocio" id="negocio" value="true" checked required /> Trabajo:
+                            <input type="radio" class="flat" name="esnegocio" id="trabajo" value="false" />
+                        </p>
+                    </div>
+                    <div class="col-md-1 col-sm-1 col-xs-12">
+                        <a data-toggle="tooltip" data-placement="top" title="Agregar Actividad" style="cursor:pointer; font-size:24px;" onclick="AgregarNegocioTrabajo();">
+                            <i class="fa fa-plus-circle"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12 col-sm-12 col-xs-12" id="listaNegociosTrabajos" name="listaNegociosTrabajos">
+                        @foreach (var a in Model.ListaTerceroActividadEditViewModel)
+                        {
+                            a.admiteedicion = true;
+                            a.identificadoractividad = a.id.ToString();
+                            { Html.RenderPartial("~/Views/Shared/ActividadView.cshtml", a); }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

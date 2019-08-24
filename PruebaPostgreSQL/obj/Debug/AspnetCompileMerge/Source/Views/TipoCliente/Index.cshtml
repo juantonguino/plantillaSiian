@@ -1,0 +1,28 @@
+@{
+	ViewBag.Title = "Index";}
+<h2> TipoCliente</h2>
+@(Html.DevExtreme().DataGrid<Entities.Terceros.ViewModels.TipoClienteViewModel>()
+    .Columns(columns =>
+    {
+        columns.AddFor(m => m.Nombre);
+    })
+    .ColumnHidingEnabled(true)
+    .Editing(e => e
+    .Mode(GridEditMode.Row)
+    .AllowAdding(true)
+    .AllowUpdating(true)
+    .AllowDeleting(true)
+    ).DataSource(d => d.WebApi()
+    .Controller("TipoClienteWebApi")
+    .InsertAction(true)
+    .UpdateAction(true)
+    .DeleteAction(true)
+    .Key("Id")
+    )
+    .Pager(pager =>
+    {
+        pager.ShowPageSizeSelector(true);
+        pager.AllowedPageSizes(new List<int> { 5, 10, 20 });
+        pager.ShowInfo(true);
+    })
+)

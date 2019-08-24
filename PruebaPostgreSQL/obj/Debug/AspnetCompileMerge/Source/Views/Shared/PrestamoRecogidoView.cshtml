@@ -1,0 +1,48 @@
+﻿@model Entities.Credito.ViewModels.Credito_PrestamoRecogidoViewModel
+
+
+@using (Html.BeginCollectionItem("ListaPrestamoRecogidoViewModel"))
+{
+<div class="x_title" id="recogimiento_@Model.identificadorprestamorecogido" name="recogimiento_@Model.identificadorprestamorecogido">
+    @Html.HiddenFor(model => model.id)
+    @Html.HiddenFor(model => model.idcredito)
+    @Html.HiddenFor(model => model.idprestamo)
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-3 col-sm-3 col-xs-12">
+                <label class="control-label has-feedback-left">
+                    Número Préstamo <span class="required right">*</span>
+                </label>
+                @Html.EditorFor(model => model.numeroprestamo, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                @Html.ValidationMessageFor(model => model.numeroprestamo, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                <label class="control-label has-feedback-left">
+                    Saldo <span class="required right">*</span>
+                </label>
+                @Html.EditorFor(model => model.saldorecogido, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                @Html.ValidationMessageFor(model => model.saldorecogido, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                <label class="control-label has-feedback-left">
+                    Tipo Reestructuracion <span class="required right">*</span>
+                </label>
+                <div class="has-feedback-left">
+                    @Html.DropDownListFor(model => model.idrestructuracion, Model.Restructuracion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.idrestructuracion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                <ul class="nav navbar-right center panel_toolbox">
+                    <li>
+                        <h3><a class="close-link" onclick="EliminarRecogimiento('@Model.identificadorprestamorecogido',@Model.saldorecogido);" style="cursor:pointer;"><i class="fa fa-trash"></i></a></h3>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+    </div>
+
+</div>
+}

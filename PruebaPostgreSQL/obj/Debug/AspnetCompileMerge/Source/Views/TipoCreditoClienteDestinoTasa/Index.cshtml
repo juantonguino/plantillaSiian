@@ -1,0 +1,43 @@
+@{
+	ViewBag.Title = "Index";}
+<h2> TipoCreditoClienteDestinoTasa</h2>
+@(Html.DevExtreme().DataGrid<Entities.Cartera.ViewModels.TipoCreditoClienteDestinoTasaViewModel>()
+	.Columns(columns =>
+	{
+		columns.AddFor(m => m.Idtipocliente)
+		.Lookup(lookup => lookup
+			.DataSource(d => d.WebApi().Controller("TipoClienteWebApi").Key("Id"))
+			.DisplayExpr("Nombre")
+			.ValueExpr("Id")
+			);
+		columns.AddFor(m => m.Idtipocredito)
+		.Lookup(lookup => lookup
+			.DataSource(d => d.WebApi().Controller("TipoCreditoWebApi").Key("Id"))
+			.DisplayExpr("Nombre")
+			.ValueExpr("Id")
+			);
+		columns.AddFor(m => m.Iddestino)
+		.Lookup(lookup => lookup
+			.DataSource(d => d.WebApi().Controller("DestinoCreditoWebApi").Key("Id"))
+			.DisplayExpr("Nombre")
+			.ValueExpr("Id")
+			);
+		columns.AddFor(m => m.Montoinicial);
+		columns.AddFor(m => m.Montofinal);
+		columns.AddFor(m => m.Tasa);
+		columns.AddFor(m => m.Esactivo);
+	})
+	.ColumnHidingEnabled(true)
+	.Editing(e => e
+	.Mode(GridEditMode.Row)
+	.AllowAdding(true)
+	.AllowUpdating(true)
+	.AllowDeleting(true)
+	).DataSource(d => d.WebApi()
+	.Controller("TipoCreditoClienteDestinoTasaWebApi")
+	.InsertAction(true)
+	.UpdateAction(true)
+	.DeleteAction(true)
+	.Key("Id")
+	)
+)

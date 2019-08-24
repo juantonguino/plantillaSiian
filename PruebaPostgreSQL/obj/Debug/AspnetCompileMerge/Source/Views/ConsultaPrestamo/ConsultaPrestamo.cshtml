@@ -1,0 +1,154 @@
+﻿@model Negocio.Cartera.PrestamoConsultaViewModel
+@{
+    ViewBag.Title = "Consulta";
+}
+
+@using (Html.BeginForm())
+{
+    <!--BEGIN HIDDEN FIELDS-->
+    @Html.HiddenFor(m => m.Comando)
+    @Html.HiddenFor(m => m.IdPrestamoSeleccion)
+    <!--END HIDDEN FIELDS-->
+    <!--BEGIN BUSCAR PERSONA-->
+<div class="panel panel-heading">
+    <button class="btn" title="Informacion Adicional" ><i class="fa fa-home"></i></button>
+    <button class="btn" title="Rubros de Cobro" data-pdsa-action="traerconceptos"><i class="fa fa-save"></i></button>
+    <button class="btn" title="Tabla de amortizacion"><i class="fa fa-money"></i></button>
+</div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+
+        </div>
+        <div class="panel-body">
+            <form class="form-inline">
+                <div class="form-group mb-2">
+                    @Html.LabelFor(m => m.Tercero.Cedula)
+                    @Html.TextBoxFor(m => m.Tercero.Cedula, new { @class = "form-control" })
+                </div>
+                <div class="form-group mx-sm-3 mb-2">
+                    @Html.LabelFor(m => m.Tercero.Nombre)
+                    <label>@Model.Tercero.Nombre</label>
+                </div>
+
+            </form>
+        </div>
+        <div class="panel-footer">
+            <button id="btnBuscarPersona" data-pdsa-action="buscar" class="btn btn-primary mb-2">Buscar</button>
+        </div>
+    </div>
+    <!--END BUSCAR PERSONA-->
+
+    <!--BEGIN TABLA DE PRESTAMOS-->
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h1 class="panel-title">Consulta de prestamos</h1>
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table id="tablaPrestamos" class="table table-striped jambo_table">
+                    <thead>
+                        <tr class="headings">
+                            <th>Numero</th>
+                            <th>Estado</th>
+                            <th>Calificacion</th>
+                            <th>Calificacion Peor</th>
+                            <th>Saldo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model.ListaPrestamos)
+                        {
+                            <tr class="clickable-row" data-value="@item.Id">
+                                <td>@item.Numero</td>
+                                <td>@item.Estado</td>
+                                <td>@item.Calificacion</td>
+                                <td>@item.Calificacionpeor</td>
+                                <td>@item.Saldo</td>
+
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+        <div class="panel-footer">
+
+        </div>
+    </div>
+    <!--END TABLA DE PRESTAMOS-->
+    <!--BEGIN TABLA DE RUBROS-->
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h1 class="panel-title">Rubros</h1>
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-striped jambo_table">
+                    <thead>
+                        <tr>
+                            <th>Cuota</th>
+                            <th>Concepto</th>
+                            <th>Fecha Inicio</th>
+                            <th>Fecha Final</th>
+                            <th>Proyectado</th>
+                            <th>Calculado</th>
+                            <th>Cobrado</th>
+                            <th>Estado</th>
+                            <th>Dias</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(var item in Model.ListaPrestamoConceptoCredito)
+                        {
+                        <tr>
+                            <td>@item.Cuota</td>
+                            <td>@item.Concepto</td>
+                            <td>@item.FechaInicio</td>
+                            <td>@item.FechaVencimiento</td>
+                            <td>@item.ValorProyectado</td>
+                            <td>@item.ValorCalculado</td>
+                            <td>@item.ValorCobrado</td>
+                            <td>@item.Estado</td>
+                            <td>@item.DiasCalculados</td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="panel-footer"></div>
+    </div>
+    <!--END TABLA DE RUBROS-->
+}
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            var table = $('#tablaPrestamos').DataTable();
+            $("[data-pdsa-action]").on("click", function (e) {
+                e.preventDefault();
+                $("#Comando").val($(this).data("pdsa-action"));
+                $("form").submit();
+            });
+            $("[data-value]").on("click", function (e) {
+                e.preventDefault();
+                $("#IdPrestamoSeleccion").val( $(this).data("value"));
+                
+               
+            });
+
+
+            $('#tablaPrestamos tbody').on('click', 'tr', function () {
+                if ($(this).hasClass('selected')) {
+                    $(this).removeClass('selected');
+                }
+                else {
+                    table.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,88 @@
+﻿@model Entities.Terceros.Terceros_Telefono
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Terceros_Telefono</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Terceros_terceromaestro.identificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Terceros_terceromaestro.identificacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.telefono)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.telefono)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.extencion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.extencion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.escontacto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.escontacto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.esfijo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.esfijo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.escelular)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.escelular)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.eswapsap)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.eswapsap)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.esactivo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.esactivo)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

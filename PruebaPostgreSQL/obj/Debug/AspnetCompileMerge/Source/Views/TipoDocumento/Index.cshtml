@@ -1,0 +1,39 @@
+@{
+	ViewBag.Title = "Index";}
+<h2> TipoDocumento</h2>
+@(Html.DevExtreme().DataGrid<Entities.Contabilidad.ViewModels.TipoDocumentoViewModel>()
+	.Columns(columns =>
+	{
+		columns.AddFor(m => m.Codigo);
+		columns.AddFor(m => m.Nombre);
+		columns.AddFor(m => m.Esactivo);
+		columns.AddFor(m => m.Prefijo);
+		columns.AddFor(m => m.Esfacturaventa);
+		columns.AddFor(m => m.Esfacturacompra);
+		columns.AddFor(m => m.Esegreso);
+		columns.AddFor(m => m.Esnotacontable);
+		columns.AddFor(m => m.Esnotadebito);
+		columns.AddFor(m => m.Esnotacredito);
+		columns.AddFor(m => m.Resolucion);
+		columns.AddFor(m => m.Numeroinicial);
+		columns.AddFor(m => m.Numerofinal);
+		columns.AddFor(m => m.Numeroactual);
+		columns.AddFor(m => m.Fecharesolucion);
+		columns.AddFor(m => m.Fechavencimiento);
+		columns.AddFor(m => m.Numeroverificador);
+		columns.AddFor(m => m.Esnumeracionautomatica);
+	})
+	.ColumnHidingEnabled(true)
+	.Editing(e => e
+	.Mode(GridEditMode.Form)
+	.AllowAdding(true)
+	.AllowUpdating(true)
+	.AllowDeleting(true)
+	).DataSource(d => d.WebApi()
+	.Controller("TipoDocumentoWebApi")
+	.InsertAction(true)
+	.UpdateAction(true)
+	.DeleteAction(true)
+	.Key("Id")
+	)
+)

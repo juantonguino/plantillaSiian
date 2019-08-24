@@ -1,0 +1,1150 @@
+﻿@model Entities.Credito.ViewModels.Credito_CreditoMaestroEditViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+<!-- modals -->
+<!-- Large modal -->
+<form name="formularioSeleccionCliente" id="formularioSeleccionCliente" method="post">
+    @Html.AntiForgeryToken()
+    <div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Seleccionar Cliente</h4>
+                </div>
+                <div class="modal-body" id="myModalContent">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary" data-dismiss="modal" id="btnAceptar" onclick="SeleccionarCliente();">Aceptar</button>
+                    <button type="submit" class="btn btn-primary" data-dismiss="modal" id="btnConyugue" onclick="SeleccionarConyugue();">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<div class="clearfix"></div>
+<div>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>
+                    <i class="fa fa-bars"></i>
+                    @if (Model.id != 0)
+                    {
+                        @Model.numerosolicitud
+                    }
+                </h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="#">Settings 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Settings 2</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+
+                @using (Html.BeginForm("Guardar", "CreditoMaestro", FormMethod.Post, new { id = "CreditoForm" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    @Html.HiddenFor(model => model.Cliente.id)
+                    @Html.HiddenFor(model => model.idetapa)
+
+                    <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                        <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+                            <li role="presentation" class="active">
+                                <a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Ingresada</a>
+                            </li>
+                            @if (Model.idetapa == int.Parse(@System.Configuration.ConfigurationManager.AppSettings["Digitacion"]) || Model.idetapa == int.Parse(@System.Configuration.ConfigurationManager.AppSettings["Aprobacion"]))
+                            {
+                                <li role="presentation" class="disabledTab">
+                                    <a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Digitación</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li role="presentation" class="disabledTab" style="visibility:hidden">
+                                    <a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Digitación</a>
+                                </li>
+                            }
+                            @if (Model.idetapa == int.Parse(@System.Configuration.ConfigurationManager.AppSettings["Aprobacion"]))
+                            {
+                                <li role="presentation" class="disabledTab">
+                                    <a href="#tab_content3" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Comite</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li role="presentation" class="disabledTab" style="visibility:hidden">
+                                    <a href="#tab_content3" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Comite</a>
+                                </li>
+                            }
+                        </ul>
+
+                        <div id="myTabContent" class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
+                                @if (Model.idetapa == int.Parse(System.Configuration.ConfigurationManager.AppSettings["Digitacion"]) || Model.idetapa == int.Parse(System.Configuration.ConfigurationManager.AppSettings["Aprobacion"]))
+                                {
+                                    @RenderPage("~/Views/CreditoMaestro/Details.cshtml", Model)
+                                }
+                                else if (Model.idetapa == int.Parse(System.Configuration.ConfigurationManager.AppSettings["Ingresada"]))
+                                {
+                                    if (Model.idtercero != 0)
+                                    {
+                                        @RenderPage("~/Views/CreditoMaestro/EditEtapaIngresada.cshtml", Model)
+                                    }
+                                    else
+                                    {
+                                        <div class="row">
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                <h2>Seleccione un cliente para ingresar los datos de la solicitud</h2>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+
+                            <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
+                                @if (Model.idetapa == int.Parse(System.Configuration.ConfigurationManager.AppSettings["Digitacion"]) || Model.idetapa == int.Parse(System.Configuration.ConfigurationManager.AppSettings["Aprobacion"]))
+                                {
+                                    @RenderPage("~/Views/CreditoMaestro/EditEtapaDigitacion.cshtml", Model)
+                                }
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
+                                @if (Model.idetapa == int.Parse(System.Configuration.ConfigurationManager.AppSettings["Aprobacion"]))
+                                {
+                                    <div class="row">
+                                        <div class="x_panel panel-primary">
+                                            <div class="x_title panel-heading">
+                                                <label>DECISIÓN DE COMITE DE CRÉDITO</label>
+                                                <ul class="nav navbar-right panel_toolbox" style="min-width:0;">
+                                                    <li>
+                                                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                                    </li>
+                                                </ul>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                            <div class="x_content">
+
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        @Html.HiddenFor(model => model.DecisionComiteViewModel.idusuarioautorizaexcepcion)
+                                                        @Html.HiddenFor(model => model.DecisionComiteViewModel.idusuarioregistracomite)
+                                                        <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                                            <label class="control-label has-feedback-left">
+                                                                Existen Creditos en Unidad Familiar
+                                                            </label>
+                                                            <div style="display:block;">
+                                                                @Html.EditorFor(model => model.DecisionComiteViewModel.existencreditosenunidadfamiliar, new { htmlAttributes = new { @class = "flat" } })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                                            <label class="control-label has-feedback-left">
+                                                                Nombre titular <span class="required right">*</span>
+                                                            </label>
+                                                            @Html.EditorFor(model => model.DecisionComiteViewModel.nombretitular, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.DecisionComiteViewModel.nombretitular, "", new { @class = "text-danger" })
+                                                        </div>
+                                                        <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                                            <label class="control-label has-feedback-left">
+                                                                Cédula <span class="required right">*</span>
+                                                            </label>
+                                                            @Html.EditorFor(model => model.DecisionComiteViewModel.identificaciontitular, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.DecisionComiteViewModel.identificaciontitular, "", new { @class = "text-danger" })
+                                                        </div>
+                                                        <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                                            <label class="control-label has-feedback-left">
+                                                                Dias de mora <span class="required right">*</span>
+                                                            </label>
+                                                            @Html.EditorFor(model => model.DecisionComiteViewModel.diasdemora, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.DecisionComiteViewModel.diasdemora, "", new { @class = "text-danger" })
+                                                        </div>
+                                                        <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                                            <label class="control-label has-feedback-left">
+                                                                Monto <span class="required right">*</span>
+                                                            </label>
+                                                            @Html.EditorFor(model => model.DecisionComiteViewModel.monto, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.DecisionComiteViewModel.monto, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                                            <label class="control-label has-feedback-left">
+                                                                Es Familiar de Colaboradores de la Empresa
+                                                            </label>
+                                                            <div style="display:block;">
+                                                                @Html.EditorFor(model => model.DecisionComiteViewModel.esfamiliardecolaboradoresdelaempresa, new { htmlAttributes = new { @class = "flat" } })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                            <label class="control-label has-feedback-left">
+                                                                Nombre Colaborador <span class="required right">*</span>
+                                                            </label>
+                                                            @Html.EditorFor(model => model.DecisionComiteViewModel.nombrecolaborador, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.DecisionComiteViewModel.nombrecolaborador, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                                            <label class="control-label has-feedback-left">
+                                                                Excepciones realizadas
+                                                            </label>
+                                                            <div style="display:block;">
+                                                                @Html.EditorFor(model => model.DecisionComiteViewModel.excepcionesrealizadas, new { htmlAttributes = new { @class = "flat" } })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                                                            <label class="control-label has-feedback-left">
+                                                                Descripción excepciones <span class="required right">*</span>
+                                                            </label>
+                                                            @Html.TextAreaFor(model => model.DecisionComiteViewModel.descripcionexcepciones, new { @class = "form-control" })
+                                                            @Html.ValidationMessageFor(model => model.DecisionComiteViewModel.descripcionexcepciones, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <div class="row">
+                                                            <label class="control-label col-md-1 col-sm-1 col-xs-12">Monto aprobado:</label>
+                                                            <div class="col-md-2 col-sm-2 col-xs-12">
+                                                                @Html.EditorFor(model => model.DecisionComiteViewModel.montoaprobado, new { htmlAttributes = new { @class = "form-control" } })
+                                                                @Html.ValidationMessageFor(model => model.DecisionComiteViewModel.montoaprobado, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <label class="control-label col-md-1 col-sm-1 col-xs-12">Plazo:</label>
+                                                            <div class="col-md-2 col-sm-2 col-xs-12">
+                                                                @Html.EditorFor(model => model.DecisionComiteViewModel.numerocuotas, new { htmlAttributes = new { @class = "form-control" } })
+                                                                @Html.ValidationMessageFor(model => model.DecisionComiteViewModel.numerocuotas, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <div class="row">
+                                                            <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                                                @Html.LabelFor(model => model.DecisionComiteViewModel.idfrecuenciapagointeres, "Frecuencia pago interes", htmlAttributes: new { @class = "control-label has-feedback-left" })
+                                                                @Html.DropDownListFor(model => model.DecisionComiteViewModel.idfrecuenciapagointeres, Model.FrecuenciaPagoInteres, htmlAttributes: new { @class = "form-control" })
+                                                                @Html.ValidationMessageFor(model => model.DecisionComiteViewModel.idfrecuenciapagointeres, "", new { @class = "text-danger" })
+                                                            </div>
+                                                            <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                                                @Html.LabelFor(model => model.DecisionComiteViewModel.idfrecuenciapagocapital, "Frecuencia pago capital", htmlAttributes: new { @class = "control-label has-feedback-left" })
+                                                                @Html.DropDownListFor(model => model.DecisionComiteViewModel.idfrecuenciapagocapital, Model.FrecuenciaPagoCapital, htmlAttributes: new { @class = "form-control" })
+                                                                @Html.ValidationMessageFor(model => model.DecisionComiteViewModel.idfrecuenciapagocapital, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="x_panel panel-primary">
+                                                        <div class="x_title panel-heading">
+                                                            <label>RECOGIMIENTO DE PRESTAMO</label>
+                                                            <ul class="nav navbar-right panel_toolbox" style="min-width:0;">
+                                                                <li>
+                                                                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                                                </li>
+                                                            </ul>
+                                                            <div class="clearfix"></div>
+                                                        </div>
+                                                        <div class="x_content">
+                                                            <div class="form-group">
+                                                                <div class="panel-body">
+                                                                    <div class="row">
+                                                                        <div class="col-md-5 col-sm-5 col-xs-12 form-group has-feedback">
+                                                                            <label class="control-label col-md-5 col-sm-5 col-xs-12">Cedula Titular:</label>
+                                                                            @Html.TextBoxFor(m => m.cedulatitularprestamorecoger, new { @class = "form-control" })
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-md-5 col-sm-5 col-xs-12 form-group has-feedback">
+                                                                            <label class="control-label col-md-5 col-sm-5 col-xs-12">Nombre Titular:</label>
+                                                                            <label id="nombretitularprestamorecoger"></label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="panel-footer">
+                                                                    <button id="btnBuscarPersona" type="button" class="btn btn-primary" onclick="TraerPrestamos();">Buscar</button>
+                                                                </div>
+                                                            </div>
+
+                                                            <!--BEGIN TABLA DE PRESTAMOS-->
+                                                            <div class="panel panel-primary">
+                                                                <div class="panel-heading">
+                                                                    <h1 class="panel-title">Consulta de prestamos</h1>
+                                                                </div>
+                                                                <div class="panel-body">
+                                                                    <div class="table-responsive">
+                                                                        <table id="tablaPrestamos" class="table table-striped jambo_table">
+                                                                            <thead>
+                                                                                <tr class="headings">
+                                                                                    <th style="display:none">Id</th>
+                                                                                    <th>Numero</th>
+                                                                                    <th>Estado</th>
+                                                                                    <th>Calificacion</th>
+                                                                                    <th>Calificacion Peor</th>
+                                                                                    <th>Saldo</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody></tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!--END TABLA DE PRESTAMOS-->
+                                                            <!--BEGIN TABLA DE PRESTAMOS PARA RECOGIMIENTO-->
+                                                            <div class="panel panel-primary">
+                                                                <div class="panel-heading">
+                                                                    <h1 class="panel-title">Lista Recogimiento</h1>
+                                                                </div>
+                                                                <div class="panel-body">
+                                                                    <div class="form-group">
+                                                                        <div class="col-md-12 col-sm-12 col-xs-12" id="listaRecogimientos" name="listaRecogimientos">
+                                                                            @foreach (var r in Model.ListaPrestamoRecogidoViewModel)
+                                                                            {
+                                                                                //r.admiteedicion = true;
+                                                                                r.identificadorprestamorecogido = r.id.ToString();
+                                                                                { Html.RenderPartial("~/Views/Shared/PrestamoRecogidoView.cshtml", r); }
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!--END TABLA DE PRESTAMOS-->
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Confirmar</h4>
+            </div>
+            <div>
+                <p>Está seguro que desea desembolsar esta solicitud?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="modal-btn-si">Si</button>
+                <button type="button" class="btn btn-primary" id="modal-btn-no">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true" id="modalmsg">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                @if (ViewBag.Guardado == 1)
+                {
+                    <h2><i style="color:darkblue" class="fa fa-info-circle"></i> Información</h2>
+                }
+                else
+                {
+                    <h2><i style="color:orange" class="fa fa-exclamation-circle"></i> Error</h2>
+                }
+            </div>
+            <div class="modal-body">
+                <p id="mensaje">
+
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/Scripts/funcionescomunesbusquedaterceros.js"></script>
+    <style type="text/css">
+
+
+        /* Important part */
+        .pagos {
+            overflow-y: initial !important
+        }
+
+        .pagos-body {
+            height: 250px;
+            overflow-y: auto;
+        }
+
+        .disabledTab {
+            /*pointer-events: none;*/
+        }
+
+        .table-scroll {
+            position: relative;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        .table-wrap {
+            width: 100%;
+            overflow: auto;
+        }
+
+        .table-scroll table {
+            width: 100%;
+            margin: auto;
+            border-spacing: 0;
+        }
+
+        .table-scroll th, .table-scroll td {
+            padding: 5px 10px;
+            white-space: nowrap;
+        }
+
+        .texto-vertical-2 {
+            writing-mode: vertical-lr;
+            transform: rotate(180deg);
+            margin-right: 15px;
+        }
+    </style>
+    <script src="~/Scripts/otf.js"></script>
+    <script type="text/javascript">
+
+        var saldoRecogido = 0;
+
+        function AdicionarRecogimiento(idprestamo, saldo) {
+            saldoRecogido = saldoRecogido + saldo;
+
+            $.ajax({
+                cache: false,
+                async: false,
+                url: "@System.Configuration.ConfigurationManager.AppSettings["Url"]/CreditoMaestro/PrestamoRecogidoNuevo",
+                type: "POST",
+                data:
+                {
+                    "idprestamo": idprestamo
+                },
+                success: function (response) {
+                    $("#listaRecogimientos").append(response);
+                },
+                error: function (xhr, status, error) {
+
+                }
+            });
+        }
+
+        function TraerPrestamos() {
+            var cedulatitularprestamorecoger = document.getElementById("cedulatitularprestamorecoger").value;
+             $.ajax({
+                cache: false,
+                dataType: "Json",
+                type: "POST",
+                url: "@System.Configuration.ConfigurationManager.AppSettings["Url"]/CreditoMaestro/PrestamosPorIdentificacionPersona",
+                data:
+                {
+                    "IdentificacionPersona": cedulatitularprestamorecoger
+                },
+                success: function (data) {
+                    $.each(data, function (i, item) {
+                        document.getElementById("nombretitularprestamorecoger").innerHTML = item.NombreTitular;
+                        $("#tablaPrestamos").append("<tr ondblclick='AdicionarRecogimiento(" + item.Id + "," + item.Saldo + ");'><td style='display: none'>" + item.Id + "</td><td>" + item.Numero + "</td><td>" + item.Estado + "</td><td>" + item.Calificacion + "</td><td>" + item.Calificacionpeor + "</td><td>" + item.Saldo + "</td></tr>");
+                    });
+                },
+                error: function () {
+                    alert("Error al consultar prestamos.");
+                }
+            });
+        }
+
+        function ObtenerTerceros() {
+            $.ajax({
+                type: "GET",
+                url: "@System.Configuration.ConfigurationManager.AppSettings["Url"]/TerceroMaestro/BusquedaTercero",
+                contentType: "application/json; charset=utf-8",
+                datatype: "json",
+                success: function (data) {
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal('show');
+                    $("#btnAceptar").css("display", "none");
+                    $("#btnConyugue").css("display", "inline");
+                    document.getElementById("myModalLabel").innerHTML = "Seleccionar Conyuge";
+                    identificacionBusqueda = document.getElementById("Cliente.identificacionconyuge").value;
+                    CargarDatosTerceros();
+                },
+                error: function () {
+                    alert("Error al cargar contenido.");
+                }
+            });
+        }
+
+        $(function () {
+            $(document).on('click', '.borrar', function (event) {
+                event.preventDefault();
+                document.getElementById("ListaCosteoActividadComercialYServicios_" + this.id + "__esactivo").value = false;
+                $(this).closest('tr').hide();
+            });
+        });
+
+        //Solo permite introducir números.
+        function soloNumeros(e) {
+            var key = window.event ? e.which : e.keyCode;
+            if (key < 48 || key > 57) {
+                e.preventDefault();
+            }
+        }
+
+        function CalcularSaldoRecogido() {
+            var items = @Html.Raw(Json.Encode(Model.ListaPrestamoRecogidoViewModel));
+            $.each(items, function (index, value) {
+                saldoRecogido = saldoRecogido + value.saldo;
+            });
+        }
+
+        function RenderDateTimePartialViews() {
+            var items = @Html.Raw(Json.Encode(Model.ListaTerceroBienInmuebleEditViewModel));
+            $.each(items, function (index, value) {
+                $('#myDatepickerFechaDocumento_' + value.identificadorbieninmueble).datetimepicker({
+                    format: 'DD/MM/YYYY'
+                });
+            });
+            var itemsGarantias = @Html.Raw(Json.Encode(Model.ListaGarantiasViewModel));
+            $.each(itemsGarantias, function (index, value) {
+                $('#myDatepickerFechaAvaluo_' + value.Index).datetimepicker({
+                    format: 'DD/MM/YYYY'
+                });
+            });
+        }
+                
+
+        function ValidarDestinos() {
+            var monto = parseFloat(document.getElementById("montoinicial").value);
+            var idtipocliente = parseFloat(document.getElementById("Cliente_idtipocliente").value);
+
+            $('#idtipocreditotasa').empty();
+            var items = @Html.Raw(Json.Encode(Model.ListaTiposCreditoClienteDestino));
+            $('#idtipocreditotasa').append($('<option>').text("Elija una opción").attr('value', null));
+            $.each(items, function (index, value) {
+                if (monto <= value.montofinal && monto >= value.montoinicial && idtipocliente == value.idtipocliente) {
+                    if ('@Model.idtipocreditotasa' == value.id) {
+                        $('#idtipocreditotasa').append($('<option>').text(value.nombre).attr('value', value.id).attr("selected", true));
+                    }
+                    else {
+                        $('#idtipocreditotasa').append($('<option>').text(value.nombre).attr('value', value.id));
+                    }
+                }
+            });
+        }
+
+        $(document).on('change', '[data-cascade-combo]', function (event) {
+            var id = $(this).attr('data-cascade-combo');
+            var url = $(this).attr('data-cascade-combo-source');
+            var paramName = $(this).attr('data-cascade-combo-param-name');
+            var data = {};
+            data[paramName] = id;
+            $.ajax({
+                url: url,
+                data: {
+                    id: $(this).val()
+                }
+            }).success(function (data) {
+                $(id).html('');
+                $.each(data,
+                    function (index, type) {
+                        var content = '<option value="' + type.Value + '">' + type.Text + '</option>';
+                        $(id).append(content);
+                    });
+            });
+        });
+
+        function OnChangeEventEstadoCivil(obj) {
+            var CONYUGE = document.getElementById("DatosConyuge");
+            CONYUGE.style.display = obj.value == 'C' || obj.value == 'UE' ? 'block' : 'none';
+        }
+
+        //Solo permite introducir números.
+        function soloNumeros(e) {
+            var key = window.event ? e.which : e.keyCode;
+            if (key < 48 || key > 57) {
+                e.preventDefault();
+            }
+        }
+
+        var modalConfirm = function (callback) {
+            $("#Desembolsar").on("click", function () {
+                $("#mi-modal").modal('show');
+            });
+
+            $("#modal-btn-si").on("click", function () {
+                callback(true);
+                $("#mi-modal").modal('hide');
+            });
+
+            $("#modal-btn-no").on("click", function () {
+                callback(false);
+                $("#mi-modal").modal('hide');
+            });
+        };
+
+        modalConfirm(function (confirm) {
+            if (confirm) {
+                document.getElementById("CreditoForm").action = "@System.Configuration.ConfigurationManager.AppSettings["Url"]/CreditoMaestro/Desembolsar";
+                document.getElementById("CreditoForm").submit();
+            }
+        });
+
+
+        $("a[rel='pop-up']").click(function () {
+            var caracteristicas = "height=600,width=650,scrollTo,resizable=1,scrollbars=1,location=1";
+            nueva = window.open(this.href, 'popup', caracteristicas);
+
+            return false;
+        });
+
+        function SeleccionarConyugue() {
+            document.getElementById("Cliente_idconyuge").value = idtercero;
+            document.getElementById("Cliente_idterceromaestroconyuge").value = idtercero;
+            document.getElementById("Cliente.identificacionconyuge").value = identificaciontercero;
+            document.getElementById("Cliente.nombreunidoconyuge").value = nombrestercero + ' ' + apellidostercero;
+            document.getElementById("CreditoForm").action = "@System.Configuration.ConfigurationManager.AppSettings["Url"]/CreditoMaestro/Guardar";
+            document.getElementById("CreditoForm").submit();
+        }
+
+        function SeleccionarCliente() {
+            var x = $('input[name=seleccionCliente]:checked').val();
+            document.getElementById("formularioSeleccionCliente").action = "@System.Configuration.ConfigurationManager.AppSettings["Url"]/CreditoMaestro/SeleccionTercero";
+            document.getElementById("formularioSeleccionCliente").submit();
+        }
+
+        $("#GuardarDatos").click(function () {
+            document.getElementById("CreditoForm").action = "@System.Configuration.ConfigurationManager.AppSettings["Url"]/CreditoMaestro/Guardar";
+            document.getElementById("CreditoForm").submit();
+        });
+
+        $("#ProcesarEtapa").click(function () {
+            document.getElementById("CreditoForm").action = "@System.Configuration.ConfigurationManager.AppSettings["Url"]/CreditoMaestro/ProcesarEtapa";
+            document.getElementById("CreditoForm").submit();
+
+        });
+
+
+
+        $("#BuscarCliente").click(function () {
+            $.ajax({
+                type: "GET",
+                url: "@System.Configuration.ConfigurationManager.AppSettings["Url"]/TerceroMaestro/BusquedaTercero",
+                contentType: "application/json; charset=utf-8",
+                datatype: "json",
+                success: function (data) {
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal('show');
+                    $("#btnAceptar").css("display", "inline");
+                    $("#btnConyugue").css("display", "none");
+                    document.getElementById("myModalLabel").innerHTML = "Seleccionar Cliente";
+                    CargarDatosTerceros();
+                },
+                error: function () {
+                    alert("Error al cargar contenido.");
+                }
+            });
+        });
+
+        $("#TablaAmortizacion").click(function () {
+            $.ajax({
+                cache: false,
+                dataType: "Html",
+                type: "POST",
+                url: "@System.Configuration.ConfigurationManager.AppSettings["Url"]/CreditoMaestro/GenerarTablaAmortizacion",
+                data:
+                {
+                    "IdSolicitud": @Model.id
+                },
+                success: function (data) {
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal('show');
+                    $("#btnAceptar").css("display", "none");
+                    $("#btnConyugue").css("display", "none");
+                    document.getElementById("myModalLabel").innerHTML = "Tabla de Amortización";
+                },
+                error: function () {
+                    alert("Error al cargar tabla de amortización.");
+                }
+            });
+        });
+
+        function AgregarReferencia() {
+            var tiporeferencia = document.getElementById("TipoReferencia").value;
+            $.ajax({
+                cache: false,
+                async: false,
+                url: "@System.Configuration.ConfigurationManager.AppSettings["Url"]/CreditoMaestro/ReferenciaNueva",
+                type: "POST",
+                data:
+                {
+                    "IdTipoReferencia": tiporeferencia
+                },
+                success: function (response) {
+                    $("#listaReferencias").append(response);
+                },
+                error: function (xhr, status, error) {
+
+                }
+            });
+        }
+
+        function AgregarNegocioTrabajo() {
+            var esnegocio = document.getElementById("negocio").checked;
+            $.ajax({
+                cache: false,
+                async: false,
+                url: "@System.Configuration.ConfigurationManager.AppSettings["Url"]/CreditoMaestro/ActividadNueva",
+                type: "POST",
+                data:
+                {
+                    "EsNegocio": esnegocio
+                },
+                success: function (response) {
+                    $("#listaNegociosTrabajos").append(response);
+                },
+                error: function (xhr, status, error) {
+
+                }
+            });
+        }
+
+         function AgregarBeneficiario() {
+            $.ajax({
+                cache: false,
+                async: false,
+                url: "@System.Configuration.ConfigurationManager.AppSettings["Url"]/CreditoMaestro/BeneficiarioNuevo",
+                type: "POST",
+                success: function (response) {
+                    $("#listaBeneficiarios").append(response);
+                },
+                error: function (xhr, status, error) {
+
+                }
+            });
+        }
+
+        function AgregarVehiculo() {
+            $.ajax({
+                cache: false,
+                async: false,
+                url: "@System.Configuration.ConfigurationManager.AppSettings["Url"]/CreditoMaestro/VehiculoNuevo",
+                type: "POST",
+                success: function (response) {
+                    $("#listaVehiculos").append(response);
+                },
+                error: function (xhr, status, error) {
+
+                }
+            });
+        }
+
+        // #region Adicionar Vista Parcial Bien Raiz
+        function AgregarBienRaiz() {
+            var identificadorBienInmueble = @DateTime.Now.Ticks.ToString();
+            $.ajax({
+                cache: false,
+                async: false,
+                url: "@System.Configuration.ConfigurationManager.AppSettings["Url"]/CreditoMaestro/BienInmuebleNuevo",
+                type: "POST",
+                data:
+                {
+                    "identificador": identificadorBienInmueble
+                },
+                success: function (response) {
+                    $("#listaBienesRaices").append(response);
+                    $('#myDatepickerFechaDocumento_' + identificadorBienInmueble).datetimepicker({
+                        format: 'DD/MM/YYYY'
+                    });
+                },
+                error: function (xhr, status, error) {
+
+                }
+            });
+        }
+        // #endregion
+
+        var indexGarantia = @Html.Raw(Json.Encode(Model.ListaGarantiasViewModel.Count()));
+        var idcreditoMaestro = @Html.Raw(Json.Encode(Model.id));
+
+        function AgregarGarantia() {
+            $.ajax({
+                cache: false,
+                async: false,
+                url: "@System.Configuration.ConfigurationManager.AppSettings["Url"]/CreditoMaestro/GarantiaNueva",
+                type: "POST",
+                data:
+                {
+                    "indexGarantia": indexGarantia,
+                    "idCreditoMaestro": idcreditoMaestro
+                },
+                success: function (response) {
+                    $("#listaGarantias").append(response);
+                    tipoGarantia(1, indexGarantia);
+                    indexGarantia++;
+                },
+                error: function (xhr, status, error) {
+
+                }
+            });
+        }
+
+        function EliminarBienInmueble(idBienInmueble) {
+            $("#bienInmueble_" + idBienInmueble).remove();
+        }
+
+        function EliminarVehiculo(idVehiculo) {
+            $("#vehiculo_" + idVehiculo).remove();
+        }
+
+        function EliminarBeneficiario(idBeneficiario) {
+            $("#beneficiario_" + idBeneficiario).remove();
+        }
+
+        function EliminarActividad(idActividad) {
+            $("#actividad_" + idActividad).remove();
+        }
+
+        function EliminarReferencia(idReferencia) {
+            $("#referencia_" + idReferencia).remove();
+        }
+
+        function EliminarGarantia(idgarantia, index) {
+            document.getElementById('garantiaactiva_' + index).value = false;
+            $("#garantia_" + idgarantia).remove();
+        }
+        
+        function EliminarRecogimiento(idRecogimiento, saldo) {
+            saldoRecogido = saldoRecogido - saldo;
+            $("#recogimiento_" + idRecogimiento).remove();
+        }
+
+        function tipoGarantia(i, index) {
+            var tipo = @Html.Raw(Json.Encode(Model.ListaTipoGarantia));
+            var bienPersonal = @Html.Raw(Json.Encode(Model.ListaBienPersonalViewModel));
+
+            for (var x = 0; x < bienPersonal.length; x++) {
+                if (bienPersonal[x].Id == i) {
+                    document.getElementById('infohipoteca_' + index).style.display = bienPersonal[x].Informacionhipoteca ? 'inline-block' : 'none';
+                    document.getElementById('infopignoracion_' + index).style.display = bienPersonal[x].Informacionpignoracion ? 'inline-block' : 'none';
+                    document.getElementById('infoavaluadorlabel_' + index).style.display = bienPersonal[x].Informacionpignoracion ? 'inline-block' : 'none';
+                    document.getElementById('infoavaluador_' + index).style.display = bienPersonal[x].Informacionpignoracion ? 'inline-block' : 'none';
+
+                    document.getElementById('idtipogarantia_' + index).value = bienPersonal[x].IdTipoGarantia;
+                    document.getElementById('tipogarantiadetalle_' + index).value = bienPersonal[x].TIpoGarantia;
+                    document.getElementById('valoravaluo_' + index).value = bienPersonal[x].ValorAvaluo;
+
+                    if (bienPersonal[x].Informacionhipoteca) {
+                        document.getElementById('idtercerobieninmueble_' + index).value = bienPersonal[x].Id;
+                        document.getElementById('numeroescritura_' + index).value = bienPersonal[x].NumeroEscritura;
+                        document.getElementById('ciudad_' + index).value = bienPersonal[x].Ciudad;
+                    }
+                    else {
+                        document.getElementById('idtercerovehiculo_' + index).value = bienPersonal[x].Id;
+                        document.getElementById('placa_' + index).value = bienPersonal[x].Placa;
+                        document.getElementById('modelo_' + index).value = bienPersonal[x].Modelo;
+                        document.getElementById('tipo_' + index).value = bienPersonal[x].Tipo;
+                        document.getElementById('marca_' + index).value = bienPersonal[x].Marca;
+                    }
+                }
+            }
+        }
+
+        var indexActividadComercial =  @Html.Raw(Json.Encode(Model.ListaCosteoActividadComercialYServicios.Count()));
+        var indexActividadAgricola =  @Html.Raw(Json.Encode(Model.ListaCosteoActividadProduccionAgricola.Count()));
+
+        function AgregarCosteo() {
+            var idactividad = document.getElementById("actividadtercero").value;
+
+            if (idactividad != 0) {
+                var existeActividadComercialServicios = document.getElementById("detalleCosteoActividadServicios_" + idactividad);
+                var existeActividadProduccionAgricola = document.getElementById("detalleCosteoActividadProduccionAgricola_" + idactividad);
+                
+                if (existeActividadComercialServicios != null || existeActividadProduccionAgricola != null) {
+                    if (existeActividadComercialServicios) {
+                        var visibleActividadServicios = $("#divisionCosteoActividadServicios_" + idactividad).is(":visible");
+                        if (visibleActividadServicios) {
+                            document.getElementById("mensaje").innerHTML = "Ya existe un costeo para esta actividad.";
+                            $('#modalmsg').modal('show');
+                            return;
+                        }
+                        else {
+                            $("#divisionCosteoActividadServicios_" + idactividad).show();
+                            return;
+                        }
+                    }
+                    else {
+                        var visibleActividadProduccionAgricola = $("#divisionCosteoActividadProduccionAgricola_" + idactividad).is(":visible");
+                        if (visibleActividadProduccionAgricola) {
+                            document.getElementById("mensaje").innerHTML = "Ya existe un costeo para esta actividad.";
+                            $('#modalmsg').modal('show');
+                            return;
+                        }
+                        else {
+                            $("#divisionCosteoActividadProduccionAgricola_" + idactividad).show();
+                            return;
+                        }
+                    }
+
+                }
+
+                var nombreactividad = document.getElementById("actividadtercero")[document.getElementById("actividadtercero").selectedIndex].text;
+                var esActividadComercialServicios = document.getElementById("actividadcomercialservicios").checked;
+
+                if (esActividadComercialServicios) {
+                    $("#listaCosteoActividadComercialServicios").append('<div class="form-group" id="divisionCosteoActividadServicios_' + idactividad + '">' +
+                        '<div class="row"><h3><a class="" onclick="EliminarCosteoDetalleActividadServicios(' + idactividad + ');" style="cursor:pointer;"><i class="fa fa-trash"></i></a></h3></div>' +
+                        '<div id="table-scroll" class="table-scroll">' +
+                        '<div class="table-responsive">' +
+                        '<table id="detalleCosteoActividadServicios_' + idactividad + '" class="table table-striped jambo_table bulk_action" style="vertical-align: middle;">' +
+                        '<thead>' +
+                        '<tr class="thead-default">' +
+                        '<td colspan="4">' +
+                        'Costos Actividades Comerciales/Servicios ' + nombreactividad +
+                        '<a data-toggle="tooltip" data-placement="top" title="Agregar Costeo" id="costeo" style="cursor:pointer; font-size:24px;" onclick="AgregarCosteoActividadComercialServicios(' + idactividad + ');">' +
+                        '<i class="fa fa-plus-circle"></i>' +
+                        '</a>' +
+                        '</td>' +
+                        '</tr>' +
+                        '<tr class="headings">' +
+                        '<th>Mercancia/Insumo</th>' +
+                        '<th>Unidad costo</th>' +
+                        '<th>Unidades Vendidas</th>' +
+                        '<th>Costo Unitario</th>' +
+                        '<th>Precio Venta Unitario</th>' +
+                        '<th>Costo Total CxB</th>' +
+                        '<th>Ventas Totales DxB</th>' +
+                        '<th>Costo % E/F</th>' +
+                        '<th></th>' +
+                        '</tr>' +
+                        '</thead>' +
+                        '<tbody>' +
+                        '</tbody>' +
+                        '</table>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>');
+                    AgregarCosteoActividadComercialServicios(idactividad);
+                }
+                else {
+                    $("#listaCosteoActividadProduccionAgricola").append('<div class="form-group" id="divisionCosteoActividadProduccionAgricola_' + idactividad + '">'+
+                        '<div class="row"><h3><a class="" onclick="EliminarCosteoDetalleActividadAgricola(' + idactividad + ');" style="cursor:pointer;"><i class="fa fa-trash"></i></a></h3></div>' +
+                        '<div id="table-scroll" class="table-scroll">' +
+                            '<div class="table-responsive">' +
+                            '<table id="detalleCosteoActividadProduccionAgricola_' + idactividad + '" class="table table-striped jambo_table bulk_action" style="vertical-align: middle;">' +
+                        '<thead>'+
+                        '<tr class="thead-default">'+
+                            '<td colspan="4">' +
+                            'Costos Actividades Producción/Agricolas/Pecuarias/Servicios ' + nombreactividad +
+                            '<a data-toggle="tooltip" data-placement="top" title="Agregar Costeo" id="costeo" style="cursor:pointer; font-size:24px;" onclick="AgregarCosteoActividadProduccionAgricola(' + idactividad + ');">' +
+                        '<i class="fa fa-plus-circle"></i>'+
+                        '</a>'+
+                        '</td>'+
+                        '</tr>'+
+                        '<tr class="headings">'+
+                        '<th>Insumos/Materia Prima</th>'+
+                        '<th>Unidad costo</th>'+
+                        '<th>Frecuencia compra</th>'+
+                        '<th>Unidades Utilizadas</th>'+
+                        '<th>Costo Unitario</th>'+
+                        '<th>Costo Total C x D</th>'+
+                        '<th></th>'+
+                        '</tr>'+
+                        '</thead>'+
+                        '<tbody>'+
+                        '</tbody>'+
+                        '</table>'+
+                        '</div>'+
+                        '</div>'+
+                        '</div>');
+                    AgregarCosteoActividadProduccionAgricola(idactividad);
+                }
+            }
+            else {
+                document.getElementById("mensaje").innerHTML = "Seleccione una actividad";
+                $('#modalmsg').modal('show');
+            }
+        }
+
+        function AgregarCosteoActividadComercialServicios(obj) {
+            $('#detalleCosteoActividadServicios_' + obj).append('<tr class="even pointer">'
+                + '<input type = "hidden" name = "ListaCosteoActividadComercialYServicios[' + indexActividadComercial + '].id" value = "0" />'
+                + '<input type="hidden" id="ListaCosteoActividadComercialYServicios_' + indexActividadComercial + '__idterceroactividad"  name="ListaCosteoActividadComercialYServicios[' + indexActividadComercial + '].idterceroactividad" value="' + obj + '" />'
+                + '<input type = "hidden" id = "ListaCosteoActividadComercialYServicios_' + indexActividadComercial + '__esactivo"  name = "ListaCosteoActividadComercialYServicios[' + indexActividadComercial + '].esactivo" value = "true" />'
+                + '<td> <input type="text" class="form-control" id="ListaCosteoActividadComercialYServicios_' + indexActividadComercial + '__mercanciainsumo" name="ListaCosteoActividadComercialYServicios[' + indexActividadComercial + '].mercanciainsumo" /></td > '
+                + '<td><input type="text" class="form-control" id="ListaCosteoActividadComercialYServicios_' + indexActividadComercial + '__unidadcosto" name="ListaCosteoActividadComercialYServicios[' + indexActividadComercial + '].unidadcosto" /></td>'
+                + '<td><input type="text" class="form-control" id="ListaCosteoActividadComercialYServicios_' + indexActividadComercial + '__unidadesvendidas" name="ListaCosteoActividadComercialYServicios[' + indexActividadComercial + '].unidadesvendidas" onkeyup = "CalcularTotalesActividadComercial(' + indexActividadComercial +')" /></td>'
+                + '<td><input type="text" class="form-control" id="ListaCosteoActividadComercialYServicios_' + indexActividadComercial + '__costounitario" name="ListaCosteoActividadComercialYServicios[' + indexActividadComercial + '].costounitario" onkeyup = "CalcularTotalesActividadComercial(' + indexActividadComercial +')" /></td>'
+                + '<td><input type="text" class="form-control" id="ListaCosteoActividadComercialYServicios_' + indexActividadComercial + '__precioventaunitario" name="ListaCosteoActividadComercialYServicios[' + indexActividadComercial + '].precioventaunitario" onkeyup = "CalcularTotalesActividadComercial(' + indexActividadComercial +')" /></td>'
+                + '<td><input type="text" class="form-control" id="ListaCosteoActividadComercialYServicios_' + indexActividadComercial + '__costototal" name="ListaCosteoActividadComercialYServicios[' + indexActividadComercial + '].costototal" readonly /></td>'
+                + '<td><input type="text" class="form-control" id="ListaCosteoActividadComercialYServicios_' + indexActividadComercial + '__ventastotales" name="ListaCosteoActividadComercialYServicios[' + indexActividadComercial + '].ventastotales" readonly /></td>'
+                + '<td><input type="text" class="form-control" id="ListaCosteoActividadComercialYServicios_' + indexActividadComercial + '__costoporcentaje" name="ListaCosteoActividadComercialYServicios[' + indexActividadComercial + '].costoporcentaje" readonly /></td>'
+                + '<td> <a class="borrar" data-toggle="tooltip" data-placement="top" title="Eliminar Item Costeo" id="' + indexActividadComercial+'" style="cursor:pointer; font-size:24px;"><i class= "fa fa-minus-circle" ></i></a></td></tr>');
+            indexActividadComercial++;
+        }
+
+        function AgregarCosteoActividadProduccionAgricola(obj) {
+            var frecuenciasCompra = @Html.Raw(Json.Encode(Model.ListaFrecuenciasCompra));
+
+            var html = '';
+            html = '<tr class="even pointer">'
+                + '<input type = "hidden" name = "ListaCosteoActividadProduccionAgricola[' + indexActividadAgricola + '].id" value = "0" />'
+                + '<input type="hidden" id="ListaCosteoActividadProduccionAgricola_' + indexActividadAgricola + '__idterceroactividad"  name="ListaCosteoActividadProduccionAgricola[' + indexActividadAgricola + '].idterceroactividad" value="' + obj + '" />'
+                + '<input type = "hidden" id = "ListaCosteoActividadProduccionAgricola_' + indexActividadAgricola + '__esactivo"  name = "ListaCosteoActividadProduccionAgricola[' + indexActividadAgricola + '].esactivo" value = "true" />'
+                + '<td><input type="text" class="form-control" id="ListaCosteoActividadProduccionAgricola_' + indexActividadAgricola + '__insumomateriaprima" name="ListaCosteoActividadProduccionAgricola[' + indexActividadAgricola + '].insumomateriaprima" /></td > '
+                + '<td><input type="text" class="form-control" id="ListaCosteoActividadProduccionAgricola_' + indexActividadAgricola + '__unidadcosto" name="ListaCosteoActividadProduccionAgricola[' + indexActividadAgricola + '].unidadcosto" /></td>'
+                + '<td><select data-val="true" data-val-required="El campo Frecuencia Compra es obligatorio." id = "ListaCosteoActividadProduccionAgricola_' + indexActividadAgricola + '__idfrecuenciacompra" name = "ListaCosteoActividadProduccionAgricola[' + indexActividadAgricola + '].idfrecuenciacompra" class="form-control" >';
+            for (var i = 0; i < frecuenciasCompra.length; i++) {
+                html = html + '<option value="' + frecuenciasCompra[i].Value + '">' + frecuenciasCompra[i].Text + '</option > ';
+            }
+            html = html + '</select></td>'
+
+            html = html + '<td><input type="text" class="form-control" id="ListaCosteoActividadProduccionAgricola_' + indexActividadAgricola + '__unidadesutilizadas" name="ListaCosteoActividadProduccionAgricola[' + indexActividadAgricola + '].unidadesutilizadas" onkeup="CalcularTotalesActividadAgricola(' + indexActividadAgricola + ');" /></td>'
+                + '<td><input type="text" class="form-control" id="ListaCosteoActividadProduccionAgricola_' + indexActividadAgricola + '__costounitario" name="ListaCosteoActividadProduccionAgricola[' + indexActividadAgricola + '].costounitario" onkeup="CalcularTotalesActividadAgricola(' + indexActividadAgricola + ');" /></td>'
+                + '<td><input type="text" class="form-control" id="ListaCosteoActividadProduccionAgricola_' + indexActividadAgricola + '__costototal" name="ListaCosteoActividadProduccionAgricola[' + indexActividadAgricola + '].costototal" readonly /></td>'
+                + '<td> <a class="borrar" data-toggle="tooltip" data-placement="top" title="Eliminar Item Costeo" id="' + indexActividadAgricola + '" style="cursor:pointer; font-size:24px;"><i class= "fa fa-minus-circle" ></i></a></td></tr>';
+
+            $('#detalleCosteoActividadProduccionAgricola_' + obj).append(html);
+            indexActividadAgricola++;
+        }
+
+        function EliminarCosteoDetalleActividadServicios(obj) {
+            $('#detalleCosteoActividadServicios_' + obj + ' tbody tr').each(function () {
+                $(this).children("input").each(function (index2) {
+                    switch (index2) {
+                        case 2:
+                            $(this).closest('tr').hide();
+                            $(this)[0].value = "false";
+                         break;
+                    }
+                });
+            });
+            $("#divisionCosteoActividadServicios_" + obj).hide();
+        }
+
+        function EliminarCosteoDetalleActividadAgricola(obj) {
+            $('#detalleCosteoActividadProduccionAgricola_' + obj + ' tbody tr').each(function () {
+                $(this).children("input").each(function (index2) {
+                    switch (index2) {
+                        case 2:
+                            $(this).closest('tr').hide();
+                            $(this)[0].value = "false";
+                            break;
+                    }
+                });
+            });
+            $("#divisionCosteoActividadProduccionAgricola_" + obj).hide();
+        }
+
+        function CalcularTotalesActividadAgricola(p) {
+            var D = document.getElementById('ListaCosteoActividadProduccionAgricola_' + p + '__costounitario').value;
+            var C = document.getElementById('ListaCosteoActividadProduccionAgricola_' + p + '__unidadesutilizadas').value;
+            var E = C * D;
+            document.getElementById('ListaCosteoActividadProduccionAgricola_' + p + '__costototal').value = E;            
+        }
+
+        function CalcularTotalesActividadComercial(p) {
+            var D = document.getElementById('ListaCosteoActividadComercialYServicios_' + p + '__precioventaunitario').value;
+            var B = document.getElementById('ListaCosteoActividadComercialYServicios_' + p + '__unidadesvendidas').value;
+            var C = document.getElementById('ListaCosteoActividadComercialYServicios_' + p + '__costounitario').value;
+            var E = C * B;
+            var F = D * B;
+            var G = E / F;
+            document.getElementById('ListaCosteoActividadComercialYServicios_' + p + '__costototal').value = E;
+            document.getElementById('ListaCosteoActividadComercialYServicios_' + p + '__ventastotales').value = F;
+            document.getElementById('ListaCosteoActividadComercialYServicios_' + p + '__costoporcentaje').value = G;
+        }
+
+
+        $(document).ready(function () {
+
+            if (@Model.Cliente.id != 0)
+            {
+                document.getElementById('GuardarDatos').style.display = 'inline-block';
+                if (@Model.id != 0) {
+                    document.getElementById('ProcesarEtapa').style.display = 'inline-block';
+                    document.getElementById('TablaAmortizacion').style.display = 'inline-block';
+                    if (@Model.idetapa == parseInt(@System.Configuration.ConfigurationManager.AppSettings["Aprobacion"]))
+                    {
+                        document.getElementById('ProcesarEtapa').style.display = 'none';
+                        document.getElementById('Desembolsar').style.display = 'inline-block';
+                    }
+                }
+            }
+
+            document.getElementById('BuscarCliente').style.display = 'inline-block';
+
+            if (@Model.idtercero != 0) {
+                $('#myDatepickerFechaCreacion').datetimepicker({
+                    format: 'DD/MM/YYYY'
+                });
+
+                $('#myDatepickerFechaPrimerPago').datetimepicker({
+                    format: 'DD/MM/YYYY'
+                });
+
+                OnChangeEventEstadoCivil(document.getElementById("Cliente_codigoestadocivil"));
+                ValidarDestinos();
+                RenderDateTimePartialViews();
+                CalcularSaldoRecogido();
+            }
+
+
+            if ('@ViewBag.Guardado' != '') {
+                document.getElementById("mensaje").innerHTML = "@ViewBag.Mensaje";
+                $('#modalmsg').modal('show');
+            }
+
+        });
+
+    </script>
+}

@@ -1,0 +1,478 @@
+﻿@model Entities.Credito.ViewModels.Credito_CreditoMaestroEditViewModel
+
+<div class="row">
+    <div class="x_panel panel-primary">
+        <div class="x_title panel-heading">
+            <label>BENEFICIARIOS</label>
+            <ul class="nav navbar-right panel_toolbox" style="min-width:0;">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-1 col-sm-1 col-xs-12">
+                        <a data-toggle="tooltip" data-placement="top" title="Agregar Beneficiario" style="cursor:pointer; font-size:24px;" onclick="AgregarBeneficiario();">
+                            <i class="fa fa-plus-circle"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12 col-sm-12 col-xs-12" id="listaBeneficiarios" name="listaBeneficiarios">
+                        @foreach (var beneficiario in Model.ListaCreditoBeneficiarioEditViewModel)
+                        {
+                            beneficiario.identificadorbeneficiario = DateTime.Now.Ticks.ToString();
+                            @Html.Partial("~/Views/Shared/BeneficiarioView.cshtml", beneficiario)
+                        }
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="x_panel panel-primary">
+        <div class="x_title panel-heading">
+            <label>ACTIVOS</label>
+            <ul class="nav navbar-right panel_toolbox" style="min-width:0;">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="x_panel panel-warning">
+                        <div class="x_title panel-heading">
+                            <label>Vehículos</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-1 col-sm-1 col-xs-12">
+                        <a data-toggle="tooltip" data-placement="top" title="Agregar Vehiculo" style="cursor:pointer; font-size:24px;" onclick="AgregarVehiculo();">
+                            <i class="fa fa-plus-circle"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12 col-sm-12 col-xs-12" id="listaVehiculos" name="listaVehiculos">
+                        @foreach (var vehiculo in Model.ListaTerceroVehiculoEditViewModel)
+                        {
+                            vehiculo.identificadorvehiculo = DateTime.Now.Ticks.ToString();
+                            @Html.Partial("~/Views/Shared/VehiculoView.cshtml", vehiculo)
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="x_panel panel-warning">
+                        <div class="x_title panel-heading">
+                            <label>Bienes raíces</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-1 col-sm-1 col-xs-12">
+                        <a data-toggle="tooltip" data-placement="top" title="Agregar Bien Raiz" style="cursor:pointer; font-size:24px;" onclick="AgregarBienRaiz();">
+                            <i class="fa fa-plus-circle"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12 col-sm-12 col-xs-12" id="listaBienesRaices" name="listaBienesRaices">
+                        @foreach (var bienInmueble in Model.ListaTerceroBienInmuebleEditViewModel)
+                        {
+                            bienInmueble.identificadorbieninmueble = DateTime.Now.Ticks.ToString();
+                            @Html.Partial("~/Views/Shared/BienInmuebleView.cshtml", bienInmueble)
+                        }
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="x_panel panel-primary">
+        <div class="x_title panel-heading">
+            <label>COSTEO ACTIVIDADES</label>
+            <ul class="nav navbar-right panel_toolbox" style="min-width:0;">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <label class="control-label has-feedback-left">
+                            Seleccione una actividad
+                        </label>
+                        @Html.DropDownList("actividadtercero", Model.ListaActividades, htmlAttributes: new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-3 col-sm-3 col-xs-12" style="margin-top:7px;">
+                        Actividad Comercial/Servicios:
+                        <input type="radio" class="flat" name="esactividadcomercialservicios" id="actividadcomercialservicios" value="true" checked required />
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12" style="margin-top:7px;">
+                        Actividad Agricola/Pecuaria/Servicios:
+                        <input type="radio" class="flat" name="esactividadcomercialservicios" id="actividadagricolapecuaria" value="false" />
+                    </div>
+                    <div class="col-md-1 col-sm-1 col-xs-12">
+                        <a data-toggle="tooltip" data-placement="top" title="Agregar Costeo" style="cursor:pointer; font-size:24px;" onclick="AgregarCosteo();">
+                            <i class="fa fa-plus-circle"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12" id="listaCosteoActividadComercialServicios" name="listaCosteoActividadComercialServicios">
+
+                        @foreach (var actividad in Model.ListaActividades)
+                        {
+                            if (actividad.Value.Equals(""))
+                            {
+                                continue;
+                            }
+                            int c = Model.ListaCosteoActividadComercialYServicios.Where(x => x.idterceroactividad == int.Parse(actividad.Value)).Count();
+                            if (c > 0)
+                            {
+                                <div class="form-group" id="divisionCosteoActividadServicios_@actividad.Value">
+                                    <div class="row"><h3><a onclick="EliminarCosteoDetalleActividadServicios(@actividad.Value);" style="cursor:pointer;"><i class="fa fa-trash"></i></a></h3></div>
+                                    <div id="table-scroll" class="table-scroll">
+                                        <div class="table-responsive">
+                                        <table id="detalleCosteoActividadServicios_@actividad.Value" class="table table-striped jambo_table bulk_action" style="vertical-align: middle;">
+                                            <thead>
+                                                <tr class="thead-default">
+                                                    <td colspan="4">
+                                                        Costos Actividades Comerciales/Servicios @actividad.Text
+                                                        <a data-toggle="tooltip" data-placement="top" title="Agregar Costeo" id="costeo" style="cursor:pointer; font-size:24px; margin-left:2px;" onclick="AgregarCosteoActividadComercialServicios(@actividad.Value);">
+                                                            <i class="fa fa-plus-circle"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <tr class="headings">
+                                                    <th>Mercancia/Insumo</th>
+                                                    <th>Unidad costo</th>
+                                                    <th>Unidades Vendidas</th>
+                                                    <th>Costo Unitario</th>
+                                                    <th>Precio Venta Unitario</th>
+                                                    <th>Costo Total CxB</th>
+                                                    <th>Ventas Totales DxB</th>
+                                                    <th>Costo % E/F</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @for (int costeo = 0; costeo < Model.ListaCosteoActividadComercialYServicios.Where(x => x.idterceroactividad == int.Parse(actividad.Value)).Count(); costeo++)
+                                                {
+                                                    <tr class="even pointer">
+                                                        @Html.Hidden("ListaCosteoActividadComercialYServicios[" + costeo + "].id", Model.ListaCosteoActividadComercialYServicios[costeo].id, new { @class = "form-control" })
+                                                        @Html.Hidden("ListaCosteoActividadComercialYServicios[" + costeo + "].idterceroactividad", Model.ListaCosteoActividadComercialYServicios[costeo].idterceroactividad, new { @class = "form-control" })
+                                                        @Html.Hidden("ListaCosteoActividadComercialYServicios[" + costeo + "].esactivo", Model.ListaCosteoActividadComercialYServicios[costeo].esactivo, new { @class = "form-control" })
+
+                                                        <td>
+                                                            @Html.TextBox("ListaCosteoActividadComercialYServicios[" + costeo + "].mercanciainsumo", Model.ListaCosteoActividadComercialYServicios[costeo].mercanciainsumo, new { @class = "form-control" })
+                                                        </td>
+                                                        <td>
+                                                            @Html.TextBox("ListaCosteoActividadComercialYServicios[" + costeo + "].unidadcosto", Model.ListaCosteoActividadComercialYServicios[costeo].unidadcosto, new { @class = "form-control" })
+                                                        </td>
+                                                        <td>
+                                                            @Html.TextBox("ListaCosteoActividadComercialYServicios[" + costeo + "].unidadesvendidas", Model.ListaCosteoActividadComercialYServicios[costeo].unidadesvendidas, new { @class = "form-control", onkeypress = "soloNumeros(event)", onkeyup = "CalcularTotalesActividadComercial(" + costeo + ")" })
+                                                        </td>
+                                                        <td>
+                                                            @Html.TextBox("ListaCosteoActividadComercialYServicios[" + costeo + "].costounitario", Model.ListaCosteoActividadComercialYServicios[costeo].costounitario, new { @class = "form-control", onkeypress = "soloNumeros(event)", onkeyup = "CalcularTotalesActividadComercial(" + costeo + ")" })
+                                                        </td>
+                                                        <td>
+                                                            @Html.TextBox("ListaCosteoActividadComercialYServicios[" + costeo + "].precioventaunitario", Model.ListaCosteoActividadComercialYServicios[costeo].precioventaunitario, new { @class = "form-control", onkeypress = "soloNumeros(event)", onkeyup = "CalcularTotalesActividadComercial(" + costeo + ")" })
+                                                        </td>
+                                                        <td>
+                                                            @Html.TextBox("ListaCosteoActividadComercialYServicios[" + costeo + "].costototal", Model.ListaCosteoActividadComercialYServicios[costeo].costototal, new { @class = "form-control", @readonly = "true" })
+                                                        </td>
+                                                        <td>
+                                                            @Html.TextBox("ListaCosteoActividadComercialYServicios[" + costeo + "].ventastotales", Model.ListaCosteoActividadComercialYServicios[costeo].ventastotales, new { @class = "form-control", @readonly = "true" })
+                                                        </td>
+                                                        <td>
+                                                            @Html.TextBox("ListaCosteoActividadComercialYServicios[" + costeo + "].costoporcentaje", Model.ListaCosteoActividadComercialYServicios[costeo].costoporcentaje, new { @class = "form-control", @readonly = "true" })
+                                                        </td>
+                                                        <td>
+                                                            <a class="borrar" data-placement="top" title="Eliminar Item Costeo" id="@costeo" style="cursor:pointer; font-size:24px;">
+                                                                <i class="fa fa-minus-circle"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12" id="listaCosteoActividadProduccionAgricola" name="listaCosteoActividadProduccionAgricola">
+                        @foreach (var actividad in Model.ListaActividades)
+                        {
+                            if (actividad.Value.Equals(""))
+                            {
+                                continue;
+                            }
+                            int c = Model.ListaCosteoActividadProduccionAgricola.Where(x => x.idterceroactividad == int.Parse(actividad.Value)).Count();
+                            if (c > 0)
+                            {
+                                <div class="form-group" id="divisionCosteoActividadProduccionAgricola_@actividad.Value">
+                                    <div class="row"><h3><a class="" onclick="EliminarCosteoDetalleActividadAgricola(@actividad.Value);" style="cursor:pointer;"><i class="fa fa-trash"></i></a></h3></div>
+                                    <div id="table-scroll" class="table-scroll">
+                                        <div class="table-responsive">
+                                            <table id="detalleCosteoActividadProduccionAgricola_@actividad.Value" class="table table-striped jambo_table bulk_action" style="vertical-align: middle;">
+                                                <thead>
+                                                    <tr class="thead-default">
+                                                        <td colspan="4">
+                                                            Costos Actividades Producción/Agricolas/Pecuarias/Servicios @actividad.Text
+                                                            <a data-toggle="tooltip" data-placement="top" title="Agregar Costeo" id="costeo" style="cursor:pointer; font-size:24px; margin-left:2px;" onclick="AgregarCosteoActividadProduccionAgricola(@actividad.Value);">
+                                                                <i class="fa fa-plus-circle"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="headings">
+                                                        <th>Insumos/Materia Prima</th>
+                                                        <th>Unidad costo</th>
+                                                        <th>Frecuencia compra</th>
+                                                        <th>Unidades Utilizadas</th>
+                                                        <th>Costo Unitario</th>
+                                                        <th>Costo Total C x D</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @for (int costeo = 0; costeo < Model.ListaCosteoActividadProduccionAgricola.Where(x => x.idterceroactividad == int.Parse(actividad.Value)).Count(); costeo++)
+                                                    {
+                                                        <tr class="even pointer">
+                                                            @Html.Hidden("ListaCosteoActividadProduccionAgricola[" + costeo + "].id", Model.ListaCosteoActividadProduccionAgricola[costeo].id, new { @class = "form-control" })
+                                                            @Html.Hidden("ListaCosteoActividadProduccionAgricola[" + costeo + "].idterceroactividad", Model.ListaCosteoActividadProduccionAgricola[costeo].idterceroactividad, new { @class = "form-control" })
+                                                            @Html.Hidden("ListaCosteoActividadProduccionAgricola[" + costeo + "].esactivo", Model.ListaCosteoActividadProduccionAgricola[costeo].esactivo, new { @class = "form-control" })
+                                                            <td>
+                                                                @Html.TextBox("ListaCosteoActividadProduccionAgricola[" + costeo + "].mercanciainsumo", Model.ListaCosteoActividadProduccionAgricola[costeo].insumomateriaprima, new { @class = "form-control" })
+                                                            </td>
+                                                            <td>
+                                                                @Html.TextBox("ListaCosteoActividadProduccionAgricola[" + costeo + "].unidadcosto", Model.ListaCosteoActividadProduccionAgricola[costeo].unidadcosto, new { @class = "form-control" })
+                                                            </td>
+                                                            <td>@Html.DropDownListFor(m => m.ListaCosteoActividadProduccionAgricola[costeo].idfrecuenciacompra, new SelectList(Model.ListaFrecuenciasCompra, "Value", "Text", Model.ListaCosteoActividadProduccionAgricola[costeo].idfrecuenciacompra))</td>
+                                                            <td>
+                                                                @Html.TextBox("ListaCosteoActividadProduccionAgricola[" + costeo + "].unidadesvendidas", Model.ListaCosteoActividadProduccionAgricola[costeo].unidadesutilizadas, new { @class = "form-control", onkeypress = "soloNumeros(event)", onkeyup = "CalcularTotalesActividadAgricola(" + costeo + ")" })
+                                                            </td>
+                                                            <td>
+                                                                @Html.TextBox("ListaCosteoActividadProduccionAgricola[" + costeo + "].costounitario", Model.ListaCosteoActividadProduccionAgricola[costeo].costounitario, new { @class = "form-control", onkeypress = "soloNumeros(event)", onkeyup = "CalcularTotalesActividadAgricola(" + costeo + ")" })
+                                                            </td>
+                                                            <td>
+                                                                @Html.TextBox("ListaCosteoActividadProduccionAgricola[" + costeo + "].costototal", Model.ListaCosteoActividadProduccionAgricola[costeo].costototal, new { @class = "form-control", @readonly = "true" })
+                                                            </td>
+                                                            <td>
+                                                                <a class="borrar" data-placement="top" title="Eliminar Item Costeo" id="@costeo" style="cursor:pointer; font-size:24px;">
+                                                                    <i class="fa fa-minus-circle"></i>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="x_panel panel-primary">
+        <div class="x_title panel-heading">
+            <label>BALANCE</label>
+            <ul class="nav navbar-right panel_toolbox" style="min-width:0;">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="form-group">
+
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="table-responsive">
+                        <table id="detalle" class="table table-striped jambo_table bulk_action" style="vertical-align: middle;">
+                            <thead>
+                                <tr class="headings">
+                                    <th></th>
+                                    <th></th>
+                                    <th>Detalle</th>
+                                    <th>Valor</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (int item = 0; item < Model.ListaBalanceEditViewModel.Count; item++)
+                                {
+                                    <tr style="background-color:lightgray">
+                                        <td></td>
+                                        <td></td>
+                                        <td>
+                                            @Html.EditorFor(model => model.ListaBalanceEditViewModel[item].agrupacionEspecificaEditViewModel.nombre, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                    for (int cef = 0; cef < Model.ListaBalanceEditViewModel[item].listaCreditoConceptosEstadosFinancierosEditViewModel.Count; cef++)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.HiddenFor(model => model.ListaBalanceEditViewModel[item].listaCreditoConceptosEstadosFinancierosEditViewModel[cef].idconceptocredito, new { htmlAttributes = new { @class = "form-control" } })
+                                            </td>
+                                            <td>
+                                                @Html.HiddenFor(model => model.ListaBalanceEditViewModel[item].listaCreditoConceptosEstadosFinancierosEditViewModel[cef].id, new { htmlAttributes = new { @class = "form-control" } })
+                                            </td>
+                                            <td>
+                                                @Html.EditorFor(model => model.ListaBalanceEditViewModel[item].listaCreditoConceptosEstadosFinancierosEditViewModel[cef].nombregenerico, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                                            </td>
+                                            <td>
+                                                @Html.EditorFor(model => model.ListaBalanceEditViewModel[item].listaCreditoConceptosEstadosFinancierosEditViewModel[cef].valor, new { htmlAttributes = new { @class = "form-control", onkeypress = "soloNumeros(event)"} })
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="x_panel panel-primary">
+        <div class="x_title panel-heading">
+            <label>ESTADO DE RESULTADOS</label>
+            <ul class="nav navbar-right panel_toolbox" style="min-width:0;">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="form-group">
+
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="table-responsive">
+                        <table id="detalle" class="table table-striped jambo_table bulk_action" style="vertical-align: middle;">
+                            <thead>
+                                <tr class="headings">
+                                    <th></th>
+                                    <th></th>
+                                    <th>Detalle</th>
+                                    <th>Valor</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (int item = 0; item < Model.ListaEstadoResultadosEditViewModel.Count; item++)
+                                {
+                                    if (Model.ListaEstadoResultadosEditViewModel[item].agrupacionEspecificaEditViewModel.id != 0)
+                                    {
+                                        <tr style="background-color:lightgray">
+                                            <td></td>
+                                            <td></td>
+                                            <td>
+                                                @Html.EditorFor(model => model.ListaEstadoResultadosEditViewModel[item].agrupacionEspecificaEditViewModel.nombre, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                    }
+
+                                    for (int cef = 0; cef < Model.ListaEstadoResultadosEditViewModel[item].listaCreditoConceptosEstadosFinancierosEditViewModel.Count; cef++)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.HiddenFor(model => model.ListaEstadoResultadosEditViewModel[item].listaCreditoConceptosEstadosFinancierosEditViewModel[cef].idconceptocredito, new { htmlAttributes = new { @class = "form-control" } })
+                                            </td>
+                                            <td>
+                                                @Html.HiddenFor(model => model.ListaEstadoResultadosEditViewModel[item].listaCreditoConceptosEstadosFinancierosEditViewModel[cef].id, new { htmlAttributes = new { @class = "form-control" } })
+                                            </td>
+                                            <td>
+                                                @Html.EditorFor(model => model.ListaEstadoResultadosEditViewModel[item].listaCreditoConceptosEstadosFinancierosEditViewModel[cef].nombregenerico, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                                            </td>
+                                            <td>
+                                                @Html.EditorFor(model => model.ListaEstadoResultadosEditViewModel[item].listaCreditoConceptosEstadosFinancierosEditViewModel[cef].valor, new { htmlAttributes = new { @class = "form-control", onkeypress = "soloNumeros(event)" } })
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="x_panel panel-primary">
+        <div class="x_title panel-heading">
+            <label>GARANTIAS</label>
+            <ul class="nav navbar-right panel_toolbox" style="min-width:0;">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="form-group">
+                <div class="form-group">
+                    <div class="col-md-12 col-sm-12 col-xs-12" id="listaGarantias" name="listaGarantias">
+                        @foreach (var m in Model.ListaGarantiasViewModel)
+                        {
+                            @Html.Partial("~/Views/Shared/GarantiaView.cshtml", m)
+                        }
+                    </div>
+                </div>
+                <div class="col-md-1 col-sm-1 col-xs-12">
+                    <a data-toggle="tooltip" data-placement="top" title="Agregar Garantia" style="cursor:pointer; font-size:24px;" onclick="AgregarGarantia();">
+                        <i class="fa fa-plus-circle"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

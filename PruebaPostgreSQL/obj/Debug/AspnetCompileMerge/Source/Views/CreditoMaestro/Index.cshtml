@@ -1,0 +1,142 @@
+﻿@model Entities.Credito.ViewModels.CreditoResumenViewModel
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+
+            <div class="x_title">
+                <h2>Lista de Solicitudes</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="#">Settings 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Settings 2</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                @(Html.DevExtreme().DataGrid<Entities.Credito.ViewModels.CreditoResumenViewModel>()
+                        .ID("gridContainer")
+                        .ColumnHidingEnabled(true)
+                        .ShowBorders(true)
+                        .FilterRow(filterRow => filterRow
+                            .Visible(true)
+                            .ApplyFilter(GridApplyFilterMode.Auto)
+                        )
+                        .SearchPanel(searchPanel => searchPanel
+                            .Visible(true)
+                            .Width(240)
+                            .Placeholder("Search...")
+                        )
+                        .HeaderFilter(headerFilter => headerFilter.Visible(true))
+                        .Editing(editing =>
+                        {
+                            editing.Mode(GridEditMode.Row);
+                            editing.UseIcons(true);
+                        })
+                        .Columns(columns =>
+                        {
+                        columns.AddFor(m => m.Identificacion)
+                            .Width(140)
+                            .HeaderFilter(filter => filter.GroupInterval(20));
+
+                        columns.AddFor(m => m.Cliente);
+
+                        columns.AddFor(m => m.FechaSolicitud)
+                                .Alignment(HorizontalAlignment.Right)
+                                .Width(120)
+                                .DataType(GridColumnDataType.DateTime)
+                                .Format(System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern);
+
+                        columns.AddFor(m => m.Monto)
+                        .Alignment(HorizontalAlignment.Right)
+                        .Width(120)
+                        .Format(Format.Currency)
+                        .EditorOptions(new { format = "currency", showClearButton = true });
+
+                        columns.AddFor(m => m.Solicitud)
+                        .Width(150);
+
+                        columns.AddFor(m => m.Etapa)
+                        .Width(100);
+
+                        columns.AddFor(m => m.Sucursal)
+                        .Width(100)
+                        .HeaderFilter(hf => hf.AllowSearch(true));
+
+                        columns.Add()
+                        .Width(80)
+                        .AllowFiltering(false)
+                        .AllowSorting(false)
+                        .Type(GridCommandColumnType.Buttons)
+                        .Buttons(b =>
+                        {
+                        b.Add().Name(GridColumnButtonName.Edit);
+                        b.Add().Name(GridColumnButtonName.Delete);
+
+                        b.Add()
+                                .Hint("Editar")
+                                .Icon("edit")
+                                .OnClick(@<text>editIconClick</text>);
+                            });
+                                    @*.CellTemplate(@<text>
+                                            <div>
+                                                <a href="#" class="dx-link dx-link-edit dx-icon-edit" title="Edit" onclick="EditarSolicitud(@Model.Id);"></a>
+                                            </div>
+                                    </text>);*@
+                        })
+                        .DataSource(d => d.WebApi().Controller("CreditoMaestroWebApi").Key("Id"))
+                        )
+            </div >
+        </div >
+    </div >
+</div >
+
+                              
+@section Scripts{
+
+<script type="text/javascript">
+
+    var editIconClick = function (e) {
+        var form = $('<form></form>');
+
+        form.attr("method", "post");
+        form.attr("action", '@System.Configuration.ConfigurationManager.AppSettings["Url"]/CreditoMaestro/EditarSolicitud');
+
+        var field = $('<input></input>');
+        field.attr("type", "hidden");
+        field.attr("name", "idsolicitud");
+        field.attr("value", e.row.data.Id);
+
+        form.append(field);
+
+        $(document.body).append(form);
+        form.submit();
+    }
+
+    $("#NuevaSolicitud").click(function() {
+        location.href = '@Url.Action("Create","CreditoMaestro")';
+    });
+
+
+    $(document).ready(function() {
+
+        document.getElementById('NuevaSolicitud').style.display = 'inline-block';
+
+    });
+
+</script>
+}

@@ -1,0 +1,183 @@
+﻿@model Entities.Contabilidad.ViewModels.DocumentoContableViewModel
+
+@{
+    /**/
+
+    ViewBag.Title = "Documento Contable";
+}
+
+@*<div class="page-title">
+        <div class="title_left">
+            <h3>Documento Contable</h3>
+        </div>
+    </div>*@
+
+@using (Html.BeginForm("Registrar", "DocumentoContable", FormMethod.Post))
+{
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+
+                <div class="x_title">
+                    <h2>Documento Contable <small>Contabilidad</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="x_content">
+                    <section class="content invoice">
+                        <div class="form-group">
+                            <div class="row">
+                                @Html.LabelFor(model => model.Idsucursal, new { @class = "control-label col-md-1 col-sm-1 col-xs-12" })
+                                <div class="col-md-2 col-sm-2 col-xs-12">
+                                    @Html.DropDownListFor(model => model.Idsucursal, Model.ListaSucursal, new { @class = "form-control col-xs-2" })
+                                    @Html.ValidationMessageFor(model => model.Idsucursal, "", new { @class = "text-danger" })
+                                </div>
+                                @Html.LabelFor(model => model.Idtipodocumento, new { @class = "control-label col-md-1 col-sm-1 col-xs-12" })
+                                <div class="col-md-2 col-sm-2 col-xs-12">
+                                    @Html.DropDownListFor(model => model.Idtipodocumento, Model.ListaTipoDocumento, new { @class = "form-control col-xs-2" })
+                                    @Html.ValidationMessageFor(model => model.Idtipodocumento, "", new { @class = "text-danger" })
+                                </div>
+                                @Html.LabelFor(model => model.Nrodocumento, new { @class = "control-label col-md-1 col-sm-1 col-xs-12" })
+                                <div class="col-md-2 col-sm-2 col-xs-12">
+                                    @Html.TextBoxFor(model => model.Nrodocumento, new { @class = "form-control col-xs-2" })
+                                    @Html.ValidationMessageFor(model => model.Nrodocumento, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                                    @Html.LabelFor(model => model.Fechadocumento, new { @class = "control-label has-feedback-left required" })
+                                    <div class='input-group date' id='myDatepickerFechaDocumento'>
+                                        @Html.TextBox("fechaDocumento", Model.Fechadocumento.Date.ToString("dd/MM/yyyy"), new { @class = "form-control  col-xs-2" })
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Fechadocumento, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                                    @Html.LabelFor(model => model.Fechacontabilizacion, new { @class = "control-label has-feedback-left required" })
+                                    <div class='input-group date' id='myDatepickerFechaContabilizacion'>
+                                        @Html.TextBox("fechaContabilizacion", Model.Fechadocumento.Date.ToString("dd/MM/yyyy"), new { @class = "form-control  col-xs-2" })
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Fechacontabilizacion, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="row">
+                                @Html.LabelFor(model => model.IdCentroCosto, new { @class = "control-label col-md-1 col-sm-1 col-xs-12" })
+                                <div class="col-md-2 col-sm-2 col-xs-12">
+                                    @Html.DropDownListFor(model => model.IdCentroCosto, Model.ListaCentroCosto, new { @class = "form-control col-xs-2" })
+                                    @Html.ValidationMessageFor(model => model.IdCentroCosto, "", new { @class = "text-danger" })
+                                </div>
+                                @Html.LabelFor(model => model.IdUnidadNegocio, new { @class = "control-label col-md-1 col-sm-1 col-xs-12" })
+                                <div class="col-md-2 col-sm-2 col-xs-12">
+                                    @Html.DropDownListFor(model => model.IdUnidadNegocio, Model.ListaUnidadNegocio, new { @class = "form-control col-xs-2" })
+                                    @Html.ValidationMessageFor(model => model.IdUnidadNegocio, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="row">
+                                <input type="submit" class="btn btn-success" value="Guardar" />
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+
+                <div class="x_title">
+                    <h2>Movimientos Contable </h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <section class="content invoice">
+                        <div class="form-group">
+                            <div class="row">
+
+                                <div class="table-responsive">
+                                    <table class="table table-striped jambo_table bulk_action">
+                                        <thead>
+                                            <tr class="headings">                                                
+                                                <th>@Html.DisplayNameFor(model => model.ListaAuxiliarContable[0].Idauxiliar)</th>
+                                                <th>@Html.DisplayNameFor(model => model.ListaAuxiliarContable[0].Idtercero)</th>
+                                                <th>@Html.DisplayNameFor(model => model.ListaAuxiliarContable[0].Notas)</th>
+                                                <th>@Html.DisplayNameFor(model => model.ListaAuxiliarContable[0].Valor)</th>
+                                                <th>@Html.DisplayNameFor(model => model.ListaAuxiliarContable[0].Esdebito)</th>
+                                                <th>@Html.DisplayNameFor(model => model.ListaAuxiliarContable[0].Idmultilibro)</th>
+                                                <th>@Html.DisplayNameFor(model => model.ListaAuxiliarContable[0].Idsucursal)</th>
+                                                <th>@Html.DisplayNameFor(model => model.ListaAuxiliarContable[0].Idccostos)</th>
+                                                <th>@Html.DisplayNameFor(model => model.ListaAuxiliarContable[0].Idunidadnegocio)</th>
+                                                <th>@Html.DisplayNameFor(model => model.ListaAuxiliarContable[0].Idpresupuesto)</th>
+                                                <th>@Html.DisplayNameFor(model => model.ListaAuxiliarContable[0].Idproyecto)</th>
+                                                <th>@Html.DisplayNameFor(model => model.ListaAuxiliarContable[0].Idfe)</th>
+                                                <th>@Html.DisplayNameFor(model => model.ListaAuxiliarContable[0].Basegravable)</th>                                                
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @for (int i = 0; i < Model.ListaAuxiliarContable.Count; i++)
+                                            {
+                                            <tr>
+                                                @*@Html.DropDownList("Gender", new SelectList(Model.ListaAuxiliar, "Value", "Text", Model.ExistingGroups[c].Gender))*@
+                                                <td>@Html.DropDownListFor(m => m.ListaAuxiliarContable[i].Idauxiliar, new SelectList(Model.ListaAuxiliar, "Value", "Text", Model.ListaAuxiliarContable[i].Idauxiliar), new { @style="width:50px"})</td>
+                                                @*<td>@Html.DropDownListFor(m => m.ListaAuxiliarContable[i].Idauxiliar, Model.ListaAuxiliar, new { @id = Model.ListaAuxiliarContable[i].Idauxiliar + i, @class = "form-control" })</td>*@
+                                                <td>@Html.TextBoxFor(m => m.ListaAuxiliarContable[i].Idtercero)</td>@*, new { @class = "form-control" })</td>*@
+                                                <td>@Html.TextBoxFor(m => m.ListaAuxiliarContable[i].Notas)</td>@*, new { @class = "form-control" })</td>*@
+                                                <td>@Html.TextBoxFor(m => m.ListaAuxiliarContable[i].Valor)</td>@*, new { @class = "form-control" })</td>*@
+                                                <td>@Html.CheckBoxFor(m => m.ListaAuxiliarContable[i].Esdebito)</td>@*, new { @class = "form-control" })</td>*@
+                                                <td>@Html.TextBoxFor(m => m.ListaAuxiliarContable[i].Idmultilibro)</td>@*, new { @class = "form-control" })</td>*@
+                                                <td>@Html.DropDownListFor(m => m.ListaAuxiliarContable[i].Idsucursal, Model.ListaSucursal, new { @id = Model.ListaAuxiliarContable[i].Idsucursal + i, @class = "form-control" })</td>
+                                                <td>@Html.DropDownListFor(m => m.ListaAuxiliarContable[i].Idccostos, Model.ListaCentroCosto, new { @id = Model.ListaAuxiliarContable[i].Idccostos + i, @class = "form-control" })</td>
+                                                <td>@Html.DropDownListFor(m => m.ListaAuxiliarContable[i].Idunidadnegocio, Model.ListaUnidadNegocio, new { @id = Model.ListaAuxiliarContable[i].Idunidadnegocio + i, @class = "form-control" })</td>
+                                                <td>@Html.TextBoxFor(m => m.ListaAuxiliarContable[i].Idpresupuesto)</td>@*, new { @class = "form-control" })</td>*@
+                                                <td>@Html.TextBoxFor(m => m.ListaAuxiliarContable[i].Idproyecto)</td>@*, new { @class = "form-control" })</td>*@
+                                                <td>@Html.TextBoxFor(m => m.ListaAuxiliarContable[i].Idfe)</td>@*, new { @class = "form-control" })</td>*@
+                                                <td>@Html.TextBoxFor(m => m.ListaAuxiliarContable[i].Basegravable)</td>@*, new { @class = "form-control" })</td>*@
+                                            </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+
+                        @section Scripts {
+                            @Scripts.Render("~/bundles/jqueryval")
+
+                            <script type="text/javascript">
+
+                                $('#myDatepickerFechaDocumento').datetimepicker({
+                                    format: 'DD/MM/YYYY'
+                                });
+
+                                $('#myDatepickerFechaContabilizacion').datetimepicker({
+                                    format: 'DD/MM/YYYY'
+                                });
+                            </script>
+                        }

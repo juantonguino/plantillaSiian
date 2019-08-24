@@ -1,0 +1,529 @@
+﻿@using Microsoft.AspNet.Identity
+
+@if (Request.IsAuthenticated)
+{
+    <!DOCTYPE html>
+    <html>
+    <head>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>AppCredito</title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+        @*@Html.DevExpress().GetStyleSheets(
+                new StyleSheet { ExtensionSuite = ExtensionSuite.Report }
+            )
+
+            @Html.DevExpress().GetScripts(
+                new Script { ExtensionSuite = ExtensionSuite.Report }
+            )*@
+
+        <link href="~/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Font Awesome -->
+        <link href="~/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+        <!-- NProgress -->
+        <link href="~/vendors/nprogress/nprogress.css" rel="stylesheet">
+        <!-- iCheck -->
+        <link href="~/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+
+        <!-- bootstrap-progressbar -->
+        <link href="~/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+        <!-- JQVMap -->
+        <link href="~/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet" />
+        <!-- bootstrap-daterangepicker -->
+        <link href="~/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+        <!-- Custom Theme Style -->
+        <link href="~/build/css/custom.min.css" rel="stylesheet">
+
+        @*@Styles.Render("~/Content/bundle")
+            @Styles.Render("~/Content/DevExtremeBundle")
+            @Scripts.Render("~/Scripts/bundle")
+            @Scripts.Render("~/Scripts/DevExtremeBundle")*@
+
+
+        @Html.DevExpress().GetStyleSheets(
+                new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+                new StyleSheet { ExtensionSuite = ExtensionSuite.Editors },
+                new StyleSheet { ExtensionSuite = ExtensionSuite.Report }
+            )
+
+        @Html.DevExpress().GetScripts(
+            new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+            new Script { ExtensionSuite = ExtensionSuite.Editors },
+            new Script { ExtensionSuite = ExtensionSuite.Report }
+        )
+        <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.2.4.min.js"></script>
+    </head>
+    <body class="nav-md">
+        <div class="container body">
+            <div class="main_container">
+                <div class="col-md-3 left_col">
+                    <div class="left_col scroll-view">
+                        <div class="navbar nav_title" style="border: 0;">
+                            <a href="#" class="site_title"><i class="fa fa-pie-chart"></i> <span>SIIAN!</span></a>
+                        </div>
+                        <div class="clearfix"></div>
+                        <!-- menu profile quick info -->
+                        <div class="profile clearfix">
+                            <div class="profile_pic">
+                                <img alt="..." class="img-circle profile_img">
+                            </div>
+                            <div class="profile_info">
+                                <span>Bienvenido,</span>
+                                <h2>
+                                    @if (User.Identity.GetUserName().Contains("@"))
+                                    {
+                                        @User.Identity.GetUserName().Substring(0, User.Identity.GetUserName().IndexOf("@"));
+                                    }
+                                    else
+                                    {
+                                        @User.Identity.GetUserName()
+                                    }
+                                </h2>
+                            </div>
+                        </div>
+                        <!-- search form -->
+                        <form action="/Home/MenuAccionRapida" method="post">
+                            <div class="input-group">
+                                <input type="text" name="q" class="form-control" placeholder="Search...">
+                                <span class="input-group-btn">
+                                    <button type="submit" name="search" id="search-btn" class="btn btn-flat">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </form>
+                        <!-- /menu profile quick info -->
+                        <br />
+                        <!-- sidebar menu -->
+                        <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                            <div class="menu_section">
+                                <h3>Menu General</h3>
+                                <ul class="nav side-menu">
+                                    @*@MuestraMenu(PruebaPostgreSQL.Seguridad.MenuPrincipal.CargarMenu())*@
+                                    <li>
+                                        <a href="~/Home/Index"><i class="fa fa-home"></i> Principal</a>
+
+                                    </li>
+                                    <li>
+                                        <a><i class="fa fa-edit"></i> Terceros <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href="#"><text style="color:#f0ad4e">(TR01)</text> Parametros</a></li>
+                                            <li><a href="~/TerceroMaestro/Create"><text style="color:#f0ad4e">(TR02)</text> Ingreso Tercero</a></li>
+                                            <li><a href="~/TerceroMaestro/Index"><text style="color:#f0ad4e">(TR03)</text> Listar Terceros</a></li>
+                                            <li><a href="#"><text style="color:#f0ad4e">(TR04)</text> Informes</a></li>
+
+                                        </ul>
+                                    </li>
+
+                                    <li>
+                                        <a><i class="fa fa-edit"></i> Credito <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href="#">Parametros</a></li>
+                                            <li><a href="~/CreditoMaestro/Index">Solicitud Credito</a></li>
+                                        </ul>
+                                    </li>
+
+                                    <li>
+                                        <a><i class="fa fa-edit"></i> Tesoreria <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href="#">Parametros</a></li>
+                                            <li>
+                                                <a>Cajas<span class="fa fa-chevron-down"></span></a>
+                                                <ul class="nav child_menu">
+                                                    <li><a href="#">Documento</a></li>
+                                                    <li><a href="~/Transaccion/Index">Transacción</a></li>
+                                                </ul>
+                                            </li>
+
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a><i class="fa fa-edit"></i> Contabilidad <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href="~/DocumentoContable/Create">Documento Contable</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a><i class="fa fa-edit"></i> Cartera<span class="fa fa-chevron-down"></span> </a>
+                                        <ul class="nav child_menu">
+                                            <li><a href="~/ConsultaPrestamo/ConsultaPrestamo">Consulta de Prestamos</a></li>
+                                            <li><a href="#">Proceso de Prestamos</a></li>
+                                            <li><a href="~/TransaccionCartera/TransaccionCartera3">Transaccion Cartera</a></li>
+                                            <li><a href="~/CierreDia/CierreDia">Cerrar Cartera</a></li>
+                                            <li><a href="~/InformeCartera/Insoluto">Insolutos</a></li>
+                                            <li><a href="~/InformeCartera/InsolutoGrid">Insolutos Grid</a></li>
+                                            <li><a href="~/InformeCartera/CalcePlazos">Calce de Plazos</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a><i class="fa fa-edit"></i>Cobranzas <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href="#">Castigar prestamos</a></li>
+                                            <li><a href="#">Judicializar prestamo</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a><i class="fa fa-edit"></i>Parametros <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li>
+                                                <a>Credito<span class="fa fa-chevron-down"></span></a>
+                                                <ul class="nav child_menu">
+                                                    <li><a href="~/TablaAmortizacion">Tablas Amortizacion</a></li>
+                                                    <li><a href="~/Transaccion/Index">Transacción</a></li>
+                                                    <li><a href="~/ParametrosDesembolsoCredito">Parametros Desembolso</a></li>
+                                                    <li><a href="~/TipoCredito">Tipo de credito</a></li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a>Cartera<span class="fa fa-chevron-down"></span></a>
+                                                <ul class="nav child_menu">
+                                                    <li><a href="~/Calificacion">Calificacion</a></li>
+                                                    <li><a href="~/CalificacionInterna">Calificacion Interna</a></li>
+                                                    <li><a href="~/DestinoCredito">Destino Credito</a></li>
+                                                    <li><a href="~/EstadoConceptoCredito">Estados Concepto credito</a></li>
+                                                    <li><a href="~/TipoCreditoClienteDestinoTasa">Tipo cliente destino tasa</a></li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a>Contabilidad<span class="fa fa-chevron-down"></span></a>
+                                                <ul class="nav child_menu">
+                                                    <li><a href="~/Mayor">Mayores</a></li>
+                                                    <li><a href="~/Auxiliares">Auxiliares</a></li>
+                                                    <li><a href="~/AuxiliarDetalle">Auxiliar Detalle</a></li>
+                                                    <li><a href="~/EstadoContable">Estados Contables</a></li>
+                                                    <li><a href="~/Moneda">Moneda</a></li>
+                                                    <li><a href="~/Multilibro">Multilibro</a></li>
+                                                    <li><a href="~/TipoCuentaImpuesto">Tipo Cuenta Impuesto</a></li>
+                                                    <li><a href="~/TipoDocumento">Tipos de documentos</a></li>
+                                                    <li><a href="~/TipoTercero">Tipo Tercero saldo</a></li>
+                                                    <li><a href="~/TipoTributo">Tipo Tributo</a></li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a>Generales<span class="fa fa-chevron-down"></span></a>
+                                                <ul class="nav child_menu">
+                                                    <li><a href="#">Documento</a></li>
+
+                                                    <li><a href="~/Companias/Index">Compañias</a></li>
+                                                    <li><a href="~/Modulo">Modulos</a></li>
+                                                    <li><a href="~/Surcusal">Sucursales</a></li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a>Servicios Adicionales<span class="fa fa-chevron-down"></span></a>
+                                                <ul class="nav child_menu">
+                                                    <li><a href="~/ServicioAdicional">Servicio Adicional</a></li>
+                                                    <li><a href="~/PlanServicioAdicional">Plan Servicio Adicional</a></li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a>Terceros<span class="fa fa-chevron-down"></span></a>
+                                                <ul class="nav child_menu">
+
+                                                    <li><a href="~/TipoCliente">Tipo Cliente</a></li>
+
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a>Transacciones<span class="fa fa-chevron-down"></span></a>
+                                                <ul class="nav child_menu">
+
+                                                    <li><a href="~/Conceptos">Conceptos</a></li>
+                                                    <li><a href="~/Transaccion/Indexm">Transacción</a></li>
+
+                                                </ul>
+                                            </li>
+
+
+                                        </ul>
+                                    </li>
+
+                                </ul>
+                            </div>
+
+                        </div>
+                        <!-- /sidebar menu -->
+                        <!-- /menu footer buttons -->
+                        <div class="sidebar-footer hidden-small">
+                            <a data-toggle="tooltip" data-placement="top" title="Settings">
+                                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                            </a>
+                            <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+                            </a>
+                            <a data-toggle="tooltip" data-placement="top" title="Lock">
+                                <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+                            </a>
+                            <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
+                                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                            </a>
+                        </div>
+                        <!-- /menu footer buttons -->
+                    </div>
+                </div>
+                <!-- top navigation -->
+                <div class="top_nav navbar-fixed-top">
+                    <div class="nav_menu">
+                        <nav>
+                            <div class="nav toggle">
+                                <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                            </div>
+                            <div class="navbar-left" style="padding-top: 12px">
+                                <button class="btn" title="Seleccionar Cliente" data-toggle="modal" data-target=".bs-example-modal-lg" name="BuscarCliente" id="BuscarCliente" style="display:none;">
+                                    <i class="fa fa-user"></i>
+                                </button>
+                                <button class="btn" title="Guardar" name="GuardarDatos" id="GuardarDatos" style="display: none;">
+                                    <i class="fa fa-save"></i>
+                                </button>
+                                <button class="btn" title="Procesar Etapa" name="ProcesarEtapa" id="ProcesarEtapa" style="display:none;">
+                                    <i class="fa fa-cog"></i>
+                                </button>
+                                <button class="btn" title="Tabla Amortización" name="TablaAmortizacion" id="TablaAmortizacion" style="display:none;">
+                                    <i class="fa fa-book"></i>
+                                </button>
+                                <button class="btn" title="Desembolsar" name="Desembolsar" id="Desembolsar" style="display:none;">
+                                    <i class="glyphicon glyphicon-briefcase"></i>
+                                </button>
+                                <button class="btn" title="Reversar Etapa" name="ReversarEtapa" id="ReversarEtapa" style="display:none;">
+                                    <i class="fa fa-backward"></i>
+                                </button>
+                                <button class="btn" title="Nueva Solicitud" name="NuevaSolicitud" id="NuevaSolicitud" style="display:none;">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </div>
+
+                            <ul class="nav navbar-nav navbar-right">
+                                <li class="">
+                                    <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                        <img alt="">@User.Identity.GetUserName()
+                                        <span class=" fa fa-angle-down"></span>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-usermenu pull-right">
+                                        <li><a href="javascript:;"> Profile</a></li>
+                                        <li>
+                                            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                                            {
+                                                @Html.AntiForgeryToken();
+                                                <a href="javascript:document.getElementById('logoutForm').submit()"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                                            }
+
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+
+                        </nav>
+                    </div>
+                </div>
+                <!-- /top navigation -->
+                <!-- page content -->
+                <div class="right_col" role="main">
+                    <!-- top tiles -->
+                    <!-- /top tiles -->
+                    <div class="row" style="margin-top:60px">
+                        @RenderBody()
+                    </div>
+
+                </div>
+                <!-- /page content -->
+                <!-- footer content -->
+                <footer>
+                    <div class="pull-right">
+                        Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+                    </div>
+                    <div class="clearfix"></div>
+                </footer>
+                <!-- /footer content -->
+            </div>
+        </div>
+
+        <script src="../vendors/jQuery-Smart-Wizard/js/jquery.smartWizard.js"></script>
+        <!-- Bootstrap -->
+        <script src="~/Scripts/jquery.validate.min.js"></script>
+        <script src="~/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+        <!-- FastClick -->
+        <script src="~/vendors/fastclick/lib/fastclick.js"></script>
+        <!-- NProgress -->
+        <script src="~/vendors/nprogress/nprogress.js"></script>
+        <!-- Chart.js -->
+        <!-- <script src="~/vendors/Chart.js/dist/Chart.min.js"></script> -->
+        <!-- gauge.js -->
+        <script src="~/vendors/gauge.js/dist/gauge.min.js"></script>
+        <!-- bootstrap-progressbar -->
+        <script src="~/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+        <!-- iCheck -->
+        <script src="~/vendors/iCheck/icheck.min.js"></script>
+        <!-- Skycons -->
+        <script src="~/vendors/skycons/skycons.js"></script>
+        <!-- Flot -->
+        <script src="~/vendors/Flot/jquery.flot.js"></script>
+        <!-- <script src="~/vendors/Flot/jquery.flot.pie.js"></script> -->
+        <script src="~/vendors/Flot/jquery.flot.time.js"></script>
+        <!-- <script src="~/vendors/Flot/jquery.flot.stack.js"></script> -->
+        <!-- <script src="~/vendors/Flot/jquery.flot.resize.js"></script> -->
+        <!-- Flot plugins -->
+        <!-- <script src="~/vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script> -->
+        <script src="~/vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
+        <!-- <script src="~/vendors/flot.curvedlines/curvedLines.js"></script> -->
+        <!-- DateJS -->
+        <script src="~/vendors/DateJS/build/date.js"></script>
+        <!-- JQVMap -->
+        <script src="~/vendors/jqvmap/dist/jquery.vmap.js"></script>
+        <script src="~/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+        <script src="~/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+        <!-- bootstrap-daterangepicker -->
+        <script src="~/vendors/moment/min/moment.min.js"></script>
+        <script src="~/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+        <script src="~/vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+        <!-- Custom Theme Scripts -->
+        <script src="~/build/js/custom.js"></script>
+
+        @RenderSection("scripts", required: false)
+    </body>
+</html>
+}
+else
+{
+
+<html>
+<head>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>AppCredito</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+
+    <link href="~/vendors/animate.css/animate.min.css" rel="stylesheet">
+
+    <link href="~/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="~/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="~/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="~/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+
+    <!-- bootstrap-progressbar -->
+    <link href="~/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+    <!-- JQVMap -->
+    <link href="~/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet" />
+    <!-- bootstrap-daterangepicker -->
+    <link href="~/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <!-- Custom Theme Style -->
+    <link href="~/build/css/custom.min.css" rel="stylesheet">
+
+    @Styles.Render("~/Content/bundle")
+    @Styles.Render("~/Content/DevExtremeBundle")
+    @Scripts.Render("~/Scripts/bundle")
+    @Scripts.Render("~/Scripts/DevExtremeBundle")
+
+</head>
+<body class="login">
+    <div>
+        <a class="hiddenanchor" id="signup"></a>
+        <a class="hiddenanchor" id="signin"></a>
+        <div class="login_wrapper">
+            @RenderBody()
+        </div>
+    </div>
+
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="~/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="~/vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="~/vendors/nprogress/nprogress.js"></script>
+    <!-- Chart.js -->
+    <!-- <script src="~/vendors/Chart.js/dist/Chart.min.js"></script> -->
+    <!-- gauge.js -->
+    <script src="~/vendors/gauge.js/dist/gauge.min.js"></script>
+    <!-- bootstrap-progressbar -->
+    <script src="~/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+    <!-- iCheck -->
+    <script src="~/vendors/iCheck/icheck.min.js"></script>
+    <!-- Skycons -->
+    <script src="~/vendors/skycons/skycons.js"></script>
+    <!-- Flot -->
+    <script src="~/vendors/Flot/jquery.flot.js"></script>
+    <!-- <script src="~/vendors/Flot/jquery.flot.pie.js"></script> -->
+    <script src="~/vendors/Flot/jquery.flot.time.js"></script>
+    <!-- <script src="~/vendors/Flot/jquery.flot.stack.js"></script> -->
+    <!-- <script src="~/vendors/Flot/jquery.flot.resize.js"></script> -->
+    <!-- Flot plugins -->
+    <!-- <script src="~/vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script> -->
+    <script src="~/vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
+    <!-- <script src="~/vendors/flot.curvedlines/curvedLines.js"></script> -->
+    <!-- DateJS -->
+    <script src="~/vendors/DateJS/build/date.js"></script>
+    <!-- JQVMap -->
+    <script src="~/vendors/jqvmap/dist/jquery.vmap.js"></script>
+    <script src="~/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+    <script src="~/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+    <!-- bootstrap-daterangepicker -->
+    <script src="~/vendors/moment/min/moment.min.js"></script>
+    <script src="~/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="~/build/js/custom.js"></script>
+
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>
+
+}
+@helper MuestraMenu(IEnumerable<Entities.Generales.ViewModels.MenuGeneralViewModel> menus)
+    {
+
+        foreach (var item in menus)
+        {
+            <li>
+                @if (!item.Espadre)
+                {
+
+                    <a href=@Url.Content(item.Funcionalidad)><i class="fa fa-home"></i> @item.Nombre</a>
+                }
+                else
+                {
+                    <a><i class="fa fa-edit"></i>@item.Nombre<span class="fa fa-chevron-down"></span></a>
+                    @Subitems(item)
+                }
+            </li>
+        }
+
+    }
+    }
+    @helper Subitems(Entities.Generales.ViewModels.MenuGeneralViewModel submenu)
+    {
+        if (submenu.ListaMenuGeneral.Count > 0)
+        {
+            <ul class="nav child_menu">
+                @foreach (var x in submenu.ListaMenuGeneral)
+                {
+                    if (x.Espadre)
+                    {
+                        <li>
+                        <a>@x.Nombre<span class="fa fa-chevron-down"></span></a>
+                        @Subitems(x)
+                        </li>
+                    }
+                    else
+                    {
+                        <li><a href=@Url.Content(x.Funcionalidad)>@x.Nombre</a></li>
+                    }
+                }
+
+            </ul>
+        }
+    }

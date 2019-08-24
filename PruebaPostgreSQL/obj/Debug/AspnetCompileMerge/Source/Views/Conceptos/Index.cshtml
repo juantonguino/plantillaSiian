@@ -1,0 +1,29 @@
+@{
+	ViewBag.Title = "Index";}
+<h2> Conceptos</h2>
+@(Html.DevExtreme().DataGrid<Entities.Transacciones.ViewModels.ConceptosViewModel>()
+	.Columns(columns =>
+	{
+		columns.AddFor(m => m.Nombre);
+		columns.AddFor(m => m.Esactivo);
+		columns.AddFor(m => m.Idauxiliar)
+		.Lookup(lookup => lookup
+			.DataSource(d => d.WebApi().Controller("AuxiliaresWebApi").Key("Id"))
+			.DisplayExpr("Nombre3")
+			.ValueExpr("Id")
+			);
+	})
+	.ColumnHidingEnabled(true)
+	.Editing(e => e
+	.Mode(GridEditMode.Row)
+	.AllowAdding(true)
+	.AllowUpdating(true)
+	.AllowDeleting(true)
+	).DataSource(d => d.WebApi()
+	.Controller("ConceptosWebApi")
+	.InsertAction(true)
+	.UpdateAction(true)
+	.DeleteAction(true)
+	.Key("Id")
+	)
+)

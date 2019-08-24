@@ -1,0 +1,27 @@
+@{
+	ViewBag.Title = "Index";}
+<h2> TipoCuentaImpuesto</h2>
+@(Html.DevExtreme().DataGrid<Entities.Contabilidad.ViewModels.TipoCuentaImpuestoViewModel>()
+	.Columns(columns =>
+	{
+		columns.AddFor(m => m.Nombre);
+		columns.AddFor(m => m.Esbaseimpuesto);
+		columns.AddFor(m => m.Esimpuesto);
+		columns.AddFor(m => m.Esretencionasumida);
+		columns.AddFor(m => m.Esretencion);
+		columns.AddFor(m => m.Essinimpuesto);
+	})
+	.ColumnHidingEnabled(true)
+	.Editing(e => e
+	.Mode(GridEditMode.Row)
+	.AllowAdding(true)
+	.AllowUpdating(true)
+	.AllowDeleting(true)
+	).DataSource(d => d.WebApi()
+	.Controller("TipoCuentaImpuestoWebApi")
+	.InsertAction(true)
+	.UpdateAction(true)
+	.DeleteAction(true)
+	.Key("Id")
+	)
+)

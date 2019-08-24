@@ -1,0 +1,22 @@
+@{
+	ViewBag.Title = "Index";}
+<h2> DestinoCredito</h2>
+@(Html.DevExtreme().DataGrid<Entities.Cartera.ViewModels.DestinoCreditoViewModel>()
+	.Columns(columns =>
+	{
+		columns.AddFor(m => m.Nombre);
+		columns.AddFor(m => m.Esactivo);
+	})
+	.Editing(e => e
+	.Mode(GridEditMode.Row)
+	.AllowAdding(true)
+	.AllowUpdating(true)
+	.AllowDeleting(true)
+	).DataSource(d => d.WebApi()
+	.Controller("DestinoCreditoWebApi")
+	.InsertAction(true)
+	.UpdateAction(true)
+	.DeleteAction(true)
+	.Key("Id")
+	)
+)

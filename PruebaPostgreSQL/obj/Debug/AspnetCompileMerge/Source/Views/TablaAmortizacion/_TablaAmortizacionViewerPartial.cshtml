@@ -1,0 +1,7 @@
+@Html.DevExpress().DocumentViewer(settings => {
+    settings.Name = "TablaAmortizacionViewer";
+    settings.CallbackRouteValues = new { Controller = "TablaAmortizacion", Action = "TablaAmortizacionViewerPartial" };
+    settings.ExportRouteValues = new { Controller = "TablaAmortizacion", Action = "TablaAmortizacionViewerPartialExport" };
+    settings.Report = (XtraReport)Model;
+    settings.ToolbarMode = DocumentViewerToolbarMode.Ribbon;
+}).GetHtml()

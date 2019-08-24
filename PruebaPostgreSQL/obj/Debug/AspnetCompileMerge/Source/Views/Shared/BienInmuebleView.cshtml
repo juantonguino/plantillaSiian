@@ -1,0 +1,113 @@
+﻿@model Entities.Credito.ViewModels.Credito_TerceroBienInmuebleEditViewModel
+
+
+@using (Html.BeginCollectionItem("ListaTerceroBienInmuebleEditViewModel"))
+{
+
+<div class="x_title" id="bienInmueble_@Model.identificadorbieninmueble" name="bienInmueble_@Model.identificadorbieninmueble">
+    @Html.HiddenFor(model => model.id)
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-3 col-sm-3 col-xs-12">
+                <label class="control-label has-feedback-left">
+                    Tipo de Inmueble <span class="required right">*</span>
+                </label>
+                @Html.DropDownListFor(model => model.idtipobieninmueble, Model.TipoBienInmueble, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.idtipobieninmueble, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                <label class="control-label has-feedback-left">
+                    Dirección <span class="required right">*</span>
+                </label>
+                @Html.EditorFor(model => model.direccion, new { htmlAttributes = new { @class = "form-control" } })
+                <span class="fa fa-home form-control-feedback right" aria-hidden="true"></span>
+                @Html.ValidationMessageFor(model => model.direccion, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-12">
+                <label class="control-label has-feedback-left">
+                    Referencia Ubicación <span class="required right">*</span>
+                </label>
+                @Html.EditorFor(model => model.referenciaubicacion, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.referenciaubicacion, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                <label class="control-label has-feedback-left">
+                    Avalúo Comercial <span class="required right">*</span>
+                </label>
+                <div class="has-feedback-left">
+                    @Html.EditorFor(model => model.avaluocomercial, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.avaluocomercial, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                <label class="control-label has-feedback-left">
+                    Hipotecado a
+                </label>
+                @Html.EditorFor(model => model.hipotecadoa, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.hipotecadoa, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                <label class="control-label has-feedback-left">
+                    Tipo Documento <span class="required right">*</span>
+                </label>
+                <div class="has-feedback-left">
+                    @Html.DropDownListFor(model => model.idtipodocumento, Model.TipoDocumento, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.idtipodocumento, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                <label class="control-label has-feedback-left">
+                    Número documento
+                </label>
+                @Html.EditorFor(model => model.numerodocumento, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.numerodocumento, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-12 form-group">
+                <label class="control-label has-feedback-left">
+                    Fecha documento <span class="required right">*</span>
+                </label>
+                <div class='input-group date' id='myDatepickerFechaDocumento_@Model.identificadorbieninmueble'>
+                    @Html.EditorFor(model => model.fechadocumento, new { htmlAttributes = new { @class = "form-control", @value = Model.fechadocumento.Date.ToString("dd/MM/yyyy") } })
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                <label class="control-label has-feedback-left">
+                    Entidad
+                </label>
+                <div class="has-feedback-left">
+                    @Html.EditorFor(model => model.entidad, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.entidad, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                <label class="control-label has-feedback-left">
+                    Ciudad
+                </label>
+                <div class="has-feedback-left">
+                    @Html.EditorFor(model => model.ciudad, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ciudad, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <ul class="nav navbar-right center panel_toolbox">
+        <li>
+            <h3><a class="close-link" onclick="EliminarBienInmueble('@Model.identificadorbieninmueble');" style="cursor:pointer;"><i class="fa fa-trash"></i></a></h3>
+        </li>
+    </ul>
+    <div class="clearfix"></div>
+</div>
+
+
+}

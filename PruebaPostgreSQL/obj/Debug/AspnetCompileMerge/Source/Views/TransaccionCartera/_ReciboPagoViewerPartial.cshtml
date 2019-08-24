@@ -1,0 +1,7 @@
+@Html.DevExpress().DocumentViewer(settings => {
+    settings.Name = "ReciboPagoViewer";
+    settings.CallbackRouteValues = new { Controller = "TransaccionCartera", Action = "ReciboPagoViewerPartial" };
+    settings.ExportRouteValues = new { Controller = "TransaccionCartera", Action = "ReciboPagoViewerPartialExport" };
+    settings.Report = (XtraReport)Model;
+    settings.ToolbarMode = DocumentViewerToolbarMode.Ribbon;
+}).GetHtml()

@@ -1,0 +1,72 @@
+﻿@model Entities.Contabilidad.EstadoContable
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>EstadoContable</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.esanulado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.esanulado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.esaprobado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.esaprobado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.esproceso)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.esproceso)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.esedicion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.esedicion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.esactivo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.esactivo)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

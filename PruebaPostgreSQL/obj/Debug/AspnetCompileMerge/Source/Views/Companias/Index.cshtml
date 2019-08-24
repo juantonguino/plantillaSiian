@@ -1,0 +1,36 @@
+@{
+	ViewBag.Title = "Index";}
+<h2> Companias</h2>
+@(Html.DevExtreme().DataGrid<Entities.Generales.ViewModels.CompaniasViewModel>()
+	.Columns(columns =>
+	{
+		columns.AddFor(m => m.Nombre);
+		columns.AddFor(m => m.Idmonedadefecto)
+		.Lookup(lookup => lookup
+			.DataSource(d => d.WebApi().Controller("MonedaWebApi").Key("Id"))
+			.DisplayExpr("Nombre")
+			.ValueExpr("Id")
+			);
+		columns.AddFor(m => m.Esactivo);
+		columns.AddFor(m => m.Fechasistema);
+		columns.AddFor(m => m.Idmultilibro)
+		.Lookup(lookup => lookup
+			.DataSource(d => d.WebApi().Controller("MultilibroWebApi").Key("Id"))
+			.DisplayExpr("Nombre")
+			.ValueExpr("Id")
+			);
+	})
+	.ColumnHidingEnabled(true)
+	.Editing(e => e
+	.Mode(GridEditMode.Row)
+	.AllowAdding(true)
+	.AllowUpdating(true)
+	.AllowDeleting(true)
+	).DataSource(d => d.WebApi()
+	.Controller("CompaniasWebApi")
+	.InsertAction(true)
+	.UpdateAction(true)
+	.DeleteAction(true)
+	.Key("Id")
+	)
+)

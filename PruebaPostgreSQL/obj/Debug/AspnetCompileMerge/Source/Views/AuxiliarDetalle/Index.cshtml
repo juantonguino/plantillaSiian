@@ -1,0 +1,32 @@
+@{
+	ViewBag.Title = "Index";}
+<h2> AuxiliarDetalle</h2>
+@(Html.DevExtreme().DataGrid<Entities.Contabilidad.ViewModels.AuxiliarDetalleViewModel>()
+	.Columns(columns =>
+	{
+		columns.AddFor(m => m.Nombre);
+		columns.AddFor(m => m.Idmodulo)
+		.Lookup(lookup => lookup
+			.DataSource(d => d.WebApi().Controller("ModuloWebApi").Key("Id"))
+			.DisplayExpr("Nombre")
+			.ValueExpr("Id")
+			);
+		columns.AddFor(m => m.Escxp);
+		columns.AddFor(m => m.Escxc);
+		columns.AddFor(m => m.Noaplica);
+		columns.AddFor(m => m.Estaactivo);
+	})
+	.ColumnHidingEnabled(true)
+	.Editing(e => e
+	.Mode(GridEditMode.Row)
+	.AllowAdding(true)
+	.AllowUpdating(true)
+	.AllowDeleting(true)
+	).DataSource(d => d.WebApi()
+	.Controller("AuxiliarDetalleWebApi")
+	.InsertAction(true)
+	.UpdateAction(true)
+	.DeleteAction(true)
+	.Key("Id")
+	)
+)

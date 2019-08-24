@@ -1,0 +1,33 @@
+﻿@model Entities.Contabilidad.ViewModels.AuxiliarContableViewModel
+
+
+@using (Html.BeginCollectionItem("AuxiliarContableViewModel"))
+{
+    <tr class="even pointer">
+        <td>@Html.DropDownListFor(m => m.ListaAuxiliarContable[i].Idauxiliar, new SelectList(Model.ListaAuxiliar, "Value", "Text", Model.ListaAuxiliarContable[i].Idauxiliar), new { @style = "width:50px" })</td>
+        @*@<td>@Html.TextBoxFor(m => m.Idauxiliar)</td>@*borrar*@
+        <td>@Html.TextBoxFor(m => m.Idtercero)</td>
+        <td>@Html.TextBoxFor(m => m.Notas)</td>
+        <td>@Html.TextBoxFor(m => m.Valor)</td>
+        <td>@Html.CheckBoxFor(m => m.Esdebito)</td>
+        <td>@Html.TextBoxFor(m => m.Idmultilibro)</td>
+        @*<td>@Html.DropDownListFor(m => m.ListaAuxiliarContable[i].Idsucursal, Model.ListaSucursal, new { @id = Model.ListaAuxiliarContable[i].Idsucursal + i, @class = "form-control" })</td>
+            <td>@Html.DropDownListFor(m => m.ListaAuxiliarContable[i].Idccostos, Model.ListaCentroCosto, new { @id = Model.ListaAuxiliarContable[i].Idccostos + i, @class = "form-control" })</td>
+            <td>@Html.DropDownListFor(m => m.ListaAuxiliarContable[i].Idunidadnegocio, Model.ListaUnidadNegocio, new { @id = Model.ListaAuxiliarContable[i].Idunidadnegocio + i, @class = "form-control" })</td>*@
+        <td>@Html.TextBoxFor(m => m.Idsucursal)</td>@*borrar*@
+        <td>@Html.TextBoxFor(m => m.Idccostos)</td>@*borrar*@
+        <td>@Html.TextBoxFor(m => m.Idunidadnegocio)</td>@*borrar*@
+        <td>@Html.TextBoxFor(m => m.Idpresupuesto)</td>
+        <td>@Html.TextBoxFor(m => m.Idproyecto)</td>
+        <td>@Html.TextBoxFor(m => m.Idfe)</td>
+        <td>@Html.TextBoxFor(m => m.Basegravable)</td>
+        @*<td>
+                <a data-toggle="tooltip" data-placement="top" title="Agregar" id="movimiento0" style="cursor:pointer; font-size:24px;" onclick="AgregarMovimiento(this);">
+                    <i class="fa fa-plus-circle"></i>
+                </a>
+            </td>*@
+    </tr>
+ }
+
+
+

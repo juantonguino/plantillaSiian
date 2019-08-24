@@ -1,0 +1,497 @@
+﻿@model Entities.Credito.ViewModels.Credito_CreditoMaestroEditViewModel
+
+<div class="row">
+    <div class="x_panel panel-primary">
+        <div class="x_title panel-heading">
+            <label>DATOS DEL CLIENTE</label>
+            <ul class="nav navbar-right panel_toolbox" style="min-width:0;">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="form-group">
+                <div class="row">
+                    <input type="hidden" name="idtercero" id="idtercero" value="@Model.idtercero" class="form-control" />
+                    <input type="hidden" name="id" id="id" value="@Model.id" class="form-control" />
+                    <input type="hidden" name="numerosolicitud" id="numerosolicitud" value="@Model.numerosolicitud" class="form-control" />
+                </div>
+                <div class="row">
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <label class="control-label has-feedback-left">Tipo Documento</label>
+                        @Html.TextBox("Cliente.codigotipoidentificacion", Model.Cliente.TipoIdentificacion.Where(x => x.Value == Model.Cliente.codigotipoidentificacion).First().Text, htmlAttributes: new { @class = "form-control", @readonly = "true" })
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <label class="control-label has-feedback-left">No.</label>
+                        <input type="text" name="Cliente.identificacion" id="Cliente.identificacion" value="@Model.Cliente.identificacion" class="form-control" readonly />
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-12 form-group has-feedback">
+                        <label class="control-label has-feedback-left">Fecha de Exp.</label>
+                        <input type="text" name="Cliente.fechaexpedicion" id="Cliente.fechaexpedicion" class="form-control" value="@Model.Cliente.fechaexpedicion.ToString("dd/MM/yyyy")" readonly />
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                        <label class="control-label has-feedback-left">Departamento de Exp.</label>
+                        @Html.HiddenFor(model => model.Cliente.iddepartamentoexpedicion)
+                        @Html.TextBox("Cliente.nombredepartamentoexpedicion", Model.Cliente.DepartamentoExpedicion.Where(x => x.Value.Equals(Model.Cliente.iddepartamentoexpedicion.ToString() ?? "")).First().Text, htmlAttributes: new { @class = "form-control", @readonly = "true" })
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                        <label class="control-label has-feedback-left">Ciudad de Exp.</label>
+                        @Html.HiddenFor(model => model.Cliente.idciudadexpedicion)
+                        @Html.TextBox("Cliente.nombreciudadexpedicion", Model.Cliente.CiudadExpedicion.Where(x => x.Value.Equals(Model.Cliente.idciudadexpedicion.ToString() ?? "")).First().Text, htmlAttributes: new { @class = "form-control", id = "municipiosexpedicion", @readonly = "true" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                        <label class="control-label has-feedback-left">
+                            1er Apellido:
+                        </label>
+                        <input type="text" name="Cliente.apellido1" id="Cliente.apellido1" value="@Model.Cliente.apellido1" class="form-control" readonly />
+                    </div>
+
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                        <label class="control-label has-feedback-left">
+                            2do Apellido:
+                        </label>
+                        <input type="text" name="Cliente.apellido2" id="Cliente.apellido2" value="@Model.Cliente.apellido2" class="form-control" readonly />
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                        <label class="control-label has-feedback-left">
+                            1er Nombre:
+                        </label>
+                        <input type="text" name="Cliente.nombre1" id="Cliente.nombre1" value="@Model.Cliente.nombre1" class="form-control" readonly />
+                    </div>
+
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                        <label class="control-label has-feedback-left">
+                            2do Nombre:
+                        </label>
+                        <input type="text" name="Cliente.nombre2" id="Cliente.nombre2" value="@Model.Cliente.nombre2" class="form-control" readonly />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                        <label class="control-label has-feedback-left" for="idgenero">
+                            Genero <span class="required right">*</span>
+                        </label>
+                        @Html.HiddenFor(model => model.Cliente.idgenero)
+                        @Html.TextBox("Cliente.nombregenero", Model.Cliente.Genero.Where(x => x.Value.Equals(Model.Cliente.idgenero.ToString())).First().Text, htmlAttributes: new { @class = "form-control", @readonly = "true" })
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                        <label class="control-label has-feedback-left">
+                            Fecha nacimiento <span class="required right">*</span>
+                        </label>
+                        <input type="text" name="Cliente.fechanacimiento" class="form-control has-feedback-left" data-inputmask="'mask': '99/99/9999'" value="@Model.Cliente.fechanacimiento.Date.ToString("dd/MM/yyyy")" readonly>
+                        <span class="glyphicon glyphicon-calendar form-control-feedback left" aria-hidden="true"></span>
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                        <label class="control-label has-feedback-left">
+                            Departamento nacimiento
+                        </label>
+                        @Html.HiddenFor(model => model.Cliente.iddepartamentonacimiento)
+                        @Html.TextBox("Cliente.nombredepartamentonacimiento", Model.Cliente.DepartamentoNacimiento.Where(x => x.Value.Equals(Model.Cliente.iddepartamentonacimiento.ToString() ?? "")).First().Text, htmlAttributes: new { @class = "form-control", @readonly = "true" })
+                    </div>
+
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                        <label class="control-label has-feedback-left">
+                            Municipio nacimiento
+                        </label>
+                        @Html.HiddenFor(model => model.Cliente.idmunicipionacimiento)
+                        @Html.TextBox("Cliente.nombremunicipionacimiento", Model.Cliente.MunicipioNacimiento.Where(x => x.Value.Equals(Model.Cliente.idmunicipionacimiento.ToString() ?? "")).First().Text, htmlAttributes: new { @class = "form-control", @readonly = "true" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                        <label class="control-label  has-feedback-left" for="idestadocivil">
+                            Estado civil
+                        </label>
+                        @Html.HiddenFor(model => model.Cliente.codigoestadocivil)
+                        @Html.TextBox("Cliente.nombreestadocivil", Model.Cliente.EstadoCivil.Where(x => x.Value == Model.Cliente.codigoestadocivil).First().Text, htmlAttributes: new { @class = "form-control", @readonly = "true" })
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                        <label class="control-label  has-feedback-left" for="idestrato">
+                            Estrato
+                        </label>
+                        @Html.HiddenFor(model => model.Cliente.idestrato)
+                        @Html.TextBox("Cliente.nombreestrato", Model.Cliente.Estrato.Where(x => x.Value.Equals(Model.Cliente.idestrato.ToString() ?? "")).First().Text, htmlAttributes: new { @class = "form-control", @readonly = "true" })
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                        <label class="control-label  has-feedback-left">
+                            No. de personas a cargo
+                        </label>
+                        @Html.TextBox("Cliente.numeropersonasacargo", Model.Cliente.numeropersonasacargo, htmlAttributes: new { @class = "form-control", @readonly = "true" })
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                        <label class="control-label  has-feedback-left" for="idniveleducativo">
+                            Nivel Educativo
+                        </label>
+                        @Html.HiddenFor(model => model.Cliente.idniveleducativo)
+                        @Html.TextBox("Cliente.nombreniveleducativo", Model.Cliente.NivelEducativo.Where(x => x.Value.Equals(Model.Cliente.idniveleducativo.ToString() ?? "")).First().Text, htmlAttributes: new { @class = "form-control", @readonly = "true" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5 col-sm-5 col-xs-12 form-group has-feedback">
+                        <label class="control-label  has-feedback-left">
+                            Dirección de Domicilio
+                        </label>
+                        @Html.TextBox("Cliente.direccion", Model.Cliente.direccion, htmlAttributes: new { @class = "form-control", @readonly = "true" })
+                    </div>
+                    <div class="col-md-5 col-sm-5 col-xs-12 form-group has-feedback">
+                        <label class="control-label  has-feedback-left">
+                            Referencia ubicación
+                        </label>
+                        @Html.TextBox("Cliente.referenciaubicacion", Model.Cliente.referenciaubicacion, htmlAttributes: new { @class = "form-control", @readonly = "true" })
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-12 form-group has-feedback">
+                        <label class="control-label  has-feedback-left">
+                            Permanencia en meses
+                        </label>
+                        @Html.TextBox("Cliente.tiempopermanenciameses", Model.Cliente.tiempopermanenciameses, htmlAttributes: new { @class = "form-control", @readonly = "true" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                        <label class="control-label  has-feedback-left">
+                            Correo cliente
+                        </label>
+                        @Html.EditorFor(model => model.Cliente.correocliente, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                        <label class="control-label  has-feedback-left">
+                            Telefono cliente
+                        </label>
+                        @Html.EditorFor(model => model.Cliente.telefonocliente, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                        <label class="control-label  has-feedback-left">
+                            Celular cliente
+                        </label>
+                        @Html.EditorFor(model => model.Cliente.celularcliente, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                        <label class="control-label  has-feedback-left">
+                            Tipo cliente
+                        </label>
+                        @Html.HiddenFor(model => model.Cliente.idtipocliente)
+                        @Html.TextBox("Cliente.nombretipocliente", Model.Cliente.TipoCliente.Where(x => x.Value.Equals(Model.Cliente.idtipocliente.ToString() ?? "")).First().Text, htmlAttributes: new { @class = "form-control", @readonly = "true" })
+                        @Html.ValidationMessageFor(model => model.Cliente.idtipocliente, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                        <label class="control-label has-feedback-left">
+                            Departamento <span class="required right">*</span>
+                        </label>
+                        @Html.HiddenFor(model => model.Cliente.iddepartamentoubicacion)
+                        @Html.TextBox("Cliente.nombredepartamentoubicacion", Model.Cliente.DepartamentoUbicacion.Where(x => x.Value.Equals(Model.Cliente.iddepartamentoubicacion.ToString() ?? "")).First().Text, htmlAttributes: new { @class = "form-control", @readonly = "true" })
+                    </div>
+
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                        <label class="control-label has-feedback-left">
+                            Ciudad <span class="required right">*</span>
+                        </label>
+                        @Html.HiddenFor(model => model.Cliente.idmunicipioubicacion)
+                        @Html.TextBox("Cliente.nombremunicipioubicacion", Model.Cliente.MunicipioUbicacion.Where(x => x.Value.Equals(Model.Cliente.idmunicipioubicacion.ToString() ?? "")).First().Text, htmlAttributes: new { @class = "form-control", @readonly = "true" })
+                    </div>
+
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                        <label class="control-label has-feedback-left">
+                            Barrio/Vereda <span class="required right">*</span>
+                        </label>
+                        @Html.HiddenFor(model => model.Cliente.idbarriovereda)
+                        @Html.TextBox("Cliente.nombrebarriovereda", Model.Cliente.BarrioVereda.Where(x => x.Value.Equals(Model.Cliente.idbarriovereda.ToString() ?? "")).First().Text, htmlAttributes: new { @class = "form-control", @readonly = "true" })
+                    </div>
+                </div>
+            </div>
+
+            <div id="DatosConyuge">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="x_panel panel-warning">
+                            <div class="x_title panel-heading">
+                                <label>Datos del conyuge o compañero permanente</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        @Html.HiddenFor(model => model.Cliente.idconyuge)
+                        @Html.HiddenFor(model => model.Cliente.identificacionconyuge)
+                        @Html.HiddenFor(model => model.Cliente.idterceromaestroconyuge)
+                        @Html.HiddenFor(model => model.Cliente.nombreunidoconyuge)
+                        @Html.HiddenFor(model => model.Cliente.apellidounidoconyuge)
+                        @Html.HiddenFor(model => model.Conyuge.iddepartamentonacimiento)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                            <label class="control-label has-feedback-left">
+                                Tipo de Documento <span class="required right">*</span>
+                            </label>
+                            @Html.HiddenFor(model => model.Conyuge.codigotipoidentificacion)
+                            @Html.TextBox("Conyuge.nombretipoidentificacion", Model.Conyuge.TipoIdentificacion.Where(x => x.Value.Equals(Model.Conyuge.codigotipoidentificacion==null?"": Model.Conyuge.codigotipoidentificacion)).First().Text, htmlAttributes: new { @class = "form-control", @readonly = "true" })
+                        </div>
+                        <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                            <label class="control-label has-feedback-left">
+                                No. <span class="required right">*</span>
+                            </label>
+                            <input type="text" name="Conyugue.identificacion" id="Conyugue.identificacion" value="@Model.Conyuge.identificacion" class="form-control" readonly />
+                        </div>
+                        <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                            <label class="control-label has-feedback-left">
+                                Fecha nacimiento <span class="required right">*</span>
+                            </label>
+                            <input type="text" name="Conyugue.fechanacimiento" class="form-control has-feedback-left" data-inputmask="'mask': '99/99/9999'" value="@Model.Conyuge.fechanacimiento.Date.ToString("dd/MM/yyyy")" readonly />
+                            <span class="glyphicon glyphicon-calendar form-control-feedback left" aria-hidden="true"></span>
+                        </div>
+                        <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                            <label class="control-label has-feedback-left">
+                                Municipio nacimiento
+                            </label>
+                            @Html.HiddenFor(model => model.Conyuge.idmunicipionacimiento)
+                            @Html.TextBox("Conyuge.nombremunicipionacimiento", Model.Conyuge.MunicipioNacimiento.Where(x => x.Value.Equals(Model.Conyuge.idmunicipionacimiento.ToString() ?? "")).First().Text, htmlAttributes: new { @class = "form-control", @readonly = "true" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                            <label class="control-label has-feedback-left">
+                                1er Apellido:
+                            </label>
+                            <input type="text" name="Conyugue.apellido1" id="Conyugue.apellido1" value="@Model.Conyuge.apellido1" class="form-control" readonly />
+                        </div>
+
+                        <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                            <label class="control-label has-feedback-left">
+                                2do Apellido:
+                            </label>
+                            <input type="text" name="Conyugue.apellido2" id="Conyugue.apellido2" value="@Model.Conyuge.apellido2" class="form-control" readonly />
+
+                        </div>
+                        <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                            <label class="control-label has-feedback-left">
+                                1er Nombre:
+                            </label>
+                            <input type="text" name="Conyugue.nombre1" id="Conyugue.nombre1" value="@Model.Conyuge.nombre1" class="form-control" readonly />
+                        </div>
+
+                        <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                            <label class="control-label has-feedback-left" for="identificacion">
+                                2do Nombre:
+                            </label>
+                            <input type="text" name="Conyugue.nombre2" id="Conyugue.nombre2" value="@Model.Conyuge.nombre2" class="form-control" readonly />
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="x_panel panel-primary">
+        <div class="x_title panel-heading">
+            <label>DATOS DE SOLICITUD</label>
+            <ul class="nav navbar-right panel_toolbox" style="min-width:0;">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="x_panel panel-warning">
+                        <div class="x_title panel-heading">
+                            <label>Solicitud de crédito</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <p>
+                            TITULAR:
+                            <input type="radio" class="flat" name="codeudor" id="titular" value="true" checked="" required /> 
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <label class="control-label col-md-1 col-sm-1 col-xs-12">SUCURSAL</label>
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+                        @Html.HiddenFor(model => model.idsucursal)
+                        @Html.TextBox("nombresucursal", Model.Sucursal.Where(x => x.Value.Equals(Model.idsucursal.ToString() ?? "")).First().Text, htmlAttributes: new { @class = "form-control", @readonly = "true" })
+                    </div>
+                    <label class="control-label col-md-1 col-sm-1 col-xs-12">FECHA SOLICITUD</label>
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group">
+                        <div class='input-group date' id='myDatepickerFechaCreacion'>
+                            <input type='text' class="form-control" name="fechacreacion" value="@Model.fechacreacion.Date.ToString("dd/MM/yyyy")" readonly />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <label class="control-label col-md-1 col-sm-1 col-xs-12">TIPO DE SOLICITUD</label>
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+                        @Html.HiddenFor(model => model.idtiposolicitud)
+                        @Html.TextBox("nombretiposolicitud", Model.TipoSolicitud.Where(x => x.Value.Equals(Model.idtiposolicitud.ToString() ?? "")).First().Text, htmlAttributes: new { @class = "form-control", @readonly = "true" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="x_panel panel-warning">
+                        <div class="x_title panel-heading">
+                            <label>Producto solicitado</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Medio de Recepción de la solicitud:</label>
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+                        @Html.HiddenFor(model => model.idmediopromocion)
+                        @Html.TextBox("nombremediopromocion", Model.MedioPromocion.Where(x => x.Value.Equals(Model.idmediopromocion.ToString() ?? "")).First().Text, htmlAttributes: new { @class = "form-control", @readonly = "true" })
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Nombre del Asesor:</label>
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+                        @Html.HiddenFor(model => model.idasesor)
+                        @Html.TextBox("nombreasesor", Model.Asesor.Where(x => x.Value.Equals(Model.idasesor.ToString() ?? "")).First().Text, htmlAttributes: new { @class = "form-control", @readonly = "true" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="x_panel panel-warning">
+                        <div class="x_title panel-heading">
+                            <label>Condiciones del crédito</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <label class="control-label col-md-1 col-sm-1 col-xs-12">Monto:</label>
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <input type="text" name="montoinicial" id="montoinicial" class="form-control" value="@Model.montoinicial" readonly />
+                    </div>
+                    <label class="control-label col-md-1 col-sm-1 col-xs-12">Producto a Financiar:</label>
+                    <div class="col-md-5 col-sm-5 col-xs-12">
+                        @Html.HiddenFor(model => model.idtipocreditotasa)
+                        @Html.TextBox("nombretipocreditotasa", Model.TipoCreditoTasa.Where(x => x.Value.Equals(Model.idtipocreditotasa.ToString() ?? "")).First().Text, htmlAttributes: new { @class = "form-control", @readonly = "true" })
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="control-label col-md-1 col-sm-1 col-xs-12">Plazo:</label>
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <input type="text" name="numerocuotas" id="numerocuotas" class="form-control" value="@Model.numerocuotas" readonly />
+                    </div>
+                    <label class="control-label col-md-1 col-sm-1 col-xs-12">Expectativa de Pago:</label>
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <input type="text" name="expectativapago" id="expectativapago" class="form-control" value="@Model.expectativapago" readonly />
+                    </div>
+                    <label class="control-label col-md-1 col-sm-1 col-xs-12">Fecha primer Pago:</label>
+                    <div class="col-md-2 col-sm-2 col-xs-12 form-group">
+                        <div class='input-group date' id='myDatepickerFechaPrimerPago'>
+                            <input type='text' class="form-control" name="fechaprimerpago" value="@Model.fechaprimerpago.Date.ToString("dd/MM/yyyy")" readonly />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                        @Html.LabelFor(model => model.idfrecuenciapagointeres, "Frecuencia pago interes", htmlAttributes: new { @class = "control-label has-feedback-left" })
+                        @Html.HiddenFor(model => model.idfrecuenciapagointeres)
+                        @Html.TextBox("nombrefrecuenciapagointeres", Model.FrecuenciaPagoInteres.Where(x => x.Value.Equals(Model.idfrecuenciapagointeres.ToString() ?? "")).First().Text, htmlAttributes: new { @class = "form-control", @readonly = "true" })
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                        @Html.LabelFor(model => model.idfrecuenciapagocapital, "Frecuencia pago capital", htmlAttributes: new { @class = "control-label has-feedback-left" })
+                        @Html.HiddenFor(model => model.idfrecuenciapagocapital)
+                        @Html.TextBox("nombrefrecuenciapagocapital", Model.FrecuenciaPagoCapital.Where(x => x.Value.Equals(Model.idfrecuenciapagocapital.ToString() ?? "")).First().Text, htmlAttributes: new { @class = "form-control", @readonly = "true" })
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="x_panel panel-primary">
+        <div class="x_title panel-heading">
+            <label>REFERENCIAS</label>
+            <ul class="nav navbar-right panel_toolbox" style="min-width:0;">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="form-group">
+                <div class="form-group">
+                    <div class="col-md-12 col-sm-12 col-xs-12" id="listaReferencias" name="listaReferencias">
+                        @foreach (var referencia in Model.ListaTerceroReferenciaEditViewModel)
+                        {
+                            referencia.admiteedicion = false;
+                            referencia.identificadorreferencia = referencia.id.ToString();
+                            @Html.Partial("~/Views/Shared/ReferenciaView.cshtml", referencia)
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="x_panel panel-primary">
+        <div class="x_title panel-heading">
+            <label>DATOS DEL NEGOCIO</label>
+            <ul class="nav navbar-right panel_toolbox" style="min-width:0;">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="form-group">
+                <div class="form-group">
+                    <div class="col-md-12 col-sm-12 col-xs-12" id="listaNegociosTrabajos" name="listaNegociosTrabajos">
+                        @foreach (var actividad in Model.ListaTerceroActividadEditViewModel)
+                        {
+                            actividad.admiteedicion = false;
+                            actividad.identificadoractividad = actividad.id.ToString();
+                            @Html.Partial("~/Views/Shared/ActividadView.cshtml", actividad)
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

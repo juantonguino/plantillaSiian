@@ -1,0 +1,28 @@
+@{
+	ViewBag.Title = "Index";}
+<h2> EstadoConceptoCredito</h2>
+@(Html.DevExtreme().DataGrid<Entities.Cartera.ViewModels.EstadoConceptoCreditoViewModel>()
+    .Columns(columns =>
+    {
+        columns.AddFor(m => m.Nombre);
+        columns.AddFor(m => m.Codigo);
+        columns.AddFor(m => m.Esactivo);
+        columns.AddFor(m => m.Esmora);
+        columns.AddFor(m => m.Espendiente);
+        columns.AddFor(m => m.Escancelado);
+        columns.AddFor(m => m.Esexigible);
+    })
+    .ColumnHidingEnabled(true)
+    .Editing(e => e
+    .Mode(GridEditMode.Row)
+    .AllowAdding(true)
+    .AllowUpdating(true)
+    .AllowDeleting(true)
+    ).DataSource(d => d.WebApi()
+    .Controller("EstadoConceptoCreditoWebApi")
+    .InsertAction(true)
+    .UpdateAction(true)
+    .DeleteAction(true)
+    .Key("Id")
+    )
+)

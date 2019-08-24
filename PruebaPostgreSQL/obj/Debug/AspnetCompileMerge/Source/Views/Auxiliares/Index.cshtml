@@ -1,0 +1,71 @@
+@{
+	ViewBag.Title = "Index";}
+<h2> Auxiliares</h2>
+@(Html.DevExtreme().DataGrid<Entities.Contabilidad.ViewModels.AuxiliaresViewModel>()
+    .Columns(columns =>
+    {
+        columns.AddFor(m => m.Id_mayor)
+        .Lookup(lookup => lookup
+            .DataSource(d => d.WebApi().Controller("MayorWebApi").Key("Id"))
+            .DisplayExpr("Nombre")
+            .ValueExpr("Id")
+            );
+        columns.AddFor(m => m.Codigo);
+        columns.AddFor(m => m.Nombre1);
+        columns.AddFor(m => m.Nombre2);
+        columns.AddFor(m => m.Nombre3);
+        columns.AddFor(m => m.Idsucursal)
+        .Lookup(lookup => lookup
+            .DataSource(d => d.WebApi().Controller("SucursalWebApi").Key("Id"))
+            .DisplayExpr("Nombre")
+            .ValueExpr("Id")
+            );
+        columns.AddFor(m => m.Esdebito);
+        columns.AddFor(m => m.Idmoneda)
+        .Lookup(lookup => lookup
+            .DataSource(d => d.WebApi().Controller("MonedaWebApi").Key("Id"))
+            .DisplayExpr("Nombre")
+            .ValueExpr("Id")
+            );
+        columns.AddFor(m => m.Idtipotercero)
+        .Lookup(lookup => lookup
+            .DataSource(d => d.WebApi().Controller("TipoTerceroWebApi").Key("Id"))
+            .DisplayExpr("Nombre")
+            .ValueExpr("Id")
+            );
+        columns.AddFor(m => m.Iddetelle)
+        .Lookup(lookup => lookup
+            .DataSource(d => d.WebApi().Controller("AuxiliarDetalleWebApi").Key("Id"))
+            .DisplayExpr("Nombre")
+            .ValueExpr("Id")
+            );
+        columns.AddFor(m => m.Esdisponible);
+        columns.AddFor(m => m.Escaja);
+        columns.AddFor(m => m.Esbanco);
+        columns.AddFor(m => m.Manejacentrocosto);
+        columns.AddFor(m => m.Manejaunidadnegocio);
+        columns.AddFor(m => m.Manejaproyecto);
+        columns.AddFor(m => m.Idtipoimpuesto)
+        .Lookup(lookup => lookup
+            .DataSource(d => d.WebApi().Controller("TipoCuentaImpuestoWebApi").Key("Id"))
+            .DisplayExpr("Nombre")
+            .ValueExpr("Id")
+            );
+        columns.AddFor(m => m.Controlfiscal);
+        columns.AddFor(m => m.Estaactivo);
+    })
+    .RemoteOperations(true)
+    .ColumnHidingEnabled(true)
+    .Editing(e => e
+    .Mode(GridEditMode.Form)
+    .AllowAdding(true)
+    .AllowUpdating(true)
+    .AllowDeleting(true)
+    ).DataSource(d => d.WebApi()
+    .Controller("AuxiliaresWebApi")
+    .InsertAction(true)
+    .UpdateAction(true)
+    .DeleteAction(true)
+    .Key("Id")
+    )
+)

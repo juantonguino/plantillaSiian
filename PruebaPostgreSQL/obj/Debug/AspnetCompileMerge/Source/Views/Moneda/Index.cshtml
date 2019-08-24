@@ -1,0 +1,25 @@
+@{
+	ViewBag.Title = "Index";}
+<h2> Moneda</h2>
+@(Html.DevExtreme().DataGrid<Entities.Contabilidad.ViewModels.MonedaViewModel>()
+	.Columns(columns =>
+	{
+		columns.AddFor(m => m.Sigla);
+		columns.AddFor(m => m.Nombre);
+		columns.AddFor(m => m.Simbolo);
+		columns.AddFor(m => m.Esactivo);
+	})
+	.ColumnHidingEnabled(true)
+	.Editing(e => e
+	.Mode(GridEditMode.Row)
+	.AllowAdding(true)
+	.AllowUpdating(true)
+	.AllowDeleting(true)
+	).DataSource(d => d.WebApi()
+	.Controller("MonedaWebApi")
+	.InsertAction(true)
+	.UpdateAction(true)
+	.DeleteAction(true)
+	.Key("Id")
+	)
+)

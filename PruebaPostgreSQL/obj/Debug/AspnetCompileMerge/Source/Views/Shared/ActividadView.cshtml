@@ -1,0 +1,449 @@
+﻿@model Entities.Credito.ViewModels.Credito_TerceroActividadEditViewModel
+
+@using (Html.BeginCollectionItem("ListaTerceroActividadEditViewModel"))
+{
+    if (Model.admiteedicion)
+    {
+        <table class="table-responsive" width="100%" id="actividad_@Model.identificadoractividad" name="actividad_@Model.identificadoractividad">
+            <tr>
+                <td>
+                    @if (Model.esnegocio)
+                    {
+                        <h2 class="texto-vertical-2">NEGOCIO</h2>
+                    }
+                    else
+                    {
+                        <h2 class="texto-vertical-2">TRABAJO</h2>
+                    }
+                </td>
+                <td>
+                    @Html.HiddenFor(model => model.id)
+                    @Html.HiddenFor(model => model.esnegocio)
+                    @if (Model.esnegocio)
+                    {
+                        <div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <label class="control-label has-feedback-left">
+                                            Nombre del Negocio <span class="required right">*</span>
+                                        </label>
+                                        @Html.EditorFor(model => model.nombreempresa, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.nombreempresa, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">
+                                            Sector económico <span class="required right">*</span>
+                                        </label>
+                                        @Html.DropDownListFor(model => model.idsectoreconomico, Model.SectorEconomico, htmlAttributes: new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.idsectoreconomico, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">Actividad principal</label>
+                                        @Html.EditorFor(model => model.actividadprincipal, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.actividadprincipal, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">
+                                            Tipo de negocio <span class="required right">*</span>
+                                        </label>
+                                        @Html.EditorFor(model => model.tipodenegocio, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.tipodenegocio, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">
+                                            Negocio ubicado en la residencia
+                                        </label>
+                                        <div style="display:block;">
+                                            @Html.EditorFor(model => model.negocioubicadoenresidencia, new { htmlAttributes = new { @class = "flat" } })
+                                            @Html.ValidationMessageFor(model => model.negocioubicadoenresidencia, "", new { @class = "text-danger" })
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">
+                                            Telefono <span class="required right">*</span>
+                                        </label>
+                                        @Html.EditorFor(model => model.telefono, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.telefono, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">
+                                            Depto Negocio <span class="required right">*</span>
+                                        </label>
+                                        @Html.DropDownListFor(model => model.iddepartamento, Model.Departamento, htmlAttributes: new { @class = "form-control",
+                                                          data_cascade_combo = "#municipios"+Model.identificadoractividad,
+                                                          data_cascade_combo_source = Url.Action("ObtenerMunicipios", "TerceroMaestro"),
+                                                          data_cascade_combo_param_name = "id"
+                                                      })
+                                        @Html.ValidationMessageFor(model => model.iddepartamento, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">
+                                            Ciudad Negocio <span class="required right">*</span>
+                                        </label>
+                                        @Html.DropDownListFor(model => model.idmunicipio, Model.Municipio, htmlAttributes: new { @class = "form-control", id = "municipios" + Model.identificadoractividad })
+                                        @Html.ValidationMessageFor(model => model.idmunicipio, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">
+                                            Tipo Local <span class="required right">*</span>
+                                        </label>
+                                        @Html.DropDownListFor(model => model.idtipolocal, Model.TipoLocal, htmlAttributes: new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.idtipolocal, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">
+                                            Nombre Propietario <span class="required right">*</span>
+                                        </label>
+                                        @Html.EditorFor(model => model.nombrepropietario, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.nombrepropietario, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12">
+                                        <label class="control-label has-feedback-left">
+                                            Telefono/Celular <span class="required right">*</span>
+                                        </label>
+                                        @Html.EditorFor(model => model.telefonopropietario, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.telefonopropietario, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <ul class="nav navbar-right center panel_toolbox">
+                                <li>
+                                    <h3><a class="close-link" onclick="EliminarActividad('@Model.identificadoractividad');" style="cursor:pointer;"><i class="fa fa-trash"></i></a></h3>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                            <div class="x_title"></div>
+
+                        </div>
+                    }
+                    else
+                    {
+                        <div>
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                                        <label class="control-label has-feedback-left">
+                                            Nombre de la empresa <span class="required right">*</span>
+                                        </label>
+                                        @Html.EditorFor(model => model.nombreempresa, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.nombreempresa, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12">
+                                        <label class="control-label has-feedback-left">
+                                            Cargo <span class="required right">*</span>
+                                        </label>
+                                        @Html.EditorFor(model => model.cargo, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.cargo, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12">
+                                        <label class="control-label has-feedback-left">
+                                            Dirección <span class="required right">*</span>
+                                        </label>
+                                        @Html.EditorFor(model => model.direccion, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.direccion, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">Telefono</label>
+                                        @Html.EditorFor(model => model.telefono, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.telefono, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">Ingreso Mensual</label>
+                                        @Html.EditorFor(model => model.ingresomensual, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.ingresomensual, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">Antiguedad Meses</label>
+                                        @Html.EditorFor(model => model.antiguedadmeses, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.antiguedadmeses, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">
+                                            Depto <span class="required right">*</span>
+                                        </label>
+                                        @Html.DropDownListFor(model => model.iddepartamento, Model.Departamento, htmlAttributes: new { @class = "form-control",
+                                                          data_cascade_combo = "#municipios"+Model.identificadoractividad,
+                                                          data_cascade_combo_source = Url.Action("ObtenerMunicipios", "TerceroMaestro"),
+                                                          data_cascade_combo_param_name = "id"
+                                                      })
+                                        @Html.ValidationMessageFor(model => model.iddepartamento, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">
+                                            Ciudad <span class="required right">*</span>
+                                        </label>
+                                        @Html.DropDownListFor(model => model.idmunicipio, Model.Municipio, htmlAttributes: new { @class = "form-control", id = "municipios" + Model.identificadoractividad })
+                                        @Html.ValidationMessageFor(model => model.idmunicipio, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">
+                                            Jefe Inmediato <span class="required right">*</span>
+                                        </label>
+                                        @Html.EditorFor(model => model.jefeinmediato, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.jefeinmediato, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12">
+                                        <label class="control-label has-feedback-left">
+                                            Nombre Referencia <span class="required right">*</span>
+                                        </label>
+                                        @Html.EditorFor(model => model.nombrereferencia, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.nombrereferencia, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12">
+                                        <label class="control-label has-feedback-left">
+                                            Cargo <span class="required right">*</span>
+                                        </label>
+                                        @Html.EditorFor(model => model.cargoreferencia, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.cargoreferencia, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            <ul class="nav navbar-right center panel_toolbox">
+                                <li>
+                                    <h3><a class="close-link" onclick="EliminarActividad('@Model.identificadoractividad');" style="cursor:pointer;"><i class="fa fa-trash"></i></a></h3>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                            <div class="x_title"></div>
+
+                        </div>
+                    }
+                </td>
+            </tr>
+        </table>
+    }
+    else
+    {
+        <table class="table-responsive" width="100%" id="actividad_@Model.identificadoractividad" name="actividad_@Model.identificadoractividad">
+            <tr>
+                <td>
+                    @if (Model.esnegocio)
+                    {
+                        <h2 class="texto-vertical-2">NEGOCIO</h2>
+                    }
+                    else
+                    {
+                        <h2 class="texto-vertical-2">TRABAJO</h2>
+                    }
+                </td>
+                <td>
+                    @Html.HiddenFor(model => model.id)
+                    @Html.HiddenFor(model => model.esnegocio)
+                    @if (Model.esnegocio)
+                    {
+                        <div>
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <label class="control-label has-feedback-left">
+                                            Nombre del Negocio <span class="required right">*</span>
+                                        </label>
+                                        @Html.EditorFor(model => model.nombreempresa, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">
+                                            Sector económico <span class="required right">*</span>
+                                        </label>
+                                        @Html.HiddenFor(model => model.idsectoreconomico)
+                                        @Html.TextBox("idsectoreconomico_" + Model.identificadoractividad, Model.SectorEconomico.Where(x => x.Value.Equals(Model.idsectoreconomico.ToString())).First().Text, htmlAttributes: new { @class = "form-control", @readonly = "true" })
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">Actividad principal</label>
+                                        @Html.EditorFor(model => model.actividadprincipal, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">
+                                            Tipo de negocio <span class="required right">*</span>
+                                        </label>
+                                        @Html.EditorFor(model => model.tipodenegocio, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">
+                                            Negocio ubicado en la residencia
+                                        </label>
+                                        <div style="display:block;">
+                                            @Html.EditorFor(model => model.negocioubicadoenresidencia, new { htmlAttributes = new { @class = "flat", @disabled = "true" } })
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">
+                                            Telefono <span class="required right">*</span>
+                                        </label>
+                                        @Html.EditorFor(model => model.telefono, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">
+                                            Depto Negocio <span class="required right">*</span>
+                                        </label>
+                                        @Html.HiddenFor(model => model.iddepartamento)
+                                        @Html.TextBox("iddepartamento_" + Model.identificadoractividad, Model.Departamento.Where(x => x.Value.Equals(Model.iddepartamento.ToString())).First().Text, htmlAttributes: new { @class = "form-control", @readonly = "true" })
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">
+                                            Ciudad Negocio <span class="required right">*</span>
+                                        </label>
+                                        @Html.HiddenFor(model => model.idmunicipio)
+                                        @Html.TextBox("idmunicipio_" + Model.identificadoractividad, Model.Municipio.Where(x => x.Value.Equals(Model.idmunicipio.ToString())).First().Text, htmlAttributes: new { @class = "form-control", id = "municipios" + Model.identificadoractividad, @readonly = "true" })
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">
+                                            Tipo Local <span class="required right">*</span>
+                                        </label>
+                                        @Html.HiddenFor(model => model.idtipolocal)
+                                        @Html.TextBox("idtipolocal_" + Model.identificadoractividad, Model.TipoLocal.Where(x => x.Value.Equals(Model.idtipolocal.ToString())).First().Text, htmlAttributes: new { @class = "form-control", @readonly = "true" })
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">
+                                            Nombre Propietario <span class="required right">*</span>
+                                        </label>
+                                        @Html.EditorFor(model => model.nombrepropietario, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12">
+                                        <label class="control-label has-feedback-left">
+                                            Telefono/Celular <span class="required right">*</span>
+                                        </label>
+                                        @Html.EditorFor(model => model.telefonopropietario, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="clearfix"></div>
+                            <div class="x_title"></div>
+
+                        </div>
+                    }
+                    else
+                    {
+                        <div>
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                                        <label class="control-label has-feedback-left">
+                                            Nombre de la empresa <span class="required right">*</span>
+                                        </label>
+                                        @Html.EditorFor(model => model.nombreempresa, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12">
+                                        <label class="control-label has-feedback-left">
+                                            Cargo <span class="required right">*</span>
+                                        </label>
+                                        @Html.EditorFor(model => model.cargo, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12">
+                                        <label class="control-label has-feedback-left">
+                                            Dirección <span class="required right">*</span>
+                                        </label>
+                                        @Html.EditorFor(model => model.direccion, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">Telefono</label>
+                                        @Html.EditorFor(model => model.telefono, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">Ingreso Mensual</label>
+                                        @Html.EditorFor(model => model.ingresomensual, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">Antiguedad Meses</label>
+                                        @Html.EditorFor(model => model.antiguedadmeses, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">
+                                            Depto <span class="required right">*</span>
+                                        </label>
+                                        @Html.HiddenFor(model => model.iddepartamento)
+                                        @Html.TextBox("iddepartamento_" + Model.identificadoractividad, Model.Departamento.Where(x => x.Value.Equals(Model.iddepartamento.ToString())).First().Text, htmlAttributes: new { @class = "form-control", @readonly = "true" })
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">
+                                            Ciudad <span class="required right">*</span>
+                                        </label>
+                                        @Html.HiddenFor(model => model.idmunicipio)
+                                        @Html.TextBox("idmunicipio_" + Model.identificadoractividad, Model.Municipio.Where(x => x.Value.Equals(Model.idmunicipio.ToString())).First().Text, htmlAttributes: new { @class = "form-control", id = "municipios" + Model.identificadoractividad, @readonly = "true" })
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">
+                                            Jefe Inmediato <span class="required right">*</span>
+                                        </label>
+                                        @Html.EditorFor(model => model.jefeinmediato, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12">
+                                        <label class="control-label has-feedback-left">
+                                            Nombre Referencia <span class="required right">*</span>
+                                        </label>
+                                        @Html.EditorFor(model => model.nombrereferencia, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12">
+                                        <label class="control-label has-feedback-left">
+                                            Cargo <span class="required right">*</span>
+                                        </label>
+                                        @Html.EditorFor(model => model.cargoreferencia, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="clearfix"></div>
+                            <div class="x_title"></div>
+
+                        </div>
+                    }
+                </td>
+            </tr>
+        </table>
+    }
+
+}
+
+@section Scripts{
+
+    <script type="text/javascript">
+
+    </script>
+}

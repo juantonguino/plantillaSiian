@@ -1,0 +1,134 @@
+﻿@model Negocio.Generales.DepartamentosViewModel
+@{
+    ViewBag.Title = "DepartamentoMVVM";
+}
+
+@using (Html.BeginForm())
+{
+    <!-- BEGIN HIDDEN FELDS AREA-->
+    @Html.HiddenFor(m => m.Comando);
+    
+    <!-- END HIDDEN FELDS AREA-->
+
+    <!-- BEGIN SEARCH  AREA-->
+    if (Model.EsAreaBusquedaVisible)
+    {
+
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h1 class="panel-title">Busqueda De Departamentos</h1>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Busqueda.Nombre, "Product Name")
+                    @Html.TextBoxFor(m => m.Busqueda.Nombre, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="panel-footer">
+                <button id="btnBusqueda" class="btn btn-sm btn-primary"
+                        data-pdsa-action="busqueda">
+                    <i class="glyphicon glyphicon-search"></i>&nbsp; Busqueda
+                </button>
+                <button id="btnReset" data-pdsa-action="resetear" class="btn btn-sm btn-primary">Reset</button>
+                <button id="btnAnadir" data-pdsa-action="aniadir" class="btn btn-sm btn-primary">A&ntilde;adir</button>
+            </div>
+        </div>
+    }
+    <!-- END SEARCH  AREA-->
+
+    <!--begin Detail Area-->
+    if (Model.EsAreaDetalleVisible)
+    {
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h1 class="panel-title">Departamento</h1>
+            </div>
+            <div class="panel-body">
+                <!--Begin message area-->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="alert alert-danger alert-dismissable" role="alert">
+                            <button type="button" class="close" data-dismiss="alert">
+                                <span aria-hidden="true">
+                                    &times;
+                                </span>
+                                <span class="sr-only">Close</span>
+
+                            </button>
+                            @Html.ValidationSummary(false)
+                        </div>
+                    </div>
+                </div>
+                <!--End message area-->
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Entidad.Codigo)
+                    @Html.TextBoxFor(m => m.Entidad.Codigo, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Entidad.Nombre)
+                    @Html.TextBoxFor(m=>m.Entidad.Nombre,
+                   new  {@class="form-control" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Entidad.Pais)
+                    @Html.TextBoxFor(m => m.Entidad.Pais, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="panel-footer">
+                <button id="btnGuardar" class="btn btn-sm btn-primary"
+                        data-pdsa-action="aniadir">
+                    <i class="glyphicon glyphicon-save"></i>Guardar
+                </button>
+                <button id="btnCancelar" class="btn btn-sm btn-primary"
+                        data-pdsa-action="cancelar">
+                    <i class="glyphicon glyphicon-plus-sign"></i>Cancelar
+                </button>
+            </div>
+        </div>
+    }
+    <!--end Detail Area-->
+
+    <!-- BEGIN LIST AREA-->
+    if (Model.EsAreaListaVisible)
+    {
+        <div class="table-responsive">
+            <table class="table table-condensed table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>codigo</th>
+                        <th>pais</th>
+                        <th>nombre</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.ListaDepartamento)
+                    {
+                        <tr class="clickable-row" data-value="@item.Id">
+                            <td>@item.Id</td>
+                            <td>@item.Codigo</td>
+                            <td>@item.Pais</td>
+                            <td>@item.Nombre</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    <!-- END LIST AREA-->
+}
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $("[data-pdsa-action]").on("click", function (e) {
+                e.preventDefault();
+                $("#Comando").val($(this).data("pdsa-action"));
+                $("form").submit();
+            });
+            
+        });
+    </script>
+}

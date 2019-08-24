@@ -1,0 +1,130 @@
+D:\LuisFer\Proyectos MVC\PostgreSQL.AspNet.Identity.EntityFramework-master\PostgreSQL.AspNet.Identity.EntityFramework-master\src\PostgreSQL.AspNet.Identity.EntityFramework\obj\Debug\PostgreSQL.AspNet.Identity.EntityFramework.csprojAssemblyReference.cache
+D:\LuisFer\Proyectos MVC\PostgreSQL.AspNet.Identity.EntityFramework-master\PostgreSQL.AspNet.Identity.EntityFramework-master\src\PostgreSQL.AspNet.Identity.EntityFramework\obj\Debug\PostgreSQL.AspNet.Identity.EntityFramework.IdentityResources.resources
+D:\LuisFer\Proyectos MVC\PostgreSQL.AspNet.Identity.EntityFramework-master\PostgreSQL.AspNet.Identity.EntityFramework-master\src\PostgreSQL.AspNet.Identity.EntityFramework\obj\Debug\PostgreSQL.AspNet.Identity.EntityFramework.csproj.GenerateResource.cache
+D:\LuisFer\Proyectos MVC\PostgreSQL.AspNet.Identity.EntityFramework-master\PostgreSQL.AspNet.Identity.EntityFramework-master\src\PostgreSQL.AspNet.Identity.EntityFramework\obj\Debug\PostgreSQL.AspNet.Identity.EntityFramework.csproj.CoreCompileInputs.cache
+D:\LuisFer\Proyectos MVC\PostgreSQL\src\PostgreSQL\bin\Debug\PostgreSQL.AspNet.Identity.EntityFramework.dll.config
+D:\LuisFer\Proyectos MVC\PostgreSQL\src\PostgreSQL\bin\Debug\PostgreSQL.AspNet.Identity.EntityFramework.dll
+D:\LuisFer\Proyectos MVC\PostgreSQL\src\PostgreSQL\bin\Debug\PostgreSQL.AspNet.Identity.EntityFramework.pdb
+D:\LuisFer\Proyectos MVC\PostgreSQL\src\PostgreSQL\bin\Debug\EntityFramework.dll
+D:\LuisFer\Proyectos MVC\PostgreSQL\src\PostgreSQL\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+D:\LuisFer\Proyectos MVC\PostgreSQL\src\PostgreSQL\bin\Debug\Mono.Security.dll
+D:\LuisFer\Proyectos MVC\PostgreSQL\src\PostgreSQL\bin\Debug\Npgsql.dll
+D:\LuisFer\Proyectos MVC\PostgreSQL\src\PostgreSQL\bin\Debug\Npgsql.EntityFramework.dll
+D:\LuisFer\Proyectos MVC\PostgreSQL\src\PostgreSQL\bin\Debug\EntityFramework.xml
+D:\LuisFer\Proyectos MVC\PostgreSQL\src\PostgreSQL\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+D:\LuisFer\Proyectos MVC\PostgreSQL\src\PostgreSQL\bin\Debug\Npgsql.xml
+D:\LuisFer\Proyectos MVC\PostgreSQL\src\PostgreSQL\bin\Debug\Npgsql.EntityFramework.xml
+D:\LuisFer\Proyectos MVC\PostgreSQL\src\PostgreSQL\bin\Debug\de\Npgsql.resources.dll
+D:\LuisFer\Proyectos MVC\PostgreSQL\src\PostgreSQL\bin\Debug\es\Npgsql.resources.dll
+D:\LuisFer\Proyectos MVC\PostgreSQL\src\PostgreSQL\bin\Debug\fi\Npgsql.resources.dll
+D:\LuisFer\Proyectos MVC\PostgreSQL\src\PostgreSQL\bin\Debug\fr\Npgsql.resources.dll
+D:\LuisFer\Proyectos MVC\PostgreSQL\src\PostgreSQL\bin\Debug\ja\Npgsql.resources.dll
+D:\LuisFer\Proyectos MVC\PostgreSQL\src\PostgreSQL\bin\Debug\zh-CN\Npgsql.resources.dll
+D:\LuisFer\Proyectos MVC\PostgreSQL\src\PostgreSQL\obj\Debug\PostgreSQL.AspNet.Identity.EntityFramework.csprojAssemblyReference.cache
+D:\LuisFer\Proyectos MVC\PostgreSQL\src\PostgreSQL\obj\Debug\PostgreSQL.AspNet.Identity.EntityFramework.IdentityResources.resources
+D:\LuisFer\Proyectos MVC\PostgreSQL\src\PostgreSQL\obj\Debug\PostgreSQL.AspNet.Identity.EntityFramework.csproj.GenerateResource.cache
+D:\LuisFer\Proyectos MVC\PostgreSQL\src\PostgreSQL\obj\Debug\PostgreSQL.AspNet.Identity.EntityFramework.csproj.CoreCompileInputs.cache
+D:\LuisFer\Proyectos MVC\PostgreSQL\src\PostgreSQL\obj\Debug\PostgreSQL.AspNet.Identity.EntityFramework.csproj.CopyComplete
+D:\LuisFer\Proyectos MVC\PostgreSQL\src\PostgreSQL\obj\Debug\PostgreSQL.AspNet.Identity.EntityFramework.dll
+D:\LuisFer\Proyectos MVC\PostgreSQL\src\PostgreSQL\obj\Debug\PostgreSQL.AspNet.Identity.EntityFramework.pdb
+D:\LuisFer\Proyectos MVC\PruebaPostgreSQL\PostgreSQL\bin\Debug\PostgreSQL.AspNet.Identity.EntityFramework.dll.config
+D:\LuisFer\Proyectos MVC\PruebaPostgreSQL\PostgreSQL\bin\Debug\PostgreSQL.AspNet.Identity.EntityFramework.dll
+D:\LuisFer\Proyectos MVC\PruebaPostgreSQL\PostgreSQL\bin\Debug\PostgreSQL.AspNet.Identity.EntityFramework.pdb
+D:\LuisFer\Proyectos MVC\PruebaPostgreSQL\PostgreSQL\bin\Debug\Npgsql.EntityFramework.dll
+D:\LuisFer\Proyectos MVC\PruebaPostgreSQL\PostgreSQL\bin\Debug\EntityFramework.xml
+D:\LuisFer\Proyectos MVC\PruebaPostgreSQL\PostgreSQL\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+D:\LuisFer\Proyectos MVC\PruebaPostgreSQL\PostgreSQL\bin\Debug\Npgsql.xml
+D:\LuisFer\Proyectos MVC\PruebaPostgreSQL\PostgreSQL\bin\Debug\Npgsql.EntityFramework.xml
+D:\LuisFer\Proyectos MVC\PruebaPostgreSQL\PostgreSQL\bin\Debug\de\Npgsql.resources.dll
+D:\LuisFer\Proyectos MVC\PruebaPostgreSQL\PostgreSQL\bin\Debug\es\Npgsql.resources.dll
+D:\LuisFer\Proyectos MVC\PruebaPostgreSQL\PostgreSQL\bin\Debug\fi\Npgsql.resources.dll
+D:\LuisFer\Proyectos MVC\PruebaPostgreSQL\PostgreSQL\bin\Debug\fr\Npgsql.resources.dll
+D:\LuisFer\Proyectos MVC\PruebaPostgreSQL\PostgreSQL\bin\Debug\ja\Npgsql.resources.dll
+D:\LuisFer\Proyectos MVC\PruebaPostgreSQL\PostgreSQL\bin\Debug\zh-CN\Npgsql.resources.dll
+D:\LuisFer\Proyectos MVC\PruebaPostgreSQL\PostgreSQL\obj\Debug\PostgreSQL.AspNet.Identity.EntityFramework.csprojAssemblyReference.cache
+D:\LuisFer\Proyectos MVC\PruebaPostgreSQL\PostgreSQL\obj\Debug\PostgreSQL.AspNet.Identity.EntityFramework.IdentityResources.resources
+D:\LuisFer\Proyectos MVC\PruebaPostgreSQL\PostgreSQL\obj\Debug\PostgreSQL.AspNet.Identity.EntityFramework.csproj.GenerateResource.cache
+D:\LuisFer\Proyectos MVC\PruebaPostgreSQL\PostgreSQL\obj\Debug\PostgreSQL.AspNet.Identity.EntityFramework.csproj.CoreCompileInputs.cache
+D:\LuisFer\Proyectos MVC\PruebaPostgreSQL\PostgreSQL\obj\Debug\PostgreSQL.AspNet.Identity.EntityFramework.csproj.CopyComplete
+D:\LuisFer\Proyectos MVC\PruebaPostgreSQL\PostgreSQL\obj\Debug\PostgreSQL.AspNet.Identity.EntityFramework.dll
+D:\LuisFer\Proyectos MVC\PruebaPostgreSQL\PostgreSQL\obj\Debug\PostgreSQL.AspNet.Identity.EntityFramework.pdb
+D:\Version1.0\PostgreSQL\obj\Debug\PostgreSQL.AspNet.Identity.EntityFramework.IdentityResources.resources
+D:\Version1.0\PostgreSQL\obj\Debug\PostgreSQL.AspNet.Identity.EntityFramework.csproj.GenerateResource.cache
+D:\Version1.0\PostgreSQL\obj\Debug\PostgreSQL.AspNet.Identity.EntityFramework.csproj.CoreCompileInputs.cache
+D:\Version1.0\PostgreSQL\bin\PostgreSQL.AspNet.Identity.EntityFramework.dll.config
+D:\Version1.0\PostgreSQL\bin\PostgreSQL.AspNet.Identity.EntityFramework.dll
+D:\Version1.0\PostgreSQL\bin\PostgreSQL.AspNet.Identity.EntityFramework.pdb
+D:\Version1.0\PostgreSQL\bin\EntityFramework.dll
+D:\Version1.0\PostgreSQL\bin\EntityFramework.SqlServer.dll
+D:\Version1.0\PostgreSQL\bin\Microsoft.AspNet.Identity.Core.dll
+D:\Version1.0\PostgreSQL\bin\Npgsql.EntityFramework.dll
+D:\Version1.0\PostgreSQL\bin\System.Linq.Dynamic.dll
+D:\Version1.0\PostgreSQL\bin\EntityFramework.xml
+D:\Version1.0\PostgreSQL\bin\EntityFramework.SqlServer.xml
+D:\Version1.0\PostgreSQL\bin\Microsoft.AspNet.Identity.Core.xml
+D:\Version1.0\PostgreSQL\bin\Npgsql.EntityFramework.xml
+D:\Version1.0\PostgreSQL\obj\Debug\PostgreSQL.AspNet.Identity.EntityFramework.csprojAssemblyReference.cache
+D:\Version1.0\PostgreSQL\obj\Debug\PostgreSQL.AspNet.Identity.EntityFramework.csproj.CopyComplete
+D:\Version1.0\PostgreSQL\obj\Debug\PostgreSQL.AspNet.Identity.EntityFramework.dll
+D:\Version1.0\PostgreSQL\obj\Debug\PostgreSQL.AspNet.Identity.EntityFramework.pdb
+D:\Version1.0\PostgreSQL\bin\Npgsql.xml
+D:\Version1.0\PostgreSQL\bin\de\Npgsql.resources.dll
+D:\Version1.0\PostgreSQL\bin\es\Npgsql.resources.dll
+D:\Version1.0\PostgreSQL\bin\fi\Npgsql.resources.dll
+D:\Version1.0\PostgreSQL\bin\fr\Npgsql.resources.dll
+D:\Version1.0\PostgreSQL\bin\ja\Npgsql.resources.dll
+D:\Version1.0\PostgreSQL\bin\zh-CN\Npgsql.resources.dll
+D:\Version1.0\PostgreSQL\bin\Npgsql.dll
+D:\Entregables\Plantilla\PostgreSQL\bin\PostgreSQL.AspNet.Identity.EntityFramework.dll.config
+D:\Entregables\Plantilla\PostgreSQL\bin\PostgreSQL.AspNet.Identity.EntityFramework.dll
+D:\Entregables\Plantilla\PostgreSQL\bin\PostgreSQL.AspNet.Identity.EntityFramework.pdb
+D:\Entregables\Plantilla\PostgreSQL\bin\EntityFramework.dll
+D:\Entregables\Plantilla\PostgreSQL\bin\EntityFramework.SqlServer.dll
+D:\Entregables\Plantilla\PostgreSQL\bin\Microsoft.AspNet.Identity.Core.dll
+D:\Entregables\Plantilla\PostgreSQL\bin\Npgsql.dll
+D:\Entregables\Plantilla\PostgreSQL\bin\Npgsql.EntityFramework.dll
+D:\Entregables\Plantilla\PostgreSQL\bin\System.Linq.Dynamic.dll
+D:\Entregables\Plantilla\PostgreSQL\bin\EntityFramework.xml
+D:\Entregables\Plantilla\PostgreSQL\bin\EntityFramework.SqlServer.xml
+D:\Entregables\Plantilla\PostgreSQL\bin\Microsoft.AspNet.Identity.Core.xml
+D:\Entregables\Plantilla\PostgreSQL\bin\Npgsql.xml
+D:\Entregables\Plantilla\PostgreSQL\bin\Npgsql.EntityFramework.xml
+D:\Entregables\Plantilla\PostgreSQL\bin\de\Npgsql.resources.dll
+D:\Entregables\Plantilla\PostgreSQL\bin\es\Npgsql.resources.dll
+D:\Entregables\Plantilla\PostgreSQL\bin\fi\Npgsql.resources.dll
+D:\Entregables\Plantilla\PostgreSQL\bin\fr\Npgsql.resources.dll
+D:\Entregables\Plantilla\PostgreSQL\bin\ja\Npgsql.resources.dll
+D:\Entregables\Plantilla\PostgreSQL\bin\zh-CN\Npgsql.resources.dll
+D:\Entregables\Plantilla\PostgreSQL\obj\Debug\PostgreSQL.AspNet.Identity.EntityFramework.IdentityResources.resources
+D:\Entregables\Plantilla\PostgreSQL\obj\Debug\PostgreSQL.AspNet.Identity.EntityFramework.csproj.GenerateResource.cache
+D:\Entregables\Plantilla\PostgreSQL\obj\Debug\PostgreSQL.AspNet.Identity.EntityFramework.csproj.CoreCompileInputs.cache
+D:\Entregables\Plantilla\PostgreSQL\obj\Debug\PostgreSQL.AspNet.Identity.EntityFramework.csproj.CopyComplete
+D:\Entregables\Plantilla\PostgreSQL\obj\Debug\PostgreSQL.AspNet.Identity.EntityFramework.dll
+D:\Entregables\Plantilla\PostgreSQL\obj\Debug\PostgreSQL.AspNet.Identity.EntityFramework.pdb
+D:\Entregables\Plantilla\PostgreSQL\obj\Debug\PostgreSQL.AspNet.Identity.EntityFramework.csprojAssemblyReference.cache
+C:\Users\diego\source\repos\Plantilla\PostgreSQL\bin\PostgreSQL.AspNet.Identity.EntityFramework.dll.config
+C:\Users\diego\source\repos\Plantilla\PostgreSQL\bin\PostgreSQL.AspNet.Identity.EntityFramework.dll
+C:\Users\diego\source\repos\Plantilla\PostgreSQL\bin\PostgreSQL.AspNet.Identity.EntityFramework.pdb
+C:\Users\diego\source\repos\Plantilla\PostgreSQL\bin\EntityFramework.dll
+C:\Users\diego\source\repos\Plantilla\PostgreSQL\bin\EntityFramework.SqlServer.dll
+C:\Users\diego\source\repos\Plantilla\PostgreSQL\bin\Microsoft.AspNet.Identity.Core.dll
+C:\Users\diego\source\repos\Plantilla\PostgreSQL\bin\Npgsql.dll
+C:\Users\diego\source\repos\Plantilla\PostgreSQL\bin\Npgsql.EntityFramework.dll
+C:\Users\diego\source\repos\Plantilla\PostgreSQL\bin\System.Linq.Dynamic.dll
+C:\Users\diego\source\repos\Plantilla\PostgreSQL\bin\EntityFramework.xml
+C:\Users\diego\source\repos\Plantilla\PostgreSQL\bin\EntityFramework.SqlServer.xml
+C:\Users\diego\source\repos\Plantilla\PostgreSQL\bin\Microsoft.AspNet.Identity.Core.xml
+C:\Users\diego\source\repos\Plantilla\PostgreSQL\bin\Npgsql.xml
+C:\Users\diego\source\repos\Plantilla\PostgreSQL\bin\Npgsql.EntityFramework.xml
+C:\Users\diego\source\repos\Plantilla\PostgreSQL\bin\de\Npgsql.resources.dll
+C:\Users\diego\source\repos\Plantilla\PostgreSQL\bin\es\Npgsql.resources.dll
+C:\Users\diego\source\repos\Plantilla\PostgreSQL\bin\fi\Npgsql.resources.dll
+C:\Users\diego\source\repos\Plantilla\PostgreSQL\bin\fr\Npgsql.resources.dll
+C:\Users\diego\source\repos\Plantilla\PostgreSQL\bin\ja\Npgsql.resources.dll
+C:\Users\diego\source\repos\Plantilla\PostgreSQL\bin\zh-CN\Npgsql.resources.dll
+C:\Users\diego\source\repos\Plantilla\PostgreSQL\obj\Debug\PostgreSQL.AspNet.Identity.EntityFramework.IdentityResources.resources
+C:\Users\diego\source\repos\Plantilla\PostgreSQL\obj\Debug\PostgreSQL.AspNet.Identity.EntityFramework.csproj.GenerateResource.cache
+C:\Users\diego\source\repos\Plantilla\PostgreSQL\obj\Debug\PostgreSQL.AspNet.Identity.EntityFramework.csproj.CoreCompileInputs.cache
+C:\Users\diego\source\repos\Plantilla\PostgreSQL\obj\Debug\PostgreSQL.AspNet.Identity.EntityFramework.csproj.CopyComplete
+C:\Users\diego\source\repos\Plantilla\PostgreSQL\obj\Debug\PostgreSQL.AspNet.Identity.EntityFramework.dll
+C:\Users\diego\source\repos\Plantilla\PostgreSQL\obj\Debug\PostgreSQL.AspNet.Identity.EntityFramework.pdb

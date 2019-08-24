@@ -1,0 +1,34 @@
+@{
+	ViewBag.Title = "Index";}
+<h2> Transaccion</h2>
+@(Html.DevExtreme().DataGrid<Entities.Transacciones.ViewModels.TransaccionViewModel>()
+	.Columns(columns =>
+	{
+		columns.AddFor(m => m.Codigo);
+		columns.AddFor(m => m.Nombre);
+		columns.AddFor(m => m.Esdebito);
+		columns.AddFor(m => m.Escartera);
+		columns.AddFor(m => m.Escontabilidad);
+		columns.AddFor(m => m.Estesoreria);
+		columns.AddFor(m => m.Escredito);
+		columns.AddFor(m => m.Idtipodocumento)
+		.Lookup(lookup => lookup
+			.DataSource(d => d.WebApi().Controller("TipoDocumentoWebApi").Key("Id"))
+			.DisplayExpr("Nombre")
+			.ValueExpr("Id")
+			);
+	})
+	.ColumnHidingEnabled(true)
+	.Editing(e => e
+	.Mode(GridEditMode.Row)
+	.AllowAdding(true)
+	.AllowUpdating(true)
+	.AllowDeleting(true)
+	).DataSource(d => d.WebApi()
+	.Controller("TransaccionWebApi")
+	.InsertAction(true)
+	.UpdateAction(true)
+	.DeleteAction(true)
+	.Key("Id")
+	)
+)

@@ -1,0 +1,152 @@
+﻿@model Terceros.TerceroMaestro
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="page-title">
+    <div class="title_left">
+        <h3>@Html.ActionLink("Crear Nuevo", "Create")</h3>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+
+            <div class="x_title">
+                <h2>Lista de Terceros</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="#">Settings 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Settings 2</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="x_content">
+                @(Html.DevExtreme().DataGrid<Terceros.TerceroMaestro>()
+                                                .ID("gridContainer")
+                                                .ColumnHidingEnabled(true)
+                                                .ShowBorders(true)
+                                                .FilterRow(filterRow => filterRow
+                                                    .Visible(true)
+                                                    .ApplyFilter(GridApplyFilterMode.Auto)
+                                                )
+                                                .SearchPanel(searchPanel => searchPanel
+                                                    .Visible(true)
+                                                    .Width(240)
+                                                    .Placeholder("Search...")
+                                                )
+                                                .HeaderFilter(headerFilter => headerFilter.Visible(true))
+                                                .Editing(editing =>
+                                                {
+                                                    editing.Mode(GridEditMode.Row);
+                                                    editing.UseIcons(true);
+                                                })
+                                                .Columns(columns =>
+                                                {
+                                                columns.AddFor(m => m.Identificacion)
+                                                            .Width(140)
+                                                            .HeaderFilter(filter => filter.GroupInterval(20));
+
+                                                columns.Add()
+                                                            .Caption("Nombres")
+                                                            .Width(180)
+                                                            .CalculateCellValue(@<text>
+                                                                function(data) {
+                                                                return [data.Nombre1, data.Nombre2]
+                                                                .join(" ");
+                                                                }
+                                                            </text>);
+
+                                                columns.Add()
+                                                            .Caption("Apellidos")
+                                                            .Width(180)
+                                                            .CalculateCellValue(@<text>
+                                                                function(data) {
+                                                                return [data.Apellido1, data.Apellido2]
+                                                                .join(" ");
+                                                                }
+                                                            </text>);
+
+                                            columns.AddFor(m => m.Fechanacimiento)
+                                                        .Alignment(HorizontalAlignment.Right)
+                                                        .Width(180)
+                                                        .DataType(GridColumnDataType.DateTime)
+                                                        .Format("M/d/yyyy");
+
+
+                                            columns.AddFor(m => m.Direcciondomicilio);
+
+                                            columns.Add()
+                                            .Width(80)
+                                            .AllowFiltering(false)
+                                            .AllowSorting(false)
+                                            .Type(GridCommandColumnType.Buttons)
+                                            .Buttons(b =>
+                                            {
+                                                b.Add()
+                                                .Hint("Editar")
+                                                .Icon("edit")
+                                                .OnClick(@<text>editIconClick</text>);
+
+                                                b.Add()
+                                                .Hint("Ver Prestamos")
+                                                .Icon("product")
+                                                .OnClick(@<text>verIconClick</text>);
+
+                                    });
+
+                                    
+                                })
+                                .RemoteOperations(true)
+                                .Paging(paging => paging.PageSize(10))
+        .Pager(pager =>
+        {
+            pager.ShowPageSizeSelector(true);
+            pager.AllowedPageSizes(new List<int> { 5, 10, 20 });
+            pager.ShowInfo(true);
+        })
+        .DataSource(d => d.WebApi().Controller("TerceroMaestroWebApi").Key("Id"))
+                )
+            </div>
+
+        </div >
+    </div >
+</div >
+
+
+
+@section Scripts {
+@Scripts.Render("~/bundles/jqueryval")
+
+<script type = "text/javascript" >
+
+    var editIconClick = function (e) {
+        var url = '@Url.Action("Edit","TerceroMaestro", new { id = "varIdTercero" })';
+        url = url.replace("varIdTercero", e.row.data.Id);
+        window.location.href = url;
+    }
+
+    var verIconClick = function (e) {
+        var url = '@Url.Action("ConsultaPrestamo","ConsultaPrestamo", new { id = "varIdTercero" })';
+        url = url.replace("varIdTercero", e.row.data.Id);
+        window.location.href = url;
+    }
+
+</script>
+}

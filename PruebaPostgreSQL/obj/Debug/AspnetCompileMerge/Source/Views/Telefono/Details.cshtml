@@ -1,0 +1,82 @@
+﻿@model Entities.Terceros.Terceros_Telefono
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Terceros_Telefono</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Terceros_terceromaestro.identificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Terceros_terceromaestro.identificacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.telefono)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.telefono)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.extencion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.extencion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.escontacto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.escontacto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.esfijo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.esfijo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.escelular)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.escelular)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.eswapsap)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.eswapsap)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.esactivo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.esactivo)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

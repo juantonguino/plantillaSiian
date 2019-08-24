@@ -1,0 +1,32 @@
+﻿@model Cartera.Calificacion
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Calificación</h2>
+@(Html.DevExtreme().DataGrid<Cartera.Calificacion>()
+        .Columns(columns =>
+        {
+
+
+            columns.AddFor(m => m.Codigo);
+
+            columns.AddFor(m => m.Nombre);
+
+            columns.AddFor(m => m.Esactivo);
+
+
+        })
+        .Editing(e => e
+            .Mode(GridEditMode.Row)
+            .AllowAdding(true)
+            .AllowUpdating(true)
+
+        ).DataSource(d => d.WebApi()
+            .Controller("CalificacionWebApi")
+            .InsertAction(true)
+            .UpdateAction(true)
+            .Key("Id")
+        )
+)
+

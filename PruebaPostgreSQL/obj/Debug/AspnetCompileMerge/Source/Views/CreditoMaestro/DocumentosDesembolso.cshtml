@@ -1,0 +1,20 @@
+﻿@model Entities.Credito.ViewModels.DocumentosDesembolsoViewModel
+@{
+    ViewBag.Title = "DocumentosDesembolso";
+}
+
+<h2>Documentos de Desembolso</h2>
+
+@Html.DevExpress().HyperLink(settings => {
+    settings.Name = "PagareHyperLink";
+    settings.NavigateUrl = "~/Pagare?id="+Model.IdCredito;
+    settings.Properties.Target = "_blank";
+    settings.Properties.Text = "Ver Pagare";
+}).GetHtml()
+<br />
+@Html.DevExpress().HyperLink(settings => {
+    settings.Name = "TablaHyperLink";
+    settings.NavigateUrl = "~/TablaAmortizacion/Reporte?id="+Model.IdPrestamo;
+    settings.Properties.Target = "_blank";
+    settings.Properties.Text = "Ver Tabla de Amortización";
+}).GetHtml()

@@ -1,0 +1,384 @@
+﻿@model Entities.Credito.ViewModels.Credito_TerceroReferenciaEditViewModel
+
+
+@using (Html.BeginCollectionItem("ListaTerceroReferenciaEditViewModel"))
+{
+    if (Model.admiteedicion)
+    {
+        if (Model.requiereparentesco == true)
+        {
+            <table class="table-responsive" width="100%" id="referencia_@Model.identificadorreferencia" name="referencia_@Model.identificadorreferencia">
+                <tr>
+                    <td>
+                        <h2 class="texto-vertical-2">@Model.nombretiporeferencia</h2>
+                    </td>
+                    <td>
+                        @Html.HiddenFor(model => model.id)
+                        @Html.HiddenFor(model => model.idtiporeferencia)
+                        @Html.HiddenFor(model => model.requiereparentesco)
+                        <div class="x_title">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-3 col-sm-3 col-xs-12">
+                                        <label class="control-label has-feedback-left">
+                                            Nombre <span class="required right">*</span>
+                                        </label>
+                                        @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nombre" } })
+                                        @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">
+                                            Tel. <span class="required right">*</span>
+                                        </label>
+                                        @Html.EditorFor(model => model.telefono, new { htmlAttributes = new { @class = "form-control", @placeholder = "Teléfono" } })
+                                        <span class="fa fa-phone form-control-feedback right" aria-hidden="true"></span>
+                                        @Html.ValidationMessageFor(model => model.telefono, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">
+                                            Dir.Dom <span class="required right">*</span>
+                                        </label>
+                                        <div class="has-feedback-left">
+                                            @Html.EditorFor(model => model.direcciondomicilio, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.direcciondomicilio, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-3 col-sm-3 col-xs-12">
+                                        <label class="control-label has-feedback-left">
+                                            Parentesco <span class="required right">*</span>
+                                        </label>
+                                        @Html.DropDownListFor(model => model.idparentesco, Model.Parentesco, htmlAttributes: new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.idparentesco, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">
+                                            Ocupación <span class="required right">*</span>
+                                        </label>
+                                        @Html.EditorFor(model => model.ocupacion, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.ocupacion, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">
+                                            Dir.Neg/Emp <span class="required right">*</span>
+                                        </label>
+                                        <div class="has-feedback-left">
+                                            @Html.EditorFor(model => model.direccionnegociooempleo, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.direccionnegociooempleo, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">
+                                            Tel Ocupación <span class="required right">*</span>
+                                        </label>
+                                        @Html.EditorFor(model => model.telefononegociooempleo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Teléfono Ocupación" } })
+                                        <span class="fa fa-phone form-control-feedback right" aria-hidden="true"></span>
+                                        @Html.ValidationMessageFor(model => model.telefononegociooempleo, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-9 col-sm-9 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">
+                                            Ref Ubicación <span class="required right">*</span>
+                                        </label>
+                                        <div class="has-feedback-left">
+                                            @Html.EditorFor(model => model.referenciaubicacionnegociooempleo, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.referenciaubicacionnegociooempleo, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <ul class="nav navbar-right center panel_toolbox">
+                                <li>
+                                    <h3><a class="close-link" onclick="EliminarReferencia('@Model.identificadorreferencia');" style="cursor:pointer;"><i class="fa fa-trash"></i></a></h3>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        }
+        else
+        {
+            <table class="table-responsive" width="100%" id="referencia_@Model.identificadorreferencia" name="referencia_@Model.identificadorreferencia">
+                <tr>
+                    <td>
+                        <h2 class="texto-vertical-2">@Model.nombretiporeferencia</h2>
+                    </td>
+                    <td>
+                        @Html.HiddenFor(model => model.id, new { @class = "form-control", @value = Model.id })
+                        @Html.HiddenFor(model => model.idtiporeferencia)
+                        @Html.HiddenFor(model => model.requiereparentesco)
+                        <div class="x_title">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <label class="control-label has-feedback-left">
+                                            Nombre <span class="required right">*</span>
+                                        </label>
+                                        @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nombre" } })
+                                        @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">
+                                            Dir.Dom <span class="required right">*</span>
+                                        </label>
+                                        <div class="has-feedback-left">
+                                            @Html.EditorFor(model => model.direcciondomicilio, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.direcciondomicilio, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">
+                                            Telefono <span class="required right">*</span>
+                                        </label>
+                                        @Html.EditorFor(model => model.telefono, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.telefono, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">
+                                            Ocupación <span class="required right">*</span>
+                                        </label>
+                                        @Html.EditorFor(model => model.ocupacion, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.ocupacion, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">
+                                            Dir.Neg/Emp <span class="required right">*</span>
+                                        </label>
+                                        <div class="has-feedback-left">
+                                            @Html.EditorFor(model => model.direccionnegociooempleo, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.direccionnegociooempleo, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">
+                                            Tel Ocupación <span class="required right">*</span>
+                                        </label>
+                                        @Html.EditorFor(model => model.telefononegociooempleo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Teléfono Ocupación" } })
+                                        <span class="fa fa-phone form-control-feedback right" aria-hidden="true"></span>
+                                        @Html.ValidationMessageFor(model => model.telefononegociooempleo, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-9 col-sm-9 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">
+                                            Ref Ubicación <span class="required right">*</span>
+                                        </label>
+                                        <div class="has-feedback-left">
+                                            @Html.EditorFor(model => model.referenciaubicacionnegociooempleo, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.referenciaubicacionnegociooempleo, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <ul class="nav navbar-right center panel_toolbox">
+                                <li>
+                                    <h3><a class="close-link" onclick="EliminarReferencia('@Model.identificadorreferencia');" style="cursor:pointer;"><i class="fa fa-trash"></i></a></h3>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        }
+    }
+    else
+    {
+        if (Model.requiereparentesco == true)
+        {
+            <table class="table-responsive" width="100%" id="referencia_@Model.identificadorreferencia" name="referencia_@Model.identificadorreferencia">
+                <tr>
+                    <td>
+                        <h2 class="texto-vertical-2">@Model.nombretiporeferencia</h2>
+                    </td>
+                    <td>
+                        @Html.HiddenFor(model => model.id, new { @class = "form-control", @value = Model.id })
+                        @Html.HiddenFor(model => model.idtiporeferencia)
+                        @Html.HiddenFor(model => model.requiereparentesco)
+                        <div class="x_title">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-3 col-sm-3 col-xs-12">
+                                        <label class="control-label has-feedback-left">
+                                            Nombre <span class="required right">*</span>
+                                        </label>
+                                        @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nombre", @readonly = "true" } })
+                                        @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">
+                                            Tel. <span class="required right">*</span>
+                                        </label>
+                                        @Html.EditorFor(model => model.telefono, new { htmlAttributes = new { @class = "form-control", @placeholder = "Teléfono", @readonly = "true" } })
+                                        <span class="fa fa-phone form-control-feedback right" aria-hidden="true"></span>
+                                        @Html.ValidationMessageFor(model => model.telefono, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">
+                                            Dir.Dom <span class="required right">*</span>
+                                        </label>
+                                        <div class="has-feedback-left">
+                                            @Html.EditorFor(model => model.direcciondomicilio, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                                            @Html.ValidationMessageFor(model => model.direcciondomicilio, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-3 col-sm-3 col-xs-12">
+                                        <label class="control-label has-feedback-left">
+                                            Parentesco <span class="required right">*</span>
+                                        </label>
+                                        @Html.TextBox("idparentesco_" + Model.idparentesco, Model.Parentesco.Where(x => x.Value.Equals(Model.idparentesco.ToString())).First().Text, htmlAttributes: new { @class = "form-control", @readonly = "true" })
+                                        @Html.ValidationMessageFor(model => model.idparentesco, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">
+                                            Ocupación <span class="required right">*</span>
+                                        </label>
+                                        @Html.EditorFor(model => model.ocupacion, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                                        @Html.ValidationMessageFor(model => model.ocupacion, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">
+                                            Dir.Neg/Emp <span class="required right">*</span>
+                                        </label>
+                                        <div class="has-feedback-left">
+                                            @Html.EditorFor(model => model.direccionnegociooempleo, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                                            @Html.ValidationMessageFor(model => model.direccionnegociooempleo, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">
+                                            Tel Ocupación <span class="required right">*</span>
+                                        </label>
+                                        @Html.EditorFor(model => model.telefononegociooempleo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Teléfono Ocupación", @readonly = "true" } })
+                                        <span class="fa fa-phone form-control-feedback right" aria-hidden="true"></span>
+                                        @Html.ValidationMessageFor(model => model.telefononegociooempleo, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-9 col-sm-9 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">
+                                            Ref Ubicación <span class="required right">*</span>
+                                        </label>
+                                        <div class="has-feedback-left">
+                                            @Html.EditorFor(model => model.referenciaubicacionnegociooempleo, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                                            @Html.ValidationMessageFor(model => model.referenciaubicacionnegociooempleo, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        }
+        else
+        {
+            <table class="table-responsive" width="100%" id="referencia_@Model.identificadorreferencia" name="referencia_@Model.identificadorreferencia">
+                <tr>
+                    <td>
+                        <h2 class="texto-vertical-2">@Model.nombretiporeferencia</h2>
+                    </td>
+                    <td>
+                        @Html.HiddenFor(model => model.id, new { @class = "form-control", @value = Model.id })
+                        @Html.HiddenFor(model => model.idtiporeferencia)
+                        @Html.HiddenFor(model => model.requiereparentesco)
+                        <div class="x_title">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <label class="control-label has-feedback-left">
+                                            Nombre <span class="required right">*</span>
+                                        </label>
+                                        @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nombre", @readonly = "true" } })
+                                        @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">
+                                            Dir.Dom <span class="required right">*</span>
+                                        </label>
+                                        <div class="has-feedback-left">
+                                            @Html.EditorFor(model => model.direcciondomicilio, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                                            @Html.ValidationMessageFor(model => model.direcciondomicilio, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">
+                                            Telefono <span class="required right">*</span>
+                                        </label>
+                                        @Html.EditorFor(model => model.telefono, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                                        @Html.ValidationMessageFor(model => model.telefono, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">
+                                            Ocupación <span class="required right">*</span>
+                                        </label>
+                                        @Html.EditorFor(model => model.ocupacion, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                                        @Html.ValidationMessageFor(model => model.ocupacion, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">
+                                            Dir.Neg/Emp <span class="required right">*</span>
+                                        </label>
+                                        <div class="has-feedback-left">
+                                            @Html.EditorFor(model => model.direccionnegociooempleo, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                                            @Html.ValidationMessageFor(model => model.direccionnegociooempleo, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">
+                                            Tel Ocupación <span class="required right">*</span>
+                                        </label>
+                                        @Html.EditorFor(model => model.telefononegociooempleo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Teléfono Ocupación", @readonly = "true" } })
+                                        <span class="fa fa-phone form-control-feedback right" aria-hidden="true"></span>
+                                        @Html.ValidationMessageFor(model => model.telefononegociooempleo, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-9 col-sm-9 col-xs-12 form-group has-feedback">
+                                        <label class="control-label has-feedback-left">
+                                            Ref Ubicación <span class="required right">*</span>
+                                        </label>
+                                        <div class="has-feedback-left">
+                                            @Html.EditorFor(model => model.referenciaubicacionnegociooempleo, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                                            @Html.ValidationMessageFor(model => model.referenciaubicacionnegociooempleo, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        }
+    }
+
+}
+
+@section Scripts{
+
+    <script type="text/javascript">
+    </script>
+}
